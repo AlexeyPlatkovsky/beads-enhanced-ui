@@ -1,0 +1,878 @@
+{
+  "version": "2.9",
+  "children": [
+    {
+      "type": "frame",
+      "id": "epics_page",
+      "x": 0,
+      "y": 0,
+      "name": "Epics Page Canvas",
+      "width": 2048,
+      "height": 450,
+      "fill": "$bg",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "row_3",
+          "x": 5,
+          "y": 198,
+          "name": "Epic Row / sd-028",
+          "width": 2031,
+          "height": 54,
+          "fill": "$panel-bg",
+          "cornerRadius": 7,
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "$border-row"
+          },
+          "layout": "none",
+          "children": [
+            {
+              "id": "25lx5",
+              "type": "ref",
+              "ref": "z7Izs",
+              "x": 1750,
+              "y": 1
+            },
+            {
+              "type": "text",
+              "id": "row_3_title",
+              "x": 148,
+              "y": 17,
+              "name": "Epic Row Title / sd-028",
+              "fill": "$fg",
+              "content": "Phase 3: LLM Arbitrator",
+              "fontFamily": "Inter",
+              "fontSize": 18,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "row_3_id",
+              "x": 18,
+              "y": 18,
+              "name": "Epic Row ID / sd-028",
+              "fill": "$fg",
+              "textGrowth": "fixed-width-height",
+              "width": "fill_container(120)",
+              "height": "fill_container(22)",
+              "content": "sd-028",
+              "textAlignVertical": "bottom",
+              "fontFamily": "Inter",
+              "fontSize": 18,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "icon_font",
+              "id": "3LmY5",
+              "x": 128,
+              "y": 20,
+              "name": "Expand Chevron / sd-028",
+              "width": 14,
+              "height": 14,
+              "iconFontName": "chevron-right",
+              "iconFontFamily": "lucide",
+              "fill": "$muted"
+            },
+            {
+              "id": "dRUpM",
+              "type": "ref",
+              "ref": "PzMuV",
+              "x": 530,
+              "y": 16,
+              "name": "Status Pill / sd-028"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "row_2",
+          "x": 5,
+          "y": 144,
+          "name": "Epic Row / sd-023",
+          "width": 2031,
+          "height": 54,
+          "fill": "$panel-bg",
+          "cornerRadius": 7,
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "$border-row"
+          },
+          "layout": "none",
+          "children": [
+            {
+              "id": "UR8Dl",
+              "type": "ref",
+              "ref": "z7Izs",
+              "x": 1750,
+              "y": 1
+            },
+            {
+              "type": "text",
+              "id": "row_2_title",
+              "x": 148,
+              "y": 17,
+              "name": "Epic Row Title / sd-023",
+              "fill": "$fg",
+              "content": "Phase 2: OCR Pipeline",
+              "fontFamily": "Inter",
+              "fontSize": 18,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "row_2_id",
+              "x": 18,
+              "y": 18,
+              "name": "Epic Row ID / sd-023",
+              "fill": "$fg",
+              "textGrowth": "fixed-width-height",
+              "width": "fill_container(120)",
+              "height": "fill_container(22)",
+              "content": "sd-023",
+              "textAlignVertical": "bottom",
+              "fontFamily": "Inter",
+              "fontSize": 18,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "icon_font",
+              "id": "zAVHU",
+              "x": 128,
+              "y": 20,
+              "name": "Expand Chevron / sd-023",
+              "width": 14,
+              "height": 14,
+              "iconFontName": "chevron-right",
+              "iconFontFamily": "lucide",
+              "fill": "$muted"
+            },
+            {
+              "id": "GMTyC",
+              "type": "ref",
+              "ref": "PzMuV",
+              "x": 530,
+              "y": 16,
+              "name": "Status Pill / sd-023"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "row_1",
+          "x": 5,
+          "y": 90,
+          "name": "Epic Row / sd-040",
+          "width": 2031,
+          "height": 54,
+          "fill": "$panel-bg",
+          "cornerRadius": 7,
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "$border-row"
+          },
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "z7Izs",
+              "x": 1750,
+              "y": 1,
+              "name": "Progress Tracker",
+              "reusable": true,
+              "width": 270,
+              "height": 52,
+              "fill": "#d9d9d900",
+              "stroke": {
+                "align": "center",
+                "thickness": 1
+              },
+              "layout": "none",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "row_1_count",
+                  "x": 190,
+                  "y": 14,
+                  "name": "Progress Count / sd-040",
+                  "fill": "$fg-mid",
+                  "content": "999/999",
+                  "fontFamily": "Inter",
+                  "fontSize": 17,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "frame",
+                  "id": "row_1_track",
+                  "x": 0,
+                  "y": 24,
+                  "name": "Progress Bar / sd-040",
+                  "width": 171,
+                  "height": 5,
+                  "fill": "$progress-track",
+                  "cornerRadius": 999,
+                  "layout": "none"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "PzMuV",
+              "x": 530,
+              "y": 16,
+              "name": "Status Pill",
+              "reusable": true,
+              "height": 22,
+              "fill": "$status-open",
+              "cornerRadius": 999,
+              "padding": [
+                3,
+                8
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "aRiAr",
+                  "name": "Status Label",
+                  "fill": "#ffffff",
+                  "content": "Open",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "row_1_title",
+              "x": 148,
+              "y": 17,
+              "name": "Epic Row Title / sd-040",
+              "fill": "$fg",
+              "content": "Phase 4: RAG Pipeline",
+              "fontFamily": "Inter",
+              "fontSize": 18,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "row_1_id",
+              "x": 18,
+              "y": 18,
+              "name": "Epic Row ID / sd-040",
+              "fill": "$fg",
+              "textGrowth": "fixed-width-height",
+              "width": "fill_container(120)",
+              "height": "fill_container(22)",
+              "content": "sd-040",
+              "textAlignVertical": "bottom",
+              "fontFamily": "Inter",
+              "fontSize": 18,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "icon_font",
+              "id": "7qZwD",
+              "x": 128,
+              "y": 20,
+              "name": "Expand Chevron / sd-040",
+              "width": 14,
+              "height": 14,
+              "iconFontName": "chevron-right",
+              "iconFontFamily": "lucide",
+              "fill": "$muted"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "jogO1",
+          "x": 18,
+          "y": 336,
+          "name": "Variants Section Label",
+          "fill": "$muted",
+          "content": "Expand / Collapse Icon — Light & Dark Variants",
+          "fontFamily": "Inter",
+          "fontSize": 12,
+          "fontWeight": "600"
+        },
+        {
+          "type": "frame",
+          "id": "T6on2",
+          "x": 18,
+          "y": 358,
+          "name": "Dark Mode Icon Variants",
+          "height": 48,
+          "fill": "$panel-bg",
+          "cornerRadius": 7,
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "$border-row"
+          },
+          "gap": 24,
+          "padding": [
+            0,
+            16
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "VRmwt",
+              "name": "Dark Label",
+              "fill": "$muted",
+              "content": "Dark",
+              "fontFamily": "Inter",
+              "fontSize": 11,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "NnyQi",
+              "name": "Dark Expanded State",
+              "gap": 6,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "KCqKJ",
+                  "name": "Chevron Down Dark",
+                  "width": 14,
+                  "height": 14,
+                  "iconFontName": "chevron-down",
+                  "iconFontFamily": "lucide",
+                  "fill": "$muted"
+                },
+                {
+                  "type": "text",
+                  "id": "bFpcR",
+                  "name": "Expanded Label Dark",
+                  "fill": "$muted",
+                  "content": "Expanded",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "eoVVa",
+              "name": "Dark Collapsed State",
+              "gap": 6,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "7obAY",
+                  "name": "Chevron Right Dark",
+                  "width": 14,
+                  "height": 14,
+                  "iconFontName": "chevron-right",
+                  "iconFontFamily": "lucide",
+                  "fill": "$muted"
+                },
+                {
+                  "type": "text",
+                  "id": "q3o1I",
+                  "name": "Collapsed Label Dark",
+                  "fill": "$muted",
+                  "content": "Collapsed",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Hs5OA",
+          "x": 320,
+          "y": 358,
+          "name": "Light Mode Icon Variants",
+          "height": 48,
+          "fill": "#ffffff",
+          "cornerRadius": 7,
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "#e5e7eb"
+          },
+          "gap": 24,
+          "padding": [
+            0,
+            16
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "64QPv",
+              "name": "Light Label",
+              "fill": "#888888",
+              "content": "Light",
+              "fontFamily": "Inter",
+              "fontSize": 11,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "NccGO",
+              "name": "Light Expanded State",
+              "gap": 6,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "ZktW7",
+                  "name": "Chevron Down Light",
+                  "width": 14,
+                  "height": 14,
+                  "iconFontName": "chevron-down",
+                  "iconFontFamily": "lucide",
+                  "fill": "#555555"
+                },
+                {
+                  "type": "text",
+                  "id": "cu86T",
+                  "name": "Expanded Label Light",
+                  "fill": "#555555",
+                  "content": "Expanded",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "PcYrZ",
+              "name": "Light Collapsed State",
+              "gap": 6,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "3FMAs",
+                  "name": "Chevron Right Light",
+                  "width": 14,
+                  "height": 14,
+                  "iconFontName": "chevron-right",
+                  "iconFontFamily": "lucide",
+                  "fill": "#555555"
+                },
+                {
+                  "type": "text",
+                  "id": "UD6XI",
+                  "name": "Collapsed Label Light",
+                  "fill": "#555555",
+                  "content": "Collapsed",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "AmR8Y",
+          "x": 0,
+          "y": 52,
+          "name": "Epics List Header",
+          "width": 2048,
+          "height": 38,
+          "fill": "$bg",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$border"
+          },
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "O0ZkN",
+              "x": 530,
+              "y": 12,
+              "name": "Status Column Header",
+              "width": 70,
+              "height": 15,
+              "gap": 5,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ANb4Y",
+                  "fill": "$fg-mid",
+                  "textGrowth": "fixed-width-height",
+                  "width": 55,
+                  "height": 15,
+                  "content": "STATUS",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "whcrt",
+                  "width": 11,
+                  "height": 11,
+                  "iconFontName": "arrow-up-down",
+                  "iconFontFamily": "lucide",
+                  "fill": "$fg-mid"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "syvv2",
+              "x": 148,
+              "y": 12,
+              "name": "Name Column Header",
+              "width": 60,
+              "height": 15,
+              "gap": 5,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "zlqUU",
+                  "fill": "$fg-mid",
+                  "textGrowth": "fixed-width-height",
+                  "width": 45,
+                  "height": "fill_container",
+                  "content": "NAME",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "H8B5i",
+                  "width": 11,
+                  "height": 11,
+                  "iconFontName": "arrow-up-down",
+                  "iconFontFamily": "lucide",
+                  "fill": "$fg-mid"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "a0RTC",
+              "x": 18,
+              "y": 12,
+              "name": "ID Column Header",
+              "width": 30,
+              "height": 15,
+              "gap": 5,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Celhj",
+                  "fill": "$fg-mid",
+                  "textGrowth": "fixed-width-height",
+                  "width": 15,
+                  "height": "fill_container",
+                  "content": "ID",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "oDp38",
+                  "width": 11,
+                  "height": 11,
+                  "iconFontName": "arrow-up-down",
+                  "iconFontFamily": "lucide",
+                  "fill": "$fg-mid"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "topbar",
+          "x": 0,
+          "y": 0,
+          "name": "Header Bar",
+          "width": 2048,
+          "height": 52,
+          "fill": "$panel-bg",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$border"
+          },
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "new_issue",
+              "x": 1931,
+              "y": 6,
+              "name": "New Issue Button",
+              "width": 99,
+              "height": 31,
+              "fill": "$button-bg",
+              "cornerRadius": 6,
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$button-border"
+              },
+              "layout": "none",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "new_issue_label",
+                  "x": 11,
+                  "y": 7,
+                  "name": "New Issue Button Label",
+                  "fill": "$fg-strong",
+                  "content": "New issue",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "800"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "toggle",
+              "x": 1861,
+              "y": 8,
+              "name": "Theme Toggle",
+              "width": 56,
+              "height": 27,
+              "fill": "$control-bg",
+              "cornerRadius": 999,
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$button-border"
+              },
+              "layout": "none",
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "toggle_knob",
+                  "x": 28,
+                  "y": 2,
+                  "name": "Theme Toggle Knob",
+                  "fill": "$button-bg",
+                  "width": 23,
+                  "height": 23
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "dark_label",
+              "x": 1819,
+              "y": 15,
+              "name": "Theme Label",
+              "fill": "$fg-mid",
+              "content": "Dark",
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "tab_board",
+              "x": 442,
+              "y": 15,
+              "name": "Board Tab Label",
+              "fill": "$fg-mid",
+              "content": "Board",
+              "fontFamily": "Inter",
+              "fontSize": 16,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "tab_epics",
+              "x": 345,
+              "y": 6,
+              "name": "Active Epics Tab",
+              "width": 77,
+              "height": 45,
+              "fill": "$surface-raised",
+              "cornerRadius": [
+                8,
+                8,
+                0,
+                0
+              ],
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$border-tab"
+              },
+              "layout": "none",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "tab_epics_label",
+                  "x": 15,
+                  "y": 9,
+                  "name": "Active Epics Tab Label",
+                  "fill": "$fg-strong",
+                  "content": "Epics",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "800"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "tab_issues",
+              "x": 267,
+              "y": 15,
+              "name": "Issues Tab Label",
+              "fill": "$fg-mid",
+              "content": "Issues",
+              "fontFamily": "Inter",
+              "fontSize": 16,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "workspace",
+              "x": 98,
+              "y": 15,
+              "name": "Workspace Path Label",
+              "fill": "$fg-dim",
+              "content": "D:\\coding\\llm_rag",
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "brand",
+              "x": 13,
+              "y": 15,
+              "name": "Brand Label",
+              "fill": "$fg-strong",
+              "content": "Beads",
+              "fontFamily": "Inter",
+              "fontSize": 18,
+              "fontWeight": "800"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "bg": {
+      "type": "color",
+      "value": "#0D1426"
+    },
+    "border": {
+      "type": "color",
+      "value": "#25304A"
+    },
+    "border-row": {
+      "type": "color",
+      "value": "#28334D"
+    },
+    "border-tab": {
+      "type": "color",
+      "value": "#2F3A55"
+    },
+    "button-bg": {
+      "type": "color",
+      "value": "#2B364A"
+    },
+    "button-border": {
+      "type": "color",
+      "value": "#3B4860"
+    },
+    "control-bg": {
+      "type": "color",
+      "value": "#151F35"
+    },
+    "control-border": {
+      "type": "color",
+      "value": "#43506E"
+    },
+    "control-knob": {
+      "type": "color",
+      "value": "#2A3247"
+    },
+    "fg": {
+      "type": "color",
+      "value": "#D9E0EA"
+    },
+    "fg-dim": {
+      "type": "color",
+      "value": "#8794AD"
+    },
+    "fg-id": {
+      "type": "color",
+      "value": "#DDE4EF"
+    },
+    "fg-label": {
+      "type": "color",
+      "value": "#B9C1CF"
+    },
+    "fg-mid": {
+      "type": "color",
+      "value": "#A8B0C0"
+    },
+    "fg-strong": {
+      "type": "color",
+      "value": "#F4F7FC"
+    },
+    "fg-tab": {
+      "type": "color",
+      "value": "#A7B1C3"
+    },
+    "muted": {
+      "type": "color",
+      "value": "#6B7B99"
+    },
+    "panel-bg": {
+      "type": "color",
+      "value": "#111A2F"
+    },
+    "progress-track": {
+      "type": "color",
+      "value": "#F4F4F1"
+    },
+    "status-open": {
+      "type": "color",
+      "value": "#51CB4E"
+    },
+    "surface": {
+      "type": "color",
+      "value": "#121A2F"
+    },
+    "surface-raised": {
+      "type": "color",
+      "value": "#141F38"
+    }
+  }
+}

@@ -68,6 +68,18 @@
   --outline-offset-m: 2px;
   --outline-offset-s: 0px;
 
+  /* New design tokens (light fallbacks) */
+  --surface-raised: var(--bg);
+  --control-bg:     #ffffff;
+  --button-bg:      #f3f4f6;
+  --border-row:     var(--border);
+  --border-tab:     var(--border);
+  --button-border:  #d1d5db;
+  --fg-strong:      var(--fg);
+  --fg-mid:         var(--muted);
+  --fg-dim:         #888888;
+  --progress-track: #e5e7eb;
+
   /* Spacing scale (2px baseline) */
   --space-0: 0;
   --space-1: 2px;
@@ -132,17 +144,13 @@ a {
   display: flex;
   align-items: start;
   justify-content: space-between;
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--panel-bg) 80%, transparent),
-    var(--panel-bg)
-  );
-  backdrop-filter: saturate(150%) blur(6px);
+  background: var(--panel-bg);
 }
 .app-title {
   font-size: 18px;
   margin: 0;
   letter-spacing: 0.02em;
+  color: var(--fg-strong);
 }
 
 /* Header layout: group title + tabs on the left */
@@ -156,6 +164,7 @@ a {
 .header-workspace {
   display: flex;
   align-items: center;
+  color: var(--fg-dim);
 }
 
 .workspace-picker {
@@ -233,7 +242,7 @@ a {
   .tab {
     display: inline-block;
     padding: var(--space-4) var(--space-6) 9px;
-    color: var(--muted);
+    color: var(--fg-mid);
     text-decoration: none;
     font-weight: 600;
     border: 1px solid transparent;
@@ -250,11 +259,11 @@ a {
     }
 
     &.active {
-      color: var(--fg);
-      background: var(--bg);
-      border-color: var(--border);
-      /* Blend into the page content below the header by covering the header border */
-      border-bottom-color: var(--bg);
+      color: var(--fg-strong);
+      font-weight: 800;
+      background: var(--surface-raised);
+      border: 1px solid var(--border-tab);
+      border-bottom: none;
       margin-bottom: -1px; /* overlap header bottom border */
       padding-bottom: 10px;
       position: relative;
@@ -290,12 +299,21 @@ a {
     transform: rotate(360deg);
   }
 }
+#new-issue-btn {
+  background: var(--button-bg);
+  border: 1px solid var(--button-border);
+  color: var(--fg-strong);
+  font-weight: 800;
+  font-size: 13px;
+  border-radius: 6px;
+}
+
 .theme-toggle {
   display: inline-flex;
   align-items: center;
   gap: var(--space-3);
   font-size: 12px;
-  color: var(--muted);
+  color: var(--fg-mid);
 
   input[type='checkbox'] {
     --switch-h: 22px;
@@ -304,7 +322,7 @@ a {
     width: 44px;
     height: var(--switch-h);
     border-radius: var(--switch-h);
-    border: 1px solid var(--control-border);
+    border: 1px solid var(--button-border);
     background: var(--control-bg);
     transition:
       background 160ms ease,
@@ -1132,11 +1150,65 @@ input.inline-edit:focus {
 }
 
 /* Epics view styles */
-.epic-group {
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  margin: 10px 12px;
-  overflow: hidden;
+.epics-table-wrap {
+  padding: 0 12px 12px;
+  overflow-x: auto;
+}
+.epics-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  table-layout: fixed;
+}
+.epics-table__col--id {
+  width: 80px;
+}
+.epics-table__col--status {
+  width: 150px;
+}
+.epics-table__col--meta {
+  width: 190px;
+}
+.epics-list-header th {
+  padding: 0 var(--space-6) 2px;
+  text-align: left;
+  vertical-align: bottom;
+}
+.epics-list-header__meta {
+  color: var(--fg-mid);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.epics-sort-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--fg-mid);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.epics-sort-button:hover,
+.epics-sort-button:focus-visible {
+  color: var(--fg);
+}
+.epics-sort-button.is-active {
+  color: var(--fg-mid);
+}
+.epics-sort-button svg {
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+.epics-sort-button.is-active svg {
+  opacity: 1;
 }
 
 /* UI-83: Issues table container aligns with epics/cards */
@@ -1148,28 +1220,111 @@ input.inline-edit:focus {
   background: var(--bg);
 }
 .epic-header {
+  cursor: pointer;
+}
+.epic-header td {
+  box-sizing: border-box;
+  height: 42px;
+  padding: 0 var(--space-6);
+  vertical-align: middle;
+  background: var(--panel-bg);
+  border-top: 1px solid var(--border-row);
+  border-bottom: 1px solid var(--border-row);
+}
+.epic-header td:first-child {
+  border-left: 1px solid var(--border-row);
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+.epic-header td:last-child {
+  border-right: 1px solid var(--border-row);
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.epic-group.is-open .epic-header td:first-child {
+  border-bottom-left-radius: 0;
+}
+.epic-group.is-open .epic-header td:last-child {
+  border-bottom-right-radius: 0;
+}
+.epic-header:hover td,
+.epic-header:focus-visible td {
+  background: color-mix(in srgb, var(--panel-bg) 90%, var(--fg));
+}
+.epic-header progress {
+  width: 140px;
+  height: 8px;
+  accent-color: var(--status-closed-base);
+}
+.epic-header__cell {
+  min-width: 0;
+}
+.epic-header__cell--name {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
-  padding: var(--space-5) var(--space-6);
-  cursor: pointer;
-  background: color-mix(in srgb, var(--panel-bg) 90%, transparent);
-  border-bottom: 1px solid var(--border);
-
-  &:hover {
-    background: color-mix(in srgb, var(--control-bg) 60%, transparent);
-  }
-
-  /* Compact native progress for epic status */
-  progress {
-    width: 140px;
-    height: 8px;
-    accent-color: var(--status-closed-base);
-  }
+  gap: var(--space-3);
+  min-width: 0;
+}
+.epic-header__cell--status {
+  white-space: nowrap;
+}
+.epic-header__meta {
+  min-width: 0;
+}
+.epic-chevron {
+  flex-shrink: 0;
+  color: var(--muted);
+}
+.epic-progress {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.epic-progress span {
+  color: var(--fg-mid);
+  white-space: nowrap;
+  text-align: right;
+  width: 45px;
+  flex: 0 0 45px;
+}
+.epic-progress progress {
+  width: 120px;
+  flex: 0 0 120px;
+  color-scheme: light dark;
+}
+.epic-progress progress::-webkit-progress-bar {
+  background: var(--progress-track);
+  border-radius: 4px;
+}
+.epic-progress progress::-webkit-progress-value {
+  background: var(--status-closed-base);
+  border-radius: 4px;
+}
+.epic-progress progress::-moz-progress-bar {
+  background: var(--status-closed-base);
+  border-radius: 4px;
 }
 .epic-children {
   padding: 8px 12px 12px;
+  background: var(--bg);
+  border-right: 1px solid var(--border-row);
+  border-bottom: 1px solid var(--border-row);
+  border-left: 1px solid var(--border-row);
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
+.epic-children .muted {
+  display: block;
+  padding: var(--space-6);
+}
+
+@media (max-width: 900px) {
+  .epics-table {
+    min-width: 640px;
+  }
+}
+
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -1399,11 +1554,22 @@ input.inline-edit:focus {
 
 /* Manual theme override */
 html[data-theme='dark'] {
-  --fg: #e5e7eb;
-  --bg: #0b1021;
-  --muted: #9ca3af;
-  --panel-bg: #0f172a;
-  --border: #1f2937;
+  --fg: #d9e0ea;
+  --bg: #0d1426;
+  --muted: #6b7b99;
+  --panel-bg: #111a2f;
+  --border: #25304a;
+  --surface-raised: #141f38;
+  --control-bg:     #151f35;
+  --button-bg:      #2b364a;
+  --border-row:     #28334d;
+  --border-tab:     #2f3a55;
+  --button-border:  #3b4860;
+  --fg-strong:      #f4f7fc;
+  --fg-mid:         #a8b0c0;
+  --fg-dim:         #8794ad;
+  --progress-track: #f4f4f1;
+  --status-open-base: #51cb4e;
 
   --badge-bg-neutral: #374151;
   --badge-fg-neutral: #f3f4f6;
@@ -1522,13 +1688,11 @@ html[data-theme='light'] {
   }
 }
 html[data-theme='dark'] {
-  --control-bg: #111827;
-  --control-fg: #e5e7eb;
-  --control-border: #374151;
-  --control-placeholder: #9ca3af;
-  --button-bg: #1f2937;
-  --button-fg: #e5e7eb;
-  --button-border: #374151;
+  --control-bg: #151f35;
+  --control-fg: #d9e0ea;
+  --control-border: #3b4860;
+  --control-placeholder: #6b7b99;
+  --button-fg: #f4f7fc;
 }
 
 /* --- Design polish additions --- */
