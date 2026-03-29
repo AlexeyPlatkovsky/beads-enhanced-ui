@@ -1306,8 +1306,9 @@ input.inline-edit:focus {
   border-radius: 4px;
 }
 .epic-children {
-  padding: 8px 12px 12px;
+  padding: 0px 6px 0px;
   background: var(--bg);
+  border-top: 1px solid var(--border-row);
   border-right: 1px solid var(--border-row);
   border-bottom: 1px solid var(--border-row);
   border-left: 1px solid var(--border-row);
@@ -1354,6 +1355,14 @@ input.inline-edit:focus {
     font-weight: 600;
   }
 }
+.epic-row td {
+  box-sizing: border-box;
+  height: 50px;
+  padding-top: 0;
+  padding-bottom: 0;
+  vertical-align: middle;
+}
+
 .epic-row:hover {
   background: color-mix(in srgb, var(--control-bg) 55%, transparent);
 }
