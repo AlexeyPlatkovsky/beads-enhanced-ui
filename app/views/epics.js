@@ -226,26 +226,40 @@ export function createEpicsView(
             data-testid=${`epic-header-name-${id}`}
           >
             ${is_open
-              ? html`<svg class="epic-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>`
-              : html`<svg class="epic-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>`}
-            <span class="text-truncate">${epic.title || '(no title)'}</span>
+              ? html`<svg class="epic-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-testid=${`epic-header-chevron-${id}`}><polyline points="6 9 12 15 18 9"></polyline></svg>`
+              : html`<svg class="epic-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-testid=${`epic-header-chevron-${id}`}><polyline points="9 18 15 12 9 6"></polyline></svg>`}
+            <span
+              class="text-truncate"
+              data-testid=${`epic-header-title-${id}`}
+              >${epic.title || '(no title)'}</span
+            >
           </td>
           <td
             class="epic-header__cell epic-header__cell--status"
             data-testid=${`epic-header-status-${id}`}
           >
-            <span class="status-badge is-${status}">${status_text}</span>
+            <span
+              class="status-badge is-${status}"
+              data-testid=${`epic-header-status-badge-${id}`}
+              >${status_text}</span
+            >
           </td>
           <td
             class="epic-header__meta"
             data-testid=${`epic-header-progress-${id}`}
           >
-            <span class="epic-progress">
+            <span
+              class="epic-progress"
+              data-testid=${`epic-progress-${id}`}
+            >
               <progress
                 value=${Number(group.closed_children || 0)}
                 max=${Math.max(1, Number(group.total_children || 0))}
+                data-testid=${`epic-progress-bar-${id}`}
               ></progress>
-              <span class="muted mono"
+              <span
+                class="muted mono"
+                data-testid=${`epic-progress-count-${id}`}
                 >${group.closed_children}/${group.total_children}</span
               >
             </span>
@@ -277,20 +291,17 @@ export function createEpicsView(
                           <col style="width: 160px" />
                           <col style="width: 130px" />
                         </colgroup>
-                        <thead
-                          testid="epic-children-header"
-                          data-testid=${`epic-children-header-${id}`}
-                        >
+                        <thead data-testid=${`epic-children-header-${id}`}>
                           <tr>
-                            <th data-testid="epic-children-header-id">${childSortHeaderTemplate('id', 'ID')}</th>
-                            <th data-testid="epic-children-header-type">${childSortHeaderTemplate('type', 'Type')}</th>
-                            <th data-testid="epic-children-header-title">${childSortHeaderTemplate('title', 'Title')}</th>
-                            <th data-testid="epic-children-header-status">${childSortHeaderTemplate('status', 'Status')}</th>
-                            <th data-testid="epic-children-header-assignee">${childSortHeaderTemplate('assignee', 'Assignee')}</th>
-                            <th data-testid="epic-children-header-priority">${childSortHeaderTemplate('priority', 'Priority')}</th>
+                            <th data-testid=${`epic-children-header-id-${id}`}>${childSortHeaderTemplate('id', 'ID')}</th>
+                            <th data-testid=${`epic-children-header-type-${id}`}>${childSortHeaderTemplate('type', 'Type')}</th>
+                            <th data-testid=${`epic-children-header-title-${id}`}>${childSortHeaderTemplate('title', 'Title')}</th>
+                            <th data-testid=${`epic-children-header-status-${id}`}>${childSortHeaderTemplate('status', 'Status')}</th>
+                            <th data-testid=${`epic-children-header-assignee-${id}`}>${childSortHeaderTemplate('assignee', 'Assignee')}</th>
+                            <th data-testid=${`epic-children-header-priority-${id}`}>${childSortHeaderTemplate('priority', 'Priority')}</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody data-testid=${`epic-children-rows-${id}`}>
                           ${sorted_list.map((item) => render_row(item))}
                         </tbody>
                       </table>`}

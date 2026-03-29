@@ -330,7 +330,9 @@ describe('views/epics', () => {
     await view.load();
 
     const child_header_labels = Array.from(
-      mount.querySelectorAll('[testid="epic-children-header"] th')
+      mount.querySelectorAll(
+        'th[data-testid^="epic-children-header-"][data-testid$="-UI-60"]'
+      )
     ).map((cell) => cell.textContent?.replace(/\s+/g, ' ').trim());
     expect(child_header_labels).toEqual([
       'ID',
@@ -961,7 +963,34 @@ describe('views/epics', () => {
       mount.querySelector('[data-testid="epic-header-UI-70"]')
     ).toBeTruthy();
     expect(
+      mount.querySelector('[data-testid="epic-header-chevron-UI-70"]')
+    ).toBeTruthy();
+    expect(
+      mount.querySelector('[data-testid="epic-header-title-UI-70"]')
+        ?.textContent
+        ?.trim()
+    ).toBe('Epic Ids');
+    expect(
+      mount.querySelector('[data-testid="epic-header-status-badge-UI-70"]')
+        ?.textContent
+        ?.trim()
+    ).toBe('Open');
+    expect(
+      mount.querySelector('[data-testid="epic-progress-bar-UI-70"]')
+    ).toBeTruthy();
+    expect(
+      mount.querySelector('[data-testid="epic-progress-count-UI-70"]')
+        ?.textContent
+        ?.trim()
+    ).toBe('0/1');
+    expect(
       mount.querySelector('[data-testid="epic-children-table-UI-70"]')
+    ).toBeTruthy();
+    expect(
+      mount.querySelector('[data-testid="epic-children-header-title-UI-70"]')
+    ).toBeTruthy();
+    expect(
+      mount.querySelector('[data-testid="epic-children-rows-UI-70"]')
     ).toBeTruthy();
     expect(
       mount.querySelector('[data-testid="epic-child-sort-title"]')
