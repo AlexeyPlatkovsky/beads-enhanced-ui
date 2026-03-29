@@ -1321,7 +1321,6 @@ input.inline-edit:focus {
 }
 .epic-children .muted {
   display: block;
-  padding: var(--space-6);
 }
 
 @media (max-width: 900px) {
