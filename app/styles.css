@@ -1314,6 +1314,10 @@ input.inline-edit:focus {
   border-left: 1px solid var(--border-row);
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
+  overflow-x: auto;
+}
+.epic-children .table {
+  min-width: 950px;
 }
 .epic-children .muted {
   display: block;

@@ -18,7 +18,8 @@ import { createTypeBadge } from '../utils/type-badge.js';
  *   onUpdate: (id: string, patch: { title?: string, assignee?: string, status?: 'open'|'in_progress'|'closed', priority?: number }) => Promise<void>,
  *   requestRender: () => void,
  *   getSelectedId?: () => string | null,
- *   row_class?: string
+ *   row_class?: string,
+ *   show_dependencies?: boolean
  * }} options
  * @returns {(it: IssueRowData) => import('lit-html').TemplateResult<1>}
  */
@@ -28,6 +29,7 @@ export function createIssueRowRenderer(options) {
   const request_render = options.requestRender;
   const get_selected_id = options.getSelectedId || (() => null);
   const row_class = options.row_class || 'issue-row';
+  const show_dependencies = options.show_dependencies !== false;
 
   /** @type {Set<string>} */
   const editing = new Set();
@@ -143,6 +145,30 @@ export function createIssueRowRenderer(options) {
     const cur_status = String(it.status || 'open');
     const cur_prio = String(it.priority ?? 2);
     const is_selected = get_selected_id() === it.id;
+    const dependency_summary =
+      (it.dependency_count || 0) > 0 || (it.dependent_count || 0) > 0
+        ? html`<span class="deps-indicator"
+            >${(it.dependency_count || 0) > 0
+              ? html`<span
+                  class="dep-count"
+                  title="${it.dependency_count} ${(it.dependency_count || 0) ===
+                  1
+                    ? 'dependency'
+                    : 'dependencies'}"
+                  >${'\u2192'}${it.dependency_count}</span
+                >`
+              : ''}${(it.dependent_count || 0) > 0
+              ? html`<span
+                  class="dependent-count"
+                  title="${it.dependent_count} ${(it.dependent_count || 0) ===
+                  1
+                    ? 'dependent'
+                    : 'dependents'}"
+                  >${'\u2190'}${it.dependent_count}</span
+                >`
+              : ''}</span
+          >`
+        : '';
     return html`<tr
       role="row"
       class="${row_class} ${is_selected ? 'selected' : ''}"
@@ -199,35 +225,15 @@ export function createIssueRowRenderer(options) {
           )}
         </select>
       </td>
-      <td
-        role="gridcell"
-        class="deps-col"
-        data-testid=${`issue-row-${it.id}-deps`}
-      >
-        ${(it.dependency_count || 0) > 0 || (it.dependent_count || 0) > 0
-          ? html`<span class="deps-indicator"
-              >${(it.dependency_count || 0) > 0
-                ? html`<span
-                    class="dep-count"
-                    title="${it.dependency_count} ${(it.dependency_count ||
-                      0) === 1
-                      ? 'dependency'
-                      : 'dependencies'}"
-                    >→${it.dependency_count}</span
-                  >`
-                : ''}${(it.dependent_count || 0) > 0
-                ? html`<span
-                    class="dependent-count"
-                    title="${it.dependent_count} ${(it.dependent_count || 0) ===
-                    1
-                      ? 'dependent'
-                      : 'dependents'}"
-                    >←${it.dependent_count}</span
-                  >`
-                : ''}</span
-            >`
-          : ''}
-      </td>
+      ${show_dependencies
+        ? html`<td
+            role="gridcell"
+            class="deps-col"
+            data-testid=${`issue-row-${it.id}-deps`}
+          >
+            ${dependency_summary}
+          </td>`
+        : ''}
     </tr>`;
   }
 

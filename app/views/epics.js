@@ -66,7 +66,8 @@ export function createEpicsView(
     onUpdate: updateInline,
     requestRender: doRender,
     getSelectedId: () => null,
-    row_class: 'epic-row'
+    row_class: 'epic-row',
+    show_dependencies: false
   });
 
   function doRender() {
