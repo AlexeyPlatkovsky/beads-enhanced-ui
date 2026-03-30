@@ -81,6 +81,23 @@ Treat as non-trivial if any are true:
 Examples: new view, protocol message type, workspace registry change, breaking
 state shape change.
 
+## Pre-Task Protocol
+
+Before writing any code or editing any file, run this sequence for non-trivial
+tasks:
+
+1. **Classify** — trivial or non-trivial? (see below)
+2. **Identify skills** — list every skill whose trigger condition matches this
+   task. Declare them to the user.
+3. **Branch** — use `work-with-git` to check the current branch and create a
+   new one if needed. Do not skip this step or assume the current branch is
+   correct.
+4. **Load skills** — execute each matched skill in order before touching files.
+5. **Implement** — make changes, following each skill's workflow.
+6. **Validate** — use the `validate` skill to confirm the result.
+
+Skipping any step requires stating the reason before proceeding.
+
 ## Validation
 
 - Run the smallest meaningful verification first.
@@ -95,9 +112,9 @@ state shape change.
 - If you see a broader issue, note it separately instead of expanding scope
   silently.
 - For non-trivial work, summarize the plan before broad edits.
-- For non-trivial code tasks, recommend creating a fresh branch before making
-  edits. Proceed on the current branch only if the user declines or explicitly
-  asks to stay on it.
+- For non-trivial code tasks, use `work-with-git` and create a fresh branch
+  before making any edits. Proceed on the current branch only if the user
+  explicitly declines.
 - State assumptions, risks, and unverified areas plainly.
 
 ## UI Work
