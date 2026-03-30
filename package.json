@@ -18,12 +18,13 @@
     "node": ">=22"
   },
   "scripts": {
-    "all": "npm run lint && npm run tsc && npm test && npm run test:coverage && npm run prettier:check",
+    "all": "npm run lint && npm run tsc && npm test && npm run test:coverage:app && npm run prettier:check",
     "start": "node server/index.js --debug",
     "build": "node scripts/build-frontend.js",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --project=jsdom --coverage",
+    "test:coverage": "vitest run --coverage",
+    "test:coverage:app": "vitest run --project=jsdom --coverage",
     "tsc": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint --ext .js .",
     "prettier:write": "prettier --write .",
