@@ -54,7 +54,7 @@ export function createIssueDialog(mount_element, store, onClose) {
    * @param {string} id
    */
   function setTitle(id) {
-    // Use copyable ID renderer but keep visible text as raw id for tests/clarity
+    // Use the shared renderer so dialog titles follow the compact UI ID rule.
     title_el.replaceChildren();
     title_el.appendChild(createIssueIdRenderer(id));
   }

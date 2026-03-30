@@ -46,7 +46,7 @@ Create an issue **before** writing code, not after, only when the work is
 substantive and worth tracking.
 
 ```bash
-bd create --id="bd-NNN" --title="..." --type=task|bug|feature --priority=2
+bd create --id="bd-ui-NNN" --title="..." --type=task|bug|feature --priority=2
 ```
 
 Priority scale: `0`=critical, `1`=high, `2`=medium, `3`=low, `4`=backlog. Use
@@ -58,10 +58,19 @@ See **When This Skill Applies** above for criteria on when to create vs. skip.
 
 Beads ID policy:
 
-- Always create issues with an explicit numeric ID in the form `bd-NNN`.
-- Never rely on Beads auto-generated mixed alphanumeric IDs such as `bd-db8`.
-- Before `bd create`, inspect existing numeric `bd-NNN` IDs and choose the next available number.
-- If the next numeric ID is ambiguous or there is collision risk, ask the user before creating the issue.
+- Always create issues with an explicit numeric ID in the form `bd-ui-NNN`.
+- `NNN` must be digits only. Never use letters or mixed alphanumeric suffixes.
+- Maintain a consecutive numeric sequence. Before `bd create`, inspect
+  existing `bd-ui-NNN` IDs and choose the next highest numeric suffix plus 1.
+- When creating multiple issues in one batch, allocate consecutive IDs in that
+  same batch order.
+- Never rely on Beads auto-generated mixed alphanumeric IDs.
+- Never introduce new legacy prefixes such as `UI-` or long workspace-derived
+  prefixes for project issue creation.
+- If the database contains legacy IDs with another prefix, inspect them before
+  cleanup. Do not delete historical issues by default. Prefer an explicit
+  migration plan over destructive cleanup, and ask the user before deleting
+  legacy issues.
 ## Working an Issue
 
 ```bash

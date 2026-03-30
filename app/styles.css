@@ -534,6 +534,7 @@ button {
 }
 /* Inline issue ID renderer: looks like plain text */
 button.id-copy {
+  display: inline-block;
   background: transparent;
   color: inherit;
   border: none;
@@ -542,6 +543,10 @@ button.id-copy {
   line-height: inherit;
   font: inherit;
   white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
 }
 button.id-copy:hover {
   text-decoration: underline;
@@ -2128,6 +2133,11 @@ html[data-theme='dark'] {
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
     'Courier New', monospace;
   font-variant-ligatures: none;
+}
+
+.issue-row__id-cell {
+  width: 120px;
+  max-width: 600px;
 }
 
 @media (max-width: 1100px) {

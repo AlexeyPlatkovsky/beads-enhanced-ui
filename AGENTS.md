@@ -95,6 +95,9 @@ state shape change.
 - If you see a broader issue, note it separately instead of expanding scope
   silently.
 - For non-trivial work, summarize the plan before broad edits.
+- For non-trivial code tasks, recommend creating a fresh branch before making
+  edits. Proceed on the current branch only if the user declines or explicitly
+  asks to stay on it.
 - State assumptions, risks, and unverified areas plainly.
 
 ## UI Work
@@ -151,4 +154,8 @@ Compliance above.
 
 ## Session End
 
-If the task used Beads, sync and close the relevant issues before handoff. If the user explicitly asked for commit/push work or approved it, follow the `work-with-git` Session End procedure. Do not assume every task requires Beads.
+If the task used Beads, sync and close the relevant issues before handoff. For
+non-trivial code tasks, recommend branch creation up front and use the
+`work-with-git` skill if the user approves git workflow changes. If the user
+explicitly asked for commit/push work or approved it, follow the `work-with-git`
+Session End procedure. Do not assume every task requires Beads.
