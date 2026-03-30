@@ -2,6 +2,19 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
+    coverage: {
+      provider: 'v8',
+      include: ['app/**/*.js'],
+      exclude: ['app/**/*.test.js', 'app/main.bundle.js'],
+      reporter: ['text', 'lcov', 'html', 'json-summary'],
+      reportsDirectory: 'coverage',
+      thresholds: {
+        lines: 65,
+        functions: 65,
+        branches: 55,
+        statements: 65
+      }
+    },
     projects: [
       {
         test: {

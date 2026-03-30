@@ -1,4 +1,5 @@
 /node_modules
+/coverage
 tsconfig.tsbuildinfo
 app/main.bundle.js
 app/main.bundle.js.map
