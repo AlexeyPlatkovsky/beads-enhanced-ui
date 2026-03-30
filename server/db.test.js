@@ -30,6 +30,7 @@ afterEach(() => {
       // ignore cleanup errors
     }
   }
+  vi.restoreAllMocks();
 });
 
 describe('resolveDbPath', () => {

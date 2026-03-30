@@ -103,9 +103,11 @@ describe('parseArgs', () => {
 describe('main', () => {
   test('prints usage and exits 0 on --help', async () => {
     const code = await main(['--help']);
+    const output = write_mock.mock.calls.map((c) => String(c[0])).join('');
 
     expect(code).toBe(0);
-    expect(write_mock).toHaveBeenCalled();
+    expect(output).toContain('Usage:');
+    expect(output).toContain('--open');
   });
 
   test('prints version and exits 0 on --version', async () => {

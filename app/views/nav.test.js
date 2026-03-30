@@ -12,6 +12,7 @@ function setup() {
     /** @param {any} v */
     set(v) {
       this.state = { ...this.state, ...v };
+      this._fn(this.state);
     },
     /** @param {(s: any) => void} fn */
     subscribe(fn) {
@@ -57,12 +58,12 @@ describe('views/nav', () => {
 
   test('marks the active tab from store state and clears on destroy', () => {
     const { mount, store, router } = setup();
-    store.set({ view: 'board' });
     const nav = createTopNav(
       mount,
       /** @type {any} */ (store),
       /** @type {any} */ (router)
     );
+    store.set({ view: 'board' });
 
     expect(
       mount.querySelector('[data-testid="nav-tab-board"]')?.classList.contains(
