@@ -190,40 +190,62 @@ export function createIssueRowRenderer(options) {
         ${editableText(it.id, 'title', it.title || '')}
       </td>
       <td role="gridcell" data-testid=${`issue-row-${it.id}-status`}>
-        <select
-          class="badge-select badge--status is-${cur_status}"
-          .value=${cur_status}
-          data-testid=${`issue-row-${it.id}-status-select`}
-          @change=${makeSelectChange(it.id, 'status')}
-        >
-          ${['open', 'in_progress', 'closed'].map(
-            (s) =>
-              html`<option value=${s} ?selected=${cur_status === s}>
-                ${statusLabel(s)}
-              </option>`
-          )}
-        </select>
+        <span class="badge-select-wrap badge-select-wrap--status">
+          <select
+            class="badge-select badge--status is-${cur_status}"
+            .value=${cur_status}
+            data-testid=${`issue-row-${it.id}-status-select`}
+            @change=${makeSelectChange(it.id, 'status')}
+          >
+            ${['open', 'in_progress', 'closed'].map(
+              (s) =>
+                html`<option value=${s} ?selected=${cur_status === s}>
+                  ${statusLabel(s)}
+                </option>`
+            )}
+          </select>
+          <span
+            class="badge-select__caret"
+            aria-hidden="true"
+            data-testid=${`issue-row-${it.id}-status-caret`}
+          >
+            <svg viewBox="0 0 12 12" focusable="false">
+              <path d="M3 4.5 6 7.5 9 4.5" />
+            </svg>
+          </span>
+        </span>
       </td>
       <td role="gridcell" data-testid=${`issue-row-${it.id}-assignee`}>
         ${editableText(it.id, 'assignee', it.assignee || '', 'Unassigned')}
       </td>
       <td role="gridcell" data-testid=${`issue-row-${it.id}-priority`}>
-        <select
-          class="badge-select badge--priority ${'is-p' + cur_prio}"
-          .value=${cur_prio}
-          data-testid=${`issue-row-${it.id}-priority-select`}
-          @change=${makeSelectChange(it.id, 'priority')}
-        >
-          ${priority_levels.map(
-            (p, i) =>
-              html`<option
-                value=${String(i)}
-                ?selected=${cur_prio === String(i)}
-              >
-                ${emojiForPriority(i)} ${p}
-              </option>`
-          )}
-        </select>
+        <span class="badge-select-wrap badge-select-wrap--priority">
+          <select
+            class="badge-select badge--priority ${'is-p' + cur_prio}"
+            .value=${cur_prio}
+            data-testid=${`issue-row-${it.id}-priority-select`}
+            @change=${makeSelectChange(it.id, 'priority')}
+          >
+            ${priority_levels.map(
+              (p, i) =>
+                html`<option
+                  value=${String(i)}
+                  ?selected=${cur_prio === String(i)}
+                >
+                  ${emojiForPriority(i)} ${p}
+                </option>`
+            )}
+          </select>
+          <span
+            class="badge-select__caret"
+            aria-hidden="true"
+            data-testid=${`issue-row-${it.id}-priority-caret`}
+          >
+            <svg viewBox="0 0 12 12" focusable="false">
+              <path d="M3 4.5 6 7.5 9 4.5" />
+            </svg>
+          </span>
+        </span>
       </td>
       ${show_dependencies
         ? html`<td

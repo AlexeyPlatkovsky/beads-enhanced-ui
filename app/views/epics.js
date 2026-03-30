@@ -89,16 +89,18 @@ export function createEpicsView(
         <table class="epics-table" data-testid="epics-table">
           <colgroup>
             <col class="epics-table__col epics-table__col--id" />
-            <col class="epics-table__col epics-table__col--name" />
+            <col class="epics-table__col epics-table__col--type" />
+            <col class="epics-table__col epics-table__col--title" />
             <col class="epics-table__col epics-table__col--status" />
-            <col class="epics-table__col epics-table__col--meta" />
+            <col class="epics-table__col epics-table__col--assignee" />
+            <col class="epics-table__col epics-table__col--priority" />
           </colgroup>
           <thead class="epics-list-header" data-testid="epics-header">
             <tr>
               <th scope="col" data-testid="epics-header-id">${sortHeaderTemplate('id', 'Id')}</th>
-              <th scope="col" data-testid="epics-header-name">${sortHeaderTemplate('name', 'Name')}</th>
+              <th scope="col" colspan="2" data-testid="epics-header-name">${sortHeaderTemplate('name', 'Name')}</th>
               <th scope="col" data-testid="epics-header-status">${sortHeaderTemplate('status', 'Status')}</th>
-              <th scope="col" class="epics-list-header__meta" data-testid="epics-header-progress">Progress</th>
+              <th scope="col" colspan="2" class="epics-list-header__meta" data-testid="epics-header-progress">Progress</th>
             </tr>
           </thead>
           ${sorted_groups.map((group) => groupTemplate(group))}
@@ -224,6 +226,7 @@ export function createEpicsView(
           </td>
           <td
             class="epic-header__cell epic-header__cell--name"
+            colspan="2"
             data-testid=${`epic-header-name-${id}`}
           >
             ${is_open
@@ -247,6 +250,7 @@ export function createEpicsView(
           </td>
           <td
             class="epic-header__meta"
+            colspan="2"
             data-testid=${`epic-header-progress-${id}`}
           >
             <span
@@ -273,7 +277,7 @@ export function createEpicsView(
             >
               <td
                 class="epic-children"
-                colspan="4"
+                colspan="6"
                 data-testid=${`epic-children-${id}`}
               >
                 ${is_loading
@@ -285,12 +289,12 @@ export function createEpicsView(
                         data-testid=${`epic-children-table-${id}`}
                       >
                         <colgroup>
-                          <col style="width: 100px" />
-                          <col style="width: 120px" />
-                          <col />
-                          <col style="width: 120px" />
-                          <col style="width: 160px" />
-                          <col style="width: 130px" />
+                          <col class="epics-table__col epics-table__col--id" />
+                          <col class="epics-table__col epics-table__col--type" />
+                          <col class="epics-table__col epics-table__col--title" />
+                          <col class="epics-table__col epics-table__col--status" />
+                          <col class="epics-table__col epics-table__col--assignee" />
+                          <col class="epics-table__col epics-table__col--priority" />
                         </colgroup>
                         <thead data-testid=${`epic-children-header-${id}`}>
                           <tr>

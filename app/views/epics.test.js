@@ -455,6 +455,9 @@ describe('views/epics', () => {
     const sel = /** @type {HTMLSelectElement|null} */ (
       mount.querySelector('tr.epic-row select')
     );
+    expect(
+      mount.querySelector('[data-testid="issue-row-UI-21-status-caret"]')
+    ).not.toBeNull();
     sel?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     expect(navCalls.length).toBe(0);
   });
@@ -738,6 +741,16 @@ describe('views/epics', () => {
 
     const header_cells = mount.querySelectorAll('.epic-header > *');
     expect(header_cells).toHaveLength(4);
+    expect(
+      mount
+        .querySelector('[data-testid="epics-header-name"]')
+        ?.getAttribute('colspan')
+    ).toBe('2');
+    expect(
+      mount
+        .querySelector('[data-testid="epics-header-progress"]')
+        ?.getAttribute('colspan')
+    ).toBe('2');
 
     const name_badge = mount.querySelector(
       '.epic-header__cell--name .status-badge'
