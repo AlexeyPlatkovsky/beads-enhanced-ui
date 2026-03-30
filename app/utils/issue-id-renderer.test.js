@@ -59,11 +59,11 @@ describe('utils/issue-id-renderer', () => {
     expect(el.textContent).toBe('UI-9');
   });
 
-  test('renders compact display text for long workspace-prefixed ids but copies canonical id', async () => {
+  test('renders full canonical id for workspace-prefixed ids', async () => {
     const el = createIssueIdRenderer('beads-enhanced-ui-123');
     document.body.appendChild(el);
 
-    expect(el.textContent).toBe('bd-ui-123');
+    expect(el.textContent).toBe('beads-enhanced-ui-123');
 
     el.click();
     await Promise.resolve();
@@ -74,7 +74,7 @@ describe('utils/issue-id-renderer', () => {
     expect(el.textContent).toBe('Copied');
 
     vi.advanceTimersByTime(1200);
-    expect(el.textContent).toBe('bd-ui-123');
+    expect(el.textContent).toBe('beads-enhanced-ui-123');
   });
 
   test('keyboard activation via Enter/Space copies', () => {

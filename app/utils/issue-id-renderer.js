@@ -2,8 +2,7 @@ import { toDisplayIssueId } from './issue-id-format.js';
 
 /**
  * Create a reusable, copy-to-clipboard issue ID renderer.
- * Shows a compact UI display id while copying the canonical Beads id.
- * Shows transient "Copied" feedback and then restores the display text.
+ * Shows the canonical Beads id with transient "Copied" feedback on click.
  *
  * @param {string} id - Canonical issue id as returned by Beads.
  * @param {{ class_name?: string, duration_ms?: number }} [opts]
@@ -22,7 +21,7 @@ export function createIssueIdRenderer(id, opts) {
   btn.type = 'button';
   btn.setAttribute('aria-live', 'polite');
   btn.setAttribute('title', `Copy issue ID ${id}`);
-  btn.setAttribute('aria-label', `Copy issue ID ${display_id} (${id})`);
+  btn.setAttribute('aria-label', `Copy issue ID ${id}`);
   btn.textContent = display_id;
 
   /** Copy handler with feedback. */

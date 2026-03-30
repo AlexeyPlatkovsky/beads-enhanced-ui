@@ -183,7 +183,7 @@ describe('views/list', () => {
     expect(mount.querySelector('[data-testid="issue-row-UI-1"]')).toBeTruthy();
   });
 
-  test('renders compact display ids and constrains the id column width', async () => {
+  test('renders full canonical ids and constrains the id column width', async () => {
     document.body.innerHTML = '<aside id="mount" class="panel"></aside>';
     const mount = /** @type {HTMLElement} */ (document.getElementById('mount'));
     const issueStores = createTestIssueStores();
@@ -218,7 +218,7 @@ describe('views/list', () => {
       mount.querySelector('[data-testid="issue-row-beads-enhanced-ui-1-id"]')
     );
     expect(id_cell?.classList.contains('issue-row__id-cell')).toBe(true);
-    expect(id_cell?.textContent?.trim()).toBe('bd-ui-1');
+    expect(id_cell?.textContent?.trim()).toBe('beads-enhanced-ui-1');
   });
 
   test('filters by status and search', async () => {
