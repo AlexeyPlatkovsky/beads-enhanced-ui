@@ -1,9 +1,9 @@
 /node_modules
+/coverage
 tsconfig.tsbuildinfo
 app/main.bundle.js
 app/main.bundle.js.map
 .DS_Store
-.beads/issues.jsonl
 
 # Dolt database files (added by bd init)
 .dolt/
@@ -11,3 +11,6 @@ app/main.bundle.js.map
 
 .playwright/snapshots
 .playwright/screenshots
+
+# Beads / Dolt files (added by bd init)
+.beads-credential-key

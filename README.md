@@ -72,6 +72,15 @@ These can also be set via CLI options: `bdui start --host 0.0.0.0 --port 8080`
 - 🔗 Alternatively, use `npm link` to link the package globally and run
   `bdui start` from any project.
 
+## Coverage Commands
+
+- `npm run all` runs lint, typecheck, the full Vitest suite, and the stable
+  frontend coverage gate via `npm run test:coverage:app`.
+- `npm run test:coverage:app` measures browser-side `jsdom` coverage for
+  `app/**/*.js`.
+- `npm run test:coverage` runs full-suite coverage across all Vitest projects,
+  so it reflects repo-wide test health rather than only the frontend gate.
+
 ## Debug Logging
 
 - The codebase uses the `debug` package with namespaces like `beads-ui:*`.

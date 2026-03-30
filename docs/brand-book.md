@@ -134,6 +134,17 @@ Rules:
 - Dialogs: concise, direct, and native-modal in tone.
 - Badges/chips: compact, semantic, readable, and never ornamental filler.
 
+### Table Rows
+
+Views that group rows (e.g., Epics) use `table-layout: fixed` tables with a
+`<colgroup>` for stable column widths. Grouped header rows must use actual
+`<td>` cells matching the `<thead>` column-span structure — never a single
+full-width `<td>` with an internal CSS grid. This lets the browser table engine
+guarantee header-to-row alignment without manual width mirroring. Card
+appearance (border + radius) is achieved by selectively applying borders to
+individual cells in a `border-collapse: separate` table (left border on first
+cell, right on last, top + bottom on all).
+
 ## Interaction and Tone
 
 - Focus styles must be visible in both themes.

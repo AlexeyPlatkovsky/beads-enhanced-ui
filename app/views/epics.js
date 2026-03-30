@@ -208,38 +208,39 @@ export function createEpicsView(
         data-testid=${`epic-group-${id}`}
       >
         <tr
-          class="epic-header"
+          class="epic-header-row"
           data-testid=${`epic-header-${id}`}
           @click=${() => toggle(id)}
           @keydown=${
             /** @param {KeyboardEvent} ev */ (ev) => onHeaderKeydown(ev, id)
           }
-          role="button"
           tabindex="0"
           aria-expanded=${is_open}
         >
           <td
-            class="epic-header__cell epic-header__cell--id"
+            class="epic-header-row__cell epic-header-row__cell--id"
             data-testid=${`epic-header-id-${id}`}
           >
             ${createIssueIdRenderer(id, { class_name: 'mono' })}
           </td>
           <td
-            class="epic-header__cell epic-header__cell--name"
+            class="epic-header-row__cell epic-header-row__cell--name"
             colspan="2"
             data-testid=${`epic-header-name-${id}`}
           >
-            ${is_open
-              ? html`<svg class="epic-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-testid=${`epic-header-chevron-${id}`}><polyline points="6 9 12 15 18 9"></polyline></svg>`
-              : html`<svg class="epic-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-testid=${`epic-header-chevron-${id}`}><polyline points="9 18 15 12 9 6"></polyline></svg>`}
-            <span
-              class="text-truncate"
-              data-testid=${`epic-header-title-${id}`}
-              >${epic.title || '(no title)'}</span
-            >
+            <span class="epic-header-name">
+              ${is_open
+                ? html`<svg class="epic-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-testid=${`epic-header-chevron-${id}`}><polyline points="6 9 12 15 18 9"></polyline></svg>`
+                : html`<svg class="epic-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-testid=${`epic-header-chevron-${id}`}><polyline points="9 18 15 12 9 6"></polyline></svg>`}
+              <span
+                class="text-truncate"
+                data-testid=${`epic-header-title-${id}`}
+                >${epic.title || '(no title)'}</span
+              >
+            </span>
           </td>
           <td
-            class="epic-header__cell epic-header__cell--status"
+            class="epic-header-row__cell epic-header-row__cell--status"
             data-testid=${`epic-header-status-${id}`}
           >
             <span
@@ -249,7 +250,7 @@ export function createEpicsView(
             >
           </td>
           <td
-            class="epic-header__meta"
+            class="epic-header-row__cell epic-header-row__cell--progress"
             colspan="2"
             data-testid=${`epic-header-progress-${id}`}
           >
