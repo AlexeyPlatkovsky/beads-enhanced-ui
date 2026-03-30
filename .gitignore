@@ -11,3 +11,6 @@ app/main.bundle.js.map
 
 .playwright/snapshots
 .playwright/screenshots
+
+# Beads / Dolt files (added by bd init)
+.beads-credential-key
