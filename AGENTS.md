@@ -88,6 +88,14 @@ state shape change.
 - If you cannot run full validation, say what was skipped.
 - For refactoring, do not treat the work as complete unless the protecting test
   is part of the validation story.
+- For non-trivial code work, run the `code-reviewer` subagent from
+  `.claude/agents/` after validation and before handoff.
+- Include the reviewer outcome in handoff: either its findings or an explicit
+  `No findings.` result.
+- If the reviewer surfaces a `High` finding, fix it, re-run validation, and
+  invoke the reviewer again on the updated diff.
+- `Medium` or `Low` findings do not require a second review pass; address them
+  at your discretion and note any you chose to defer.
 
 ## Scope and Communication
 
@@ -96,6 +104,9 @@ state shape change.
   silently.
 - For non-trivial work, summarize the plan before broad edits.
 - State assumptions, risks, and unverified areas plainly.
+- When invoking `code-reviewer`, provide the task summary, changed files, diff,
+  validation commands/results, and any blocked checks or intentional
+  tradeoffs.
 
 ## UI Work
 
@@ -106,6 +117,16 @@ clarifying question. When designing in Pencil, prefer reusable components
 across rows or cards. For frontend code changes, use the
 `frontend-implementation` skill. Full rules for design work live in the
 `designer` skill.
+
+## Agents
+
+Project agents live in `.claude/agents/<name>.md`. Invoke them via the `Agent`
+tool (not the `Skill` tool). Each agent is a focused subagent with its own
+model, tool set, and instructions.
+
+| Agent | When to use |
+| ----- | ----------- |
+| `code-reviewer` | After validation on non-trivial code work, before handoff. See Validation above for the response protocol on findings. |
 
 ## Skill Compliance
 
