@@ -54,4 +54,28 @@ describe('views/nav', () => {
     expect(mount.querySelector('[data-testid="nav-tab-epics"]')).toBeTruthy();
     expect(mount.querySelector('[data-testid="nav-tab-board"]')).toBeTruthy();
   });
+
+  test('marks the active tab from store state and clears on destroy', () => {
+    const { mount, store, router } = setup();
+    store.set({ view: 'board' });
+    const nav = createTopNav(
+      mount,
+      /** @type {any} */ (store),
+      /** @type {any} */ (router)
+    );
+
+    expect(
+      mount.querySelector('[data-testid="nav-tab-board"]')?.classList.contains(
+        'active'
+      )
+    ).toBe(true);
+    expect(
+      mount
+        .querySelector('[data-testid="nav-tab-issues"]')
+        ?.classList.contains('active')
+    ).toBe(false);
+
+    nav.destroy();
+    expect(mount.querySelector('[data-testid="top-nav"]')).toBeNull();
+  });
 });

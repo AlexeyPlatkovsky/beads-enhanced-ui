@@ -84,4 +84,38 @@ describe('views/workspace-picker', () => {
       ).disabled
     ).toBe(false);
   });
+
+  test('renders nothing when no workspaces are available', () => {
+    const mount = document.createElement('div');
+    const store = createStore({
+      workspace: { current: null, available: [] }
+    });
+
+    createWorkspacePicker(mount, store, vi.fn());
+
+    expect(mount.querySelector('[data-testid="workspace-picker"]')).toBeNull();
+  });
+
+  test('does not switch when selecting the current workspace and destroy clears content', () => {
+    const mount = document.createElement('div');
+    const store = createStore({
+      workspace: {
+        current: { path: '/repo/current' },
+        available: [{ path: '/repo/current' }, { path: '/repo/other' }]
+      }
+    });
+    const onWorkspaceChange = vi.fn();
+
+    const picker = createWorkspacePicker(mount, store, onWorkspaceChange);
+    const select = /** @type {HTMLSelectElement} */ (
+      mount.querySelector('[data-testid="workspace-picker-select"]')
+    );
+    select.value = '/repo/current';
+    select.dispatchEvent(new Event('change'));
+
+    expect(onWorkspaceChange).not.toHaveBeenCalled();
+
+    picker.destroy();
+    expect(mount.querySelector('[data-testid="workspace-picker"]')).toBeNull();
+  });
 });

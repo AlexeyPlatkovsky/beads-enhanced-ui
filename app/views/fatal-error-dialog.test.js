@@ -73,4 +73,16 @@ describe('views/fatal-error-dialog', () => {
       value: originalLocation
     });
   });
+
+  test('cancel event prevents default and closes the dialog', () => {
+    const mount = document.createElement('div');
+    const dialog = createFatalErrorDialog(mount);
+    const ev = new Event('cancel', { bubbles: true, cancelable: true });
+
+    dialog.open('Boom', 'Something failed');
+    dialog.getElement().dispatchEvent(ev);
+
+    expect(ev.defaultPrevented).toBe(true);
+    expect(dialog.getElement().hasAttribute('open')).toBe(false);
+  });
 });

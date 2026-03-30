@@ -25,9 +25,24 @@ let write_mock;
 let read_file_mock;
 
 beforeEach(() => {
+  delete process.env.DEBUG;
+  vi.clearAllMocks();
   write_mock = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
   read_file_mock = vi.mocked(readFile);
   read_file_mock.mockResolvedValue(JSON.stringify({ version: '1.2.3' }));
+});
+
+test('main treats DEBUG env as enabling debug mode for handlers', async () => {
+  process.env.DEBUG = 'beads-ui:*';
+
+  await main(['start']);
+
+  expect(commands.handleStart).toHaveBeenCalledWith({
+    open: false,
+    is_debug: true,
+    host: undefined,
+    port: undefined
+  });
 });
 
 describe('parseArgs', () => {
