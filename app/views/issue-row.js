@@ -178,7 +178,7 @@ export function createIssueRowRenderer(options) {
     >
       <td
         role="gridcell"
-        class="mono"
+        class="mono issue-row__id-cell"
         data-testid=${`issue-row-${it.id}-id`}
       >
         ${createIssueIdRenderer(it.id)}

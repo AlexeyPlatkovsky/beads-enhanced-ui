@@ -324,7 +324,7 @@ export function createListView(
                 data-testid="list-table"
               >
                 <colgroup>
-                  <col style="width: 100px" />
+                  <col style="width: 120px" data-testid="list-col-id" />
                   <col style="width: 120px" />
                   <col />
                   <col style="width: 120px" />

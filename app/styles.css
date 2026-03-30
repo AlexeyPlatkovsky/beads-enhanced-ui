@@ -534,6 +534,7 @@ button {
 }
 /* Inline issue ID renderer: looks like plain text */
 button.id-copy {
+  display: inline-block;
   background: transparent;
   color: inherit;
   border: none;
@@ -542,6 +543,10 @@ button.id-copy {
   line-height: inherit;
   font: inherit;
   white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
 }
 button.id-copy:hover {
   text-decoration: underline;
@@ -1253,57 +1258,47 @@ input.inline-edit:focus {
   overflow: hidden;
   background: var(--bg);
 }
-.epic-header {
+.epic-header-row {
   cursor: pointer;
 }
-.epic-header td {
-  box-sizing: border-box;
-  height: 42px;
+.epic-header-row__cell {
+  height: 40px;
   padding: 0 var(--space-6);
-  vertical-align: middle;
   background: var(--panel-bg);
   border-top: 1px solid var(--border-row);
   border-bottom: 1px solid var(--border-row);
+  vertical-align: middle;
+  min-width: 0;
 }
-.epic-header td:first-child {
+.epic-header-row__cell:first-child {
   border-left: 1px solid var(--border-row);
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
 }
-.epic-header td:last-child {
+.epic-header-row__cell:last-child {
   border-right: 1px solid var(--border-row);
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
 }
-.epic-group.is-open .epic-header td:first-child {
-  border-bottom-left-radius: 0;
-}
-.epic-group.is-open .epic-header td:last-child {
-  border-bottom-right-radius: 0;
-}
-.epic-header:hover td,
-.epic-header:focus-visible td {
+.epic-header-row:hover .epic-header-row__cell,
+.epic-header-row:focus-visible .epic-header-row__cell {
   background: color-mix(in srgb, var(--panel-bg) 90%, var(--fg));
 }
-.epic-header progress {
-  width: 140px;
-  height: 8px;
-  accent-color: var(--status-closed-base);
+.epic-group.is-open .epic-header-row__cell:first-child {
+  border-bottom-left-radius: 0;
 }
-.epic-header__cell {
-  min-width: 0;
+.epic-group.is-open .epic-header-row__cell:last-child {
+  border-bottom-right-radius: 0;
 }
-.epic-header__cell--name {
+.epic-header-name {
   display: flex;
   align-items: center;
   gap: var(--space-3);
   min-width: 0;
+  overflow: hidden;
 }
-.epic-header__cell--status {
+.epic-header-row__cell--status {
   white-space: nowrap;
-}
-.epic-header__meta {
-  min-width: 0;
 }
 .epic-chevron {
   flex-shrink: 0;
@@ -1312,7 +1307,7 @@ input.inline-edit:focus {
 .epic-progress {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 8px;
 }
 .epic-progress span {
@@ -1321,10 +1316,13 @@ input.inline-edit:focus {
   text-align: right;
   width: 45px;
   flex: 0 0 45px;
+  padding-right: var(--space-4);
 }
 .epic-progress progress {
-  width: 120px;
-  flex: 0 0 120px;
+  width: 200px;
+  flex: 0 0 200px;
+  height: 8px;
+  accent-color: var(--status-closed-base);
   color-scheme: light dark;
 }
 .epic-progress progress::-webkit-progress-bar {
@@ -1340,7 +1338,7 @@ input.inline-edit:focus {
   border-radius: 4px;
 }
 .epic-children {
-  padding: 0px 6px 0px;
+  padding: 0;
   background: var(--bg);
   border-top: 1px solid var(--border-row);
   border-right: 1px solid var(--border-row);
@@ -1351,7 +1349,7 @@ input.inline-edit:focus {
   overflow-x: auto;
 }
 .epic-children .table {
-  min-width: 950px;
+  min-width: 100%;
 }
 .epic-children .muted {
   display: block;
@@ -1394,7 +1392,7 @@ input.inline-edit:focus {
 }
 .epic-row td {
   box-sizing: border-box;
-  height: 50px;
+  height: 40px;
   padding-top: 0;
   padding-bottom: 0;
   vertical-align: middle;
@@ -2128,6 +2126,11 @@ html[data-theme='dark'] {
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
     'Courier New', monospace;
   font-variant-ligatures: none;
+}
+
+.issue-row__id-cell {
+  width: 120px;
+  max-width: 600px;
 }
 
 @media (max-width: 1100px) {
