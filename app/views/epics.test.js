@@ -100,7 +100,7 @@ describe('views/epics', () => {
       ]
     });
     await view.load();
-    const header = mount.querySelector('.epic-header');
+    const header = mount.querySelector('.epic-header-row');
     expect(header).not.toBeNull();
     // After expansion, only non-closed child should be present
     const rows = mount.querySelectorAll('tr.epic-row');
@@ -536,7 +536,7 @@ describe('views/epics', () => {
     );
     expect(manual).toBeDefined();
     manual
-      ?.querySelector('.epic-header')
+      ?.querySelector('.epic-header-row')
       ?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 
     // Immediately after click, expect Loading…
@@ -739,31 +739,32 @@ describe('views/epics', () => {
     ).map((cell) => cell.textContent?.replace(/\s+/g, ' ').trim());
     expect(sort_headers).toEqual(['Id', 'Name', 'Status', 'Progress']);
 
-    const header_cells = mount.querySelectorAll('.epic-header > *');
-    expect(header_cells).toHaveLength(4);
-    expect(
-      mount
-        .querySelector('[data-testid="epics-header-name"]')
-        ?.getAttribute('colspan')
-    ).toBe('2');
-    expect(
-      mount
-        .querySelector('[data-testid="epics-header-progress"]')
-        ?.getAttribute('colspan')
-    ).toBe('2');
+    // Epic header row uses 4 actual <td> cells matching the <thead> column spans
+    const header_row = mount.querySelector('.epic-header-row');
+    const header_row_cells = Array.from(
+      header_row?.querySelectorAll(':scope > td') ?? []
+    );
+    expect(header_row_cells).toHaveLength(4);
 
+    // Name cell spans 2 table columns (type + title)
+    const name_cell = mount.querySelector('.epic-header-row__cell--name');
+    expect(name_cell?.getAttribute('colspan')).toBe('2');
+
+    // Status badge is NOT inside the name cell
     const name_badge = mount.querySelector(
-      '.epic-header__cell--name .status-badge'
+      '.epic-header-row__cell--name .status-badge'
     );
     expect(name_badge).toBeNull();
 
+    // Status badge is in its own cell
     const status_cell = /** @type {HTMLElement|null} */ (
-      mount.querySelector('.epic-header__cell--status .status-badge')
+      mount.querySelector('.epic-header-row__cell--status .status-badge')
     );
     expect(status_cell?.textContent?.trim()).toBe('In progress');
 
+    // Progress count is in the progress cell
     const progress_text = /** @type {HTMLElement|null} */ (
-      mount.querySelector('.epic-header__meta .mono')
+      mount.querySelector('.epic-header-row__cell--progress .mono')
     );
     expect(progress_text?.textContent?.trim()).toBe('0/1');
   });
