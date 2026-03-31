@@ -12,6 +12,7 @@ function setup() {
     /** @param {any} v */
     set(v) {
       this.state = { ...this.state, ...v };
+      this._fn(this.state);
     },
     /** @param {(s: any) => void} fn */
     subscribe(fn) {
@@ -53,5 +54,29 @@ describe('views/nav', () => {
     expect(mount.querySelector('[data-testid="nav-tab-issues"]')).toBeTruthy();
     expect(mount.querySelector('[data-testid="nav-tab-epics"]')).toBeTruthy();
     expect(mount.querySelector('[data-testid="nav-tab-board"]')).toBeTruthy();
+  });
+
+  test('marks the active tab from store state and clears on destroy', () => {
+    const { mount, store, router } = setup();
+    const nav = createTopNav(
+      mount,
+      /** @type {any} */ (store),
+      /** @type {any} */ (router)
+    );
+    store.set({ view: 'board' });
+
+    expect(
+      mount.querySelector('[data-testid="nav-tab-board"]')?.classList.contains(
+        'active'
+      )
+    ).toBe(true);
+    expect(
+      mount
+        .querySelector('[data-testid="nav-tab-issues"]')
+        ?.classList.contains('active')
+    ).toBe(false);
+
+    nav.destroy();
+    expect(mount.querySelector('[data-testid="top-nav"]')).toBeNull();
   });
 });

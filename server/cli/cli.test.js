@@ -25,9 +25,24 @@ let write_mock;
 let read_file_mock;
 
 beforeEach(() => {
+  delete process.env.DEBUG;
+  vi.clearAllMocks();
   write_mock = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
   read_file_mock = vi.mocked(readFile);
   read_file_mock.mockResolvedValue(JSON.stringify({ version: '1.2.3' }));
+});
+
+test('main treats DEBUG env as enabling debug mode for handlers', async () => {
+  process.env.DEBUG = 'beads-ui:*';
+
+  await main(['start']);
+
+  expect(commands.handleStart).toHaveBeenCalledWith({
+    open: false,
+    is_debug: true,
+    host: undefined,
+    port: undefined
+  });
 });
 
 describe('parseArgs', () => {
@@ -88,9 +103,11 @@ describe('parseArgs', () => {
 describe('main', () => {
   test('prints usage and exits 0 on --help', async () => {
     const code = await main(['--help']);
+    const output = write_mock.mock.calls.map((c) => String(c[0])).join('');
 
     expect(code).toBe(0);
-    expect(write_mock).toHaveBeenCalled();
+    expect(output).toContain('Usage:');
+    expect(output).toContain('--open');
   });
 
   test('prints version and exits 0 on --version', async () => {

@@ -9,6 +9,8 @@ app/main.bundle.js.map
 .dolt/
 *.db
 
+coverage/
+.claude/settings.local.json
 .playwright/snapshots
 .playwright/screenshots
 

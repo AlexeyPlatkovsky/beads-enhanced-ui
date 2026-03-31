@@ -30,18 +30,19 @@ afterEach(() => {
       // ignore cleanup errors
     }
   }
+  vi.restoreAllMocks();
 });
 
 describe('resolveDbPath', () => {
   test('uses explicit_db when provided', () => {
     const res = resolveDbPath({ cwd: '/x', explicit_db: './my.db', env: {} });
-    expect(res.path.endsWith('/x/my.db')).toBe(true);
+    expect(path.normalize(res.path)).toBe(path.normalize(path.resolve('/x', 'my.db')));
     expect(res.source).toBe('flag');
   });
 
   test('uses BEADS_DB from env when set', () => {
     const res = resolveDbPath({ cwd: '/x', env: { BEADS_DB: '/abs/env.db' } });
-    expect(res.path).toBe('/abs/env.db');
+    expect(path.normalize(res.path)).toBe(path.normalize('/abs/env.db'));
     expect(res.source).toBe('env');
   });
 

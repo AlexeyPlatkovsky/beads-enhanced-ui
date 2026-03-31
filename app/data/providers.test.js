@@ -67,5 +67,43 @@ describe('data/providers', () => {
     expect(types).toContain('update-assignee');
   });
 
+  test('updateIssue covers remaining editable text fields and returns last result', async () => {
+    const rec = makeTransportRecorder();
+    const data = createDataLayer((t, p) => rec.send(t, p));
+
+    const result = await data.updateIssue({
+      id: 'UI-2',
+      notes: 'Notes',
+      design: 'Design',
+      acceptance: 'Acceptance'
+    });
+
+    expect(rec.calls).toEqual([
+      {
+        type: 'edit-text',
+        payload: { id: 'UI-2', field: 'acceptance', value: 'Acceptance' }
+      },
+      {
+        type: 'edit-text',
+        payload: { id: 'UI-2', field: 'notes', value: 'Notes' }
+      },
+      {
+        type: 'edit-text',
+        payload: { id: 'UI-2', field: 'design', value: 'Design' }
+      }
+    ]);
+    expect(result).toEqual({ id: 'UI-2' });
+  });
+
+  test('updateIssue returns null when no supported fields are provided', async () => {
+    const rec = makeTransportRecorder();
+    const data = createDataLayer((t, p) => rec.send(t, p));
+
+    const result = await data.updateIssue({ id: 'UI-3' });
+
+    expect(rec.calls).toEqual([]);
+    expect(result).toBeNull();
+  });
+
   // removed: getIssue (read RPC)
 });
