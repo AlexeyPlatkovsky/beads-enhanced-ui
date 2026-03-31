@@ -8,6 +8,22 @@ on:
       - opened
       - synchronize
       - reopened
+    paths:
+      - '.github/workflows/ci.yml'
+      - 'app/**'
+      - 'server/**'
+      - 'bin/**'
+      - 'scripts/**'
+      - 'test/**'
+      - 'types/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - 'vitest.config.mjs'
+      - 'eslint.config.js'
+      - 'prettier.config.js'
+      - '.prettierignore'
+      - '.editorconfig'
 
 jobs:
   smoke:
