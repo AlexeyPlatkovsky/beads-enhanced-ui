@@ -1,4 +1,18 @@
 {
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash(git push:*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"additionalContext\":\"PRE-PUSH CHECKLIST (AGENTS.md):\\n1. CODE REVIEW: Have you run the code-reviewer subagent on this diff?\\n2. BRANCH: Did you explicitly confirm the branch with the user before starting non-trivial work?\\nIf either answer is no, stop the push, complete the missing step, then retry.\"}}'",
+            "statusMessage": "Checking pre-push checklist..."
+          }
+        ]
+      }
+    ]
+  },
   "permissions": {
     "defaultMode": "acceptEdits",
     "allow": [
