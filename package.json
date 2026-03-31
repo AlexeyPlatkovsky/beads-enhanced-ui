@@ -25,6 +25,8 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:coverage:app": "vitest run --project=jsdom --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "tsc": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint --ext .js .",
     "prettier:write": "prettier --write .",
@@ -45,6 +47,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@playwright/test": "^1.58.2",
     "@studio/changes": "^3.0.0",
     "@trivago/prettier-plugin-sort-imports": "^6.0.0",
     "@types/debug": "^4.1.12",
