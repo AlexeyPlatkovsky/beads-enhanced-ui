@@ -212,7 +212,9 @@ describe('views/list', () => {
     await view.load();
 
     const id_col = mount.querySelector('col[data-testid="list-col-id"]');
-    expect(id_col?.getAttribute('style')).toContain('width: 120px');
+    expect(id_col?.getAttribute('style')).toContain(
+      'width: clamp(100px, 18vw, 200px)'
+    );
 
     const id_cell = /** @type {HTMLElement|null} */ (
       mount.querySelector('[data-testid="issue-row-beads-enhanced-ui-1-id"]')
@@ -415,11 +417,8 @@ describe('views/list', () => {
       issueStores
     );
     await view.load();
-    const statusSelect = /** @type {HTMLSelectElement} */ (
-      mount.querySelector('select')
-    );
-    statusSelect.value = 'ready';
-    statusSelect.dispatchEvent(new Event('change'));
+    toggleFilter(mount, 0, 'Ready');
+    expect(isFilterChecked(mount, 0, 'Ready')).toBe(true);
     // switch subscription key and apply ready membership
     issueStores.getStore('tab:issues').applyPush({
       type: 'snapshot',
@@ -554,11 +553,8 @@ describe('views/list', () => {
     await view.load();
     expect(mount.querySelectorAll('tr.issue-row').length).toBe(2);
 
-    const select = /** @type {HTMLSelectElement} */ (
-      mount.querySelector('select')
-    );
-    select.value = 'ready';
-    select.dispatchEvent(new Event('change'));
+    toggleFilter(mount, 0, 'Ready');
+    expect(isFilterChecked(mount, 0, 'Ready')).toBe(true);
     issueStores.getStore('tab:issues').applyPush({
       type: 'snapshot',
       id: 'tab:issues',
@@ -601,13 +597,9 @@ describe('views/list', () => {
     await view.load();
     expect(mount.querySelectorAll('tr.issue-row').length).toBe(2);
 
-    const select = /** @type {HTMLSelectElement} */ (
-      mount.querySelector('select')
-    );
-
     // Switch to ready (subscription now maps to ready-issues)
-    select.value = 'ready';
-    select.dispatchEvent(new Event('change'));
+    toggleFilter(mount, 0, 'Ready');
+    expect(isFilterChecked(mount, 0, 'Ready')).toBe(true);
     issueStores.getStore('tab:issues').applyPush({
       type: 'snapshot',
       id: 'tab:issues',
@@ -618,8 +610,8 @@ describe('views/list', () => {
     expect(mount.querySelectorAll('tr.issue-row').length).toBe(1);
 
     // Switch back to all; view should compose from all-issues membership
-    select.value = 'all';
-    select.dispatchEvent(new Event('change'));
+    toggleFilter(mount, 0, 'Ready');
+    expect(isFilterChecked(mount, 0, 'Ready')).toBe(false);
     issueStores.getStore('tab:issues').applyPush({
       type: 'snapshot',
       id: 'tab:issues',

@@ -3,9 +3,13 @@ import { watchDb } from './watcher.js';
 
 /** @type {{ dir: string, cb: (event: string, filename?: string) => void, w: { close: () => void } }[]} */
 const watchers = [];
+let watchError = null;
 
 vi.mock('node:fs', () => {
   const watch = vi.fn((dir, _opts, cb) => {
+    if (watchError) {
+      throw watchError;
+    }
     // Minimal event emitter interface for FSWatcher
     const handlers = /** @type {{ close: Array<() => void> }} */ ({
       close: []
@@ -21,6 +25,7 @@ vi.mock('node:fs', () => {
 
 beforeEach(() => {
   watchers.length = 0;
+  watchError = null;
   vi.useFakeTimers();
   vi.spyOn(console, 'warn').mockImplementation(() => {});
 });
@@ -116,5 +121,18 @@ describe('watchDb', () => {
     expect(calls.length).toBe(2);
 
     handle.close();
+  });
+
+  test('returns a closable handle when fs.watch throws', () => {
+    watchError = new Error('watch unavailable');
+    const calls = [];
+
+    const handle = watchDb('/repo', () => calls.push(null), {
+      explicit_db: '/repo/.beads/ui.db'
+    });
+
+    expect(watchers.length).toBe(0);
+    expect(calls).toEqual([]);
+    expect(() => handle.close()).not.toThrow();
   });
 });

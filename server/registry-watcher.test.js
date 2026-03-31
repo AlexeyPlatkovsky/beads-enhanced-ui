@@ -130,4 +130,17 @@ describe('server/registry-watcher', () => {
 
     expect(watchers).toHaveLength(0);
   });
+
+  test('treats malformed registry content as an empty registry', async () => {
+    registryContent = '{not-json';
+    const mod = await import('./registry-watcher.js');
+    const onChange = vi.fn();
+
+    mod.watchRegistry(onChange, { debounce_ms: 25 });
+    watchers[0].cb('change', 'registry.json');
+    vi.advanceTimersByTime(25);
+
+    expect(mod.readRegistry()).toEqual([]);
+    expect(onChange).toHaveBeenCalledWith([]);
+  });
 });

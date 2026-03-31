@@ -139,6 +139,39 @@ describe('app/ws client', () => {
     client.close();
   });
 
+  test('ignores malformed envelopes until a valid reply arrives', async () => {
+    const sockets = setupFakeWebSocket();
+    const client = createWsClient();
+    sockets[0].openNow();
+
+    const pending = client.send('list-issues', { filters: {} });
+    const sent = JSON.parse(sockets[0].sent[0]);
+
+    sockets[0]._dispatch('message', { data: '{"type":"list-issues"}' });
+    sockets[0]._dispatch('message', { data: 'not-json' });
+    sockets[0].emitMessage({
+      id: sent.id,
+      ok: true,
+      type: 'list-issues',
+      payload: [{ id: 'UI-1' }]
+    });
+
+    await expect(pending).resolves.toEqual([{ id: 'UI-1' }]);
+  });
+
+  test('rejects send when the underlying transport throws', async () => {
+    const sockets = setupFakeWebSocket();
+    const client = createWsClient();
+    sockets[0].openNow();
+    sockets[0].send = () => {
+      throw new Error('socket send failed');
+    };
+
+    await expect(client.send('list-issues', { filters: {} })).rejects.toThrow(
+      'ws send failed'
+    );
+  });
+
   test('dispatches server events', async () => {
     const sockets = setupFakeWebSocket();
     const client = createWsClient();

@@ -1194,7 +1194,7 @@ input.inline-edit:focus {
   table-layout: fixed;
 }
 .epics-table__col--id {
-  width: 100px;
+  width: clamp(100px, 18vw, 200px);
 }
 .epics-table__col--type {
   width: 120px;
@@ -2129,8 +2129,17 @@ html[data-theme='dark'] {
 }
 
 .issue-row__id-cell {
-  width: 120px;
-  max-width: 600px;
+  width: clamp(100px, 18vw, 200px);
+  min-width: 100px;
+  max-width: 200px;
+}
+.issue-row__id-cell .id-copy {
+  display: block;
+  max-width: 100%;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 1100px) {

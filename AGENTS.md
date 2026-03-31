@@ -49,6 +49,7 @@ updates, Vitest for tests.
 - Use matched local skills as binding workflow.
 - Use the `validate` skill before claiming non-trivial work complete.
 - For non-trivial code work, run the `code-reviewer` agent after validation and include its outcome in handoff.
+- If subagent invocation is unavailable or disallowed by the current runtime policy, read `.claude/agents/code-reviewer.md`, perform the same review workflow directly, and state in handoff that the review was done manually due to tool-policy limits.
 
 ## Trivial vs Non-Trivial Tasks
 
