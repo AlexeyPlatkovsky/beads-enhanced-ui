@@ -15,10 +15,10 @@ export default defineConfig({
         'server/ws.js'
       ],
       thresholds: {
-        lines: 75,
-        functions: 75,
+        lines: 85,
+        functions: 85,
         branches: 75,
-        statements: 75
+        statements: 85
       }
     },
     projects: [

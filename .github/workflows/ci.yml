@@ -66,7 +66,7 @@ jobs:
             const t = summary.total;
             const fmt = (n) => n.toFixed(1) + '%';
             const icon = (pct, threshold) => pct >= threshold ? '✅' : '❌';
-            const thresholds = { lines: 65, functions: 65, branches: 55, statements: 65 };
+            const thresholds = { lines: 85, functions: 85, branches: 75, statements: 85 };
 
             const body = [
               '<!-- coverage-report -->',
