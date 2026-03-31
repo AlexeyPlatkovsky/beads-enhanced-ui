@@ -12,6 +12,7 @@
       "Bash(npm:*)",
       "Bash(npx:*)",
       "Bash(playwright-cli:*)",
+      "Bash(python:*)",
       "Bash(rg:*)",
       "Bash(sqlite3:*)",
       "Skill(playwright-cli)",
@@ -19,6 +20,7 @@
       "Glob",
       "Grep",
       "Read",
+      "Read(:*)",
       "WebFetch",
       "Write"
     ],
