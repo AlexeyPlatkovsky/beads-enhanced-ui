@@ -30,3 +30,8 @@ coverage/
 .beads/dolt-server.activity
 .beads/backup/
 .beads/dolt/
+
+# Playwright
+.playwright/report/
+playwright-report/
+test-results/
