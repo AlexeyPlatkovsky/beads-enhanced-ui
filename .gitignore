@@ -10,7 +10,7 @@ app/main.bundle.js.map
 *.db
 
 coverage/
-
+.claude/settings.local.json
 .playwright/snapshots
 .playwright/screenshots
 

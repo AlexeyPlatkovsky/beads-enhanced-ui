@@ -1,43 +1,43 @@
-# AGENTS.md — Beads Enhanced UI
+# AGENTS.md -- Beads Enhanced UI
 
 > Read this before writing any code. Keep it short; details live in `docs/`.
 
-**Scope of this file:** project-wide policy only — what the project is,
-architecture invariants, trivial/non-trivial classification, validation rules,
-and skill compliance. Procedure for a specific task type belongs in the matching
-skill, not here. If a topic already has a skill, keep the details there.
-Target: ≤150 lines.
+**Scope of this file:** project-wide policy only -- what the project is,
+architecture invariants, trivial/non-trivial classification, and skill
+compliance. Procedure for a specific task type belongs in the matching skill,
+not here. If a topic already has a skill, keep the details there.
+Target: <=150 lines.
 
 ---
 
 ## What this project is
 
-`beads-enhanced-ui` is the local web UI for the `bd` CLI ([Beads](https://github.com/steveyegge/beads)
-issue tracker). Run with `bdui start`. It provides:
+`beads-enhanced-ui` is the local web UI for the `bd` CLI
+([Beads](https://github.com/steveyegge/beads) issue tracker). Run with
+`bdui start`. It provides:
 
-- **Issues view** — filterable list, inline editing
-- **Epics view** — epic progress, expandable rows
-- **Board view** — Blocked / Ready / In Progress / Closed columns
-- **Detail view** — full issue detail, notes, dependencies, design
-- **Multi-workspace** — switch projects via dropdown
+- **Issues view** -- filterable list, inline editing
+- **Epics view** -- epic progress, expandable rows
+- **Board view** -- Blocked / Ready / In Progress / Closed columns
+- **Detail view** -- full issue detail, notes, dependencies, design
+- **Multi-workspace** -- switch projects via dropdown
 
-Tech: Node.js / Express server, vanilla-JS browser frontend, WebSocket for
-live updates, Vitest for tests.
+Tech: Node.js / Express server, vanilla-JS browser frontend, WebSocket for live
+updates, Vitest for tests.
 
 ## Where things live
 
-- `server/` — Express HTTP + WebSocket server, Beads CLI bridge (`bd.js`), DB watcher, workspace registry
-- `app/` — Browser-side entry (`main.js`), state (`state.js`), router (`router.js`), WebSocket client (`ws.js`), styles (`styles.css`)
-- `app/views/` — View modules: `list.js`, `epics.js`, `board.js`, `detail.js`,
-  `nav.js`, dialogs
-- `app/data/` — Data utilities
-- `app/utils/` — Shared utilities
-- `types/` — TypeScript interface/type definitions (no runtime code)
-- `test/` — Test infrastructure and helpers
-- `docs/` — Project documentation
-- `bin/` — CLI entry points (`bdui`)
-- `scripts/` — Build and tooling scripts
-- `.pencil/` — Pencil design files (`.pen`); access via Pencil MCP only
+- `server/` -- Express HTTP + WebSocket server, Beads CLI bridge (`bd.js`), DB watcher, workspace registry
+- `app/` -- Browser-side entry (`main.js`), state (`state.js`), router (`router.js`), WebSocket client (`ws.js`), styles (`styles.css`)
+- `app/views/` -- View modules: `list.js`, `epics.js`, `board.js`, `detail.js`, `nav.js`, dialogs
+- `app/data/` -- Data utilities
+- `app/utils/` -- Shared utilities
+- `types/` -- TypeScript interface/type definitions (no runtime code)
+- `test/` -- Test infrastructure and helpers
+- `docs/` -- Project documentation
+- `bin/` -- CLI entry points (`bdui`)
+- `scripts/` -- Build and tooling scripts
+- `.pencil/` -- Pencil design files (`.pen`); access via Pencil MCP only
 
 ## Core Rules
 
@@ -45,11 +45,10 @@ live updates, Vitest for tests.
 - Prefer small, local changes over speculative refactors.
 - Preserve existing behavior unless the task explicitly requires a change.
 - Do not add dependencies unless current dependencies are insufficient.
-- Update docs when public usage, extension points, or workflow expectations
-  change.
-- For framework refactoring, use a TDD approach: add or adjust the protecting
-  test first, confirm it fails for the expected reason, then change production
-  code and re-run the smallest relevant checks.
+- Update docs when public usage, extension points, or workflow expectations change.
+- Use matched local skills as binding workflow.
+- Use the `validate` skill before claiming non-trivial work complete.
+- For non-trivial code work, run the `code-reviewer` agent after validation and include its outcome in handoff.
 
 ## Trivial vs Non-Trivial Tasks
 
@@ -74,92 +73,37 @@ Treat as non-trivial if any are true:
 - Changes public methods, config keys, protocol schema, or CLI signatures
 - Touches multiple packages or both code and docs/tests
 - Needs new tests, design tradeoffs, or migration guidance
-- May affect the server/client protocol, WebSocket message schema, or
-  subscription model
+- May affect the server/client protocol, WebSocket message schema, or subscription model
 - Changes the URL routing, view state shape, or cross-view coordination
 
 Examples: new view, protocol message type, workspace registry change, breaking
 state shape change.
 
-## Pre-Task Protocol
-
-Before writing any code or editing any file, run this sequence for non-trivial
-tasks:
-
-1. **Classify** — trivial or non-trivial? (see below)
-2. **Identify skills** — list every skill whose trigger condition matches this
-   task. Declare them to the user.
-3. **Branch** — use `work-with-git` to check the current branch and create a
-   new one if needed. Do not skip this step or assume the current branch is
-   correct.
-4. **Load skills** — execute each matched skill in order before touching files.
-5. **Implement** — make changes, following each skill's workflow.
-6. **Validate** — use the `validate` skill to confirm the result.
-
-Skipping any step requires stating the reason before proceeding.
-
-## Validation
-
-- Run the smallest meaningful verification first.
-- For non-trivial work, run relevant checks before claiming completion.
-- If you cannot run full validation, say what was skipped.
-- For refactoring, do not treat the work as complete unless the protecting test
-  is part of the validation story.
-- For non-trivial code work, run the `code-reviewer` subagent from
-  `.claude/agents/` after validation and before handoff.
-- Include the reviewer outcome in handoff: either its findings or an explicit
-  `No findings.` result.
-- If the reviewer surfaces a `High` finding, fix it, re-run validation, and
-  invoke the reviewer again on the updated diff.
-- `Medium` or `Low` findings do not require a second review pass; address them
-  at your discretion and note any you chose to defer.
-
 ## Scope and Communication
 
 - Do not mix unrelated cleanup into task work unless asked.
-- If you see a broader issue, note it separately instead of expanding scope
-  silently.
+- If you see a broader issue, note it separately instead of expanding scope silently.
 - For non-trivial work, summarize the plan before broad edits.
-- For non-trivial code tasks, use `work-with-git` and create a fresh branch
-  before making any edits. Proceed on the current branch only if the user
-  explicitly declines.
 - State assumptions, risks, and unverified areas plainly.
-- When invoking `code-reviewer`, provide the task summary, changed files, diff,
-  validation commands/results, and any blocked checks or intentional
-  tradeoffs.
-
-## UI Work
-
-UI tasks are either design-only (Pencil, no code) or implementation (code only
-after explicit approval). Never mix them silently. If ambiguous, ask one
-clarifying question. When designing in Pencil, prefer reusable components
-(`reusable: true` + `ref`) over duplicated structure for any group that repeats
-across rows or cards. For frontend code changes, use the
-`frontend-implementation` skill. Full rules for design work live in the
-`designer` skill.
+- Follow `work-with-git` for branch and push decisions.
 
 ## Agents
 
 Project agents live in `.claude/agents/<name>.md`. Invoke them via the `Agent`
-tool (not the `Skill` tool). Each agent is a focused subagent with its own
-model, tool set, and instructions.
+tool. Each agent is a focused subagent with its own model, tool set, and
+instructions.
 
 | Agent | When to use |
 | ----- | ----------- |
-| `code-reviewer` | After validation on non-trivial code work, before handoff. See Validation above for the response protocol on findings. |
+| `code-reviewer` | After validation on non-trivial code work, before handoff. |
 
 ## Skill Compliance
 
-- If a task matches a local skill, use that skill and follow its workflow. Treat
-  matched skills as binding procedure, not optional reference material.
-- Do not replace a required skill stage, tool, or discovery method with a
-  different one unless the prescribed option is unavailable or blocked.
-- If you must deviate from a matched skill, state the blocker before proceeding
-  and get user approval for the fallback.
-- Before substantial work, declare the triggered skills, why they apply, the
-  required stages/tools you will execute, and any stage you expect to skip.
-- Before considering the task complete, state which selected skill stages were
-  completed, skipped, or blocked.
+- If a task matches a local skill, use that skill and follow its workflow. Treat matched skills as binding procedure, not optional reference material.
+- Do not replace a required skill stage, tool, or discovery method with a different one unless the prescribed option is unavailable or blocked.
+- If you must deviate from a matched skill, state the blocker before proceeding and get user approval for the fallback.
+- Before substantial work, declare the triggered skills.
+- Before considering the task complete, state which selected skill stages were completed, skipped, or blocked.
 
 ## Skills
 
@@ -177,70 +121,19 @@ Compliance above.
 | `refactor-code`  | Non-trivial refactors affecting shared server, client, WebSocket, view, or protocol behavior                                                                                                      |
 | `validate`       | Select and run the right verification steps based on what changed. Use after making code, docs, config, or skill changes to confirm the result is coherent.                                       |
 | `work-with-docs` | Creating and maintaining plans, reviews, architecture docs, ADRs, and protocol docs                                                                                                               |
-| `work-with-git`  | Branch strategy and git safety rules — creating branches, preparing commits, structuring git work                                                                                                 |
+| `work-with-git`  | Branch strategy and git safety rules -- creating branches, preparing commits, structuring git work                                                                                                |
 | `write-test`     | Writing and placing unit or integration tests for the server, client, view, or protocol layers                                                                                                    |
 
 ## What NOT to do
 
-- Never read or write `.pen` files with `Read`, `Write`, `Grep`, `Glob`, or
-  shell commands — use Pencil MCP tools exclusively.
-- Never mix design work and implementation in the same task without explicit
-  approval (see UI Work).
+- Never read or write `.pen` files with `Read`, `Write`, `Grep`, `Glob`, or shell commands -- use Pencil MCP tools exclusively.
+- Never mix design work and implementation in the same task without explicit approval; use `designer` for Pencil work and `frontend-implementation` for UI code.
 - Never update `CHANGES.md`.
 - Never add dependencies without checking that existing ones are insufficient.
-- Never invent Pencil node IDs — always derive them from tool output.
+- Never invent Pencil node IDs -- always derive them from tool output.
 
 ## Session End
 
-If the task used Beads, sync and close the relevant issues before handoff. For
-non-trivial code tasks, recommend branch creation up front and use the
-`work-with-git` skill if the user approves git workflow changes. If the user
-explicitly asked for commit/push work or approved it, follow the `work-with-git`
-Session End procedure. Do not assume every task requires Beads.
-
-<!-- BEGIN BEADS INTEGRATION v:1 profile:minimal hash:ca08a54f -->
-## Beads Issue Tracker
-
-This project uses **bd (beads)** for issue tracking. Run `bd prime` to see full workflow context and commands.
-
-### Quick Reference
-
-```bash
-bd ready              # Find available work
-bd show <id>          # View issue details
-bd update <id> --claim  # Claim work
-bd close <id>         # Complete work
-```
-
-### Rules
-
-- Use `bd` for ALL task tracking — do NOT use TodoWrite, TaskCreate, or markdown TODO lists
-- Run `bd prime` for detailed command reference and session close protocol
-- Use `bd remember` for persistent knowledge — do NOT use MEMORY.md files
-
-## Session Completion
-
-**When ending a work session**, you MUST complete ALL steps below. Work is NOT complete until `git push` succeeds.
-
-**MANDATORY WORKFLOW:**
-
-1. **File issues for remaining work** - Create issues for anything that needs follow-up
-2. **Run quality gates** (if code changed) - Tests, linters, builds
-3. **Update issue status** - Close finished work, update in-progress items
-4. **PUSH TO REMOTE** - This is MANDATORY:
-   ```bash
-   git pull --rebase
-   bd dolt push
-   git push
-   git status  # MUST show "up to date with origin"
-   ```
-5. **Clean up** - Clear stashes, prune remote branches
-6. **Verify** - All changes committed AND pushed
-7. **Hand off** - Provide context for next session
-
-**CRITICAL RULES:**
-- Work is NOT complete until `git push` succeeds
-- NEVER stop before pushing - that leaves work stranded locally
-- NEVER say "ready to push when you are" - YOU must push
-- If push fails, resolve and retry until it succeeds
-<!-- END BEADS INTEGRATION -->
+If the task used Beads, follow `beads-work` for tracking and session-close
+rules. If the task involved git workflow, follow `work-with-git`. Do not assume
+every task requires Beads or git actions.

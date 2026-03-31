@@ -12,7 +12,12 @@
       "Bash(dolt version:*)",
       "Read(//c/Users/alexe/.beads//**)",
       "Bash(curl -fsSL -o /tmp/dolt.zip \"https://github.com/dolthub/dolt/releases/latest/download/dolt-windows-amd64.zip\")",
-      "Bash(unzip -o dolt.zip -d dolt_extracted)"
+      "Bash(unzip -o dolt.zip -d dolt_extracted)",
+      "Bash(for skill:*)",
+      "Bash(do)",
+      "Bash(echo \"=== $skill ===\")",
+      "Read(//d/coding/beads-enhanced-ui/.claude/skills/$skill/**)",
+      "Bash(done)"
     ]
   }
 }
