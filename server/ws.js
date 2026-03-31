@@ -1323,6 +1323,21 @@ export async function handleMessage(ws, data) {
       // Clear existing registry entries
       registry.clear();
 
+      // Broadcast workspace change to other connected clients so they can
+      // refresh local workspace state and resubscribe. The initiating socket
+      // already has the authoritative reply for this request.
+      const event = JSON.stringify({
+        id: `evt-${Date.now()}`,
+        ok: true,
+        type: /** @type {MessageType} */ ('workspace-changed'),
+        payload: CURRENT_WORKSPACE
+      });
+      for (const client of CURRENT_WSS?.clients || []) {
+        if (client !== ws && client.readyState === client.OPEN) {
+          client.send(event);
+        }
+      }
+
       // Schedule refresh of all active list subscriptions
       scheduleListRefresh();
     }

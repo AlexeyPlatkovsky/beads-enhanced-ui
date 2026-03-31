@@ -112,12 +112,30 @@ export function createWsClient(options = {}) {
     }, delay);
   }
 
+  /**
+   * Reject and remove a pending request when transport delivery fails.
+   *
+   * @param {string} id
+   * @param {unknown} error
+   */
+  function failPending(id, error) {
+    const entry = pending.get(id);
+    if (!entry) {
+      return;
+    }
+    pending.delete(id);
+    entry.reject(error);
+  }
+
   /** @param {ReturnType<typeof makeRequest>} req */
   function sendRaw(req) {
     try {
       ws?.send(JSON.stringify(req));
+      return true;
     } catch (err) {
       log('ws send failed', err);
+      failPending(req.id, new Error('ws send failed'));
+      return false;
     }
   }
 

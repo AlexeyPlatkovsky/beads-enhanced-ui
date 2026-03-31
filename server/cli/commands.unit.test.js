@@ -158,6 +158,26 @@ describe('handleStart (unit)', () => {
       }
     );
   });
+
+  test('returns 1 when early-exit registration retries all fail', async () => {
+    vi.useFakeTimers();
+    const register_workspace_with_server =
+      /** @type {import('vitest').Mock} */ (open.registerWorkspaceWithServer);
+    register_workspace_with_server.mockReset();
+    register_workspace_with_server.mockResolvedValue(false);
+
+    vi.spyOn(daemon, 'readPidFile').mockReturnValue(null);
+    vi.spyOn(daemon, 'startDaemon').mockReturnValue({ pid: 7777 });
+    vi.spyOn(daemon, 'isProcessRunning').mockImplementation((pid) => pid === 1);
+    vi.spyOn(daemon, 'removePidFile').mockImplementation(() => {});
+
+    const startPromise = handleStart({ open: false });
+    await vi.advanceTimersByTimeAsync(1000);
+
+    await expect(startPromise).resolves.toBe(1);
+    expect(register_workspace_with_server).toHaveBeenCalledTimes(5);
+    vi.useRealTimers();
+  });
 });
 
 describe('handleStop (unit)', () => {
