@@ -103,9 +103,13 @@ test.describe('connection states', () => {
     const errors = [];
     page.on('pageerror', (err) => errors.push(err.message));
     await page.goto('/');
-    await page.waitForSelector('#app', { timeout: 10_000 });
-    // Give the app a moment to fully initialize
-    await page.waitForTimeout(1_000);
+    // Wait for WebSocket handshake to complete — this is the meaningful
+    // ready signal, not an arbitrary sleep.
+    await page.waitForSelector('[data-testid="workspace-picker"]', { timeout: 10_000 });
+    await page.waitForSelector('[data-testid="workspace-picker-loading"]', {
+      state: 'hidden',
+      timeout: 10_000
+    });
     expect(errors).toHaveLength(0);
   });
 });

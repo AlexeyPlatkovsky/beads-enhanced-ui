@@ -106,10 +106,9 @@ test.describe('list view: inline edits', () => {
     const searchInput = page.locator('[data-testid="list-search-input"]');
     // Type a query that should match nothing
     await searchInput.fill('xyzzy-no-match-12345');
-    // List should show empty state or zero rows
-    await expect(
-      page.locator('[data-testid="list-table"], [data-testid="list-empty"]')
-    ).toBeVisible();
+    // List must show empty state — not the issue table
+    await expect(page.locator('[data-testid="list-empty"]')).toBeVisible();
+    await expect(page.locator('[data-testid="list-table"]')).not.toBeVisible();
     // Clear search
     await searchInput.clear();
   });
@@ -145,7 +144,8 @@ test.describe('epics view', () => {
     await page.locator('[data-testid="nav-tab-epics"]').click();
     const tableVisible = await page
       .locator('[data-testid="epics-table"]')
-      .isVisible({ timeout: 5_000 })
+      .waitFor({ state: 'visible', timeout: 5_000 })
+      .then(() => true)
       .catch(() => false);
 
     if (!tableVisible) {
@@ -185,7 +185,8 @@ test.describe('board view', () => {
       test.skip();
       return;
     }
-    expect(count).toBeGreaterThan(0);
+    // At least one named column header should be visible
+    await expect(columns.first().locator('[data-testid^="board-column-header-"]')).toBeVisible();
   });
 });
 
