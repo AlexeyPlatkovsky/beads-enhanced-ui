@@ -1,20 +1,23 @@
 {
   "name": "beads-enhanced-ui",
   "version": "0.1.0",
-  "description": "Enhanced local UI for Beads with improved epic rows, status labels, and UX refinements."
+  "description": "Enhanced local UI for Beads with improved epic rows, status labels, and UX refinements.",
   "keywords": [
     "agent",
     "issue-tracker",
     "local-first",
     "ai-tools"
   ],
-  "homepage": "https://github.com/AlexeyPlatkovsky/beads-enhanced-ui",
+  "homepage": "https://github.com/AlexeyPlatkovsky/beads-enhanced-ui#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AlexeyPlatkovsky/beads-enhanced-ui.git"
+    "url": "git+https://github.com/AlexeyPlatkovsky/beads-enhanced-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AlexeyPlatkovsky/beads-enhanced-ui/issues"
   },
   "author": "Alexey Platkovsky",
-  "license": "MIT"
+  "license": "MIT",
   "type": "module",
   "bin": {
     "bdui": "bin/bdui.js"
