@@ -29,6 +29,7 @@ function makeStubSocket() {
 
 /**
  * Parse the last message sent to a stub socket.
+ *
  * @param {ReturnType<typeof makeStubSocket>} ws
  */
 function lastReply(ws) {
