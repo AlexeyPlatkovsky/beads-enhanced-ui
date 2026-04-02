@@ -3,6 +3,7 @@ import { watchDb } from './watcher.js';
 
 /** @type {{ dir: string, cb: (event: string, filename?: string) => void, w: { close: () => void } }[]} */
 const watchers = [];
+/** @type {Error | null} */
 let watchError = null;
 
 vi.mock('node:fs', () => {
@@ -125,6 +126,7 @@ describe('watchDb', () => {
 
   test('returns a closable handle when fs.watch throws', () => {
     watchError = new Error('watch unavailable');
+    /** @type {null[]} */
     const calls = [];
 
     const handle = watchDb('/repo', () => calls.push(null), {

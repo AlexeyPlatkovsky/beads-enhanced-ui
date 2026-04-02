@@ -1,12 +1,16 @@
 import { describe, expect, test, vi } from 'vitest';
 import { createWorkspacePicker } from './workspace-picker.js';
 
+/**
+ * @param {{ workspace: { current: { path: string } | null, available: Array<{ path: string }> } }} state
+ */
 function createStore(state) {
   let current = state;
   /** @type {Array<(state: any) => void>} */
   const subscribers = [];
   return {
     getState: () => current,
+    /** @param {(state: typeof current) => void} fn */
     subscribe(fn) {
       subscribers.push(fn);
       return () => {
@@ -16,6 +20,7 @@ function createStore(state) {
         }
       };
     },
+    /** @param {typeof current} next */
     setState(next) {
       current = next;
       for (const fn of subscribers) {
@@ -53,6 +58,7 @@ describe('views/workspace-picker', () => {
         available: [{ path: '/repo/current' }, { path: '/repo/other' }]
       }
     });
+    /** @type {((value?: unknown) => void) | undefined} */
     let resolveChange;
     const onWorkspaceChange = vi.fn(
       () =>
@@ -75,6 +81,9 @@ describe('views/workspace-picker', () => {
       mount.querySelector('[data-testid="workspace-picker-loading"]')
     ).toBeTruthy();
 
+    if (!resolveChange) {
+      throw new Error('expected pending workspace change');
+    }
     resolveChange();
     await Promise.resolve();
 

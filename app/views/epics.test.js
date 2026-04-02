@@ -910,9 +910,11 @@ describe('views/epics', () => {
     };
     const issueStores = {
       getStore,
+      /** @param {string} id */
       snapshotFor(id) {
         return getStore(id).snapshot().slice();
       },
+      /** @param {() => void} fn */
       subscribe(fn) {
         listeners.add(fn);
         return () => listeners.delete(fn);

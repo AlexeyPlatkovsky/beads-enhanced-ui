@@ -1,5 +1,8 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
+/**
+ * @param {{ config?: { root_dir: string, host: string, port: number, app_dir: string, url: string }, workspaceDatabase?: { source: string, exists: boolean, path: string } }} [options]
+ */
 function setupIndexMocks(options = {}) {
   const createApp = vi.fn(() => ({ app: true }));
   const listen = vi.fn((_port, _host, cb) => cb());

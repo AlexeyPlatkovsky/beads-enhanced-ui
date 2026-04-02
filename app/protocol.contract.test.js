@@ -184,6 +184,9 @@ describe('error ReplyEnvelope contract', () => {
   test('makeError produces required fields: id, ok=false, type, error.code, error.message', () => {
     const req = makeRequest('edit-text', {}, 'r-8');
     const reply = makeError(req, 'not_found', 'Issue not found');
+    if (!reply.error) {
+      throw new Error('expected error reply');
+    }
     expect(reply.id).toBe('r-8');
     expect(reply.ok).toBe(false);
     expect(reply.type).toBe('edit-text');
@@ -196,12 +199,18 @@ describe('error ReplyEnvelope contract', () => {
   test('makeError includes optional details when provided', () => {
     const req = makeRequest('edit-text', {}, 'r-9');
     const reply = makeError(req, 'internal', 'Error', { trace: 'abc' });
+    if (!reply.error) {
+      throw new Error('expected error reply');
+    }
     expect(reply.error.details).toEqual({ trace: 'abc' });
   });
 
   test('makeError omits details when not provided', () => {
     const req = makeRequest('edit-text', {}, 'r-10');
     const reply = makeError(req, 'not_found', 'Not found');
+    if (!reply.error) {
+      throw new Error('expected error reply');
+    }
     expect(reply.error.details).toBeUndefined();
   });
 

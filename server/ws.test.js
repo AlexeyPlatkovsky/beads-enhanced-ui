@@ -20,6 +20,14 @@ function makeStubSocket() {
   };
 }
 
+/**
+ * @param {string} msg
+ * @returns {{ type?: string }}
+ */
+function parseMessage(msg) {
+  return JSON.parse(msg);
+}
+
 describe('ws message handling', () => {
   test('invalid JSON yields bad_json error', () => {
     const ws = makeStubSocket();
@@ -87,8 +95,10 @@ describe('ws message handling', () => {
     expect(watcher.rebind).toHaveBeenCalledWith({
       root_dir: path.resolve(workspaceB)
     });
-    const aMessages = a.sent.map((msg) => JSON.parse(msg));
-    const bMessages = b.sent.map((msg) => JSON.parse(msg));
+    /** @type {Array<{ type?: string }>} */
+    const aMessages = a.sent.map(parseMessage);
+    /** @type {Array<{ type?: string }>} */
+    const bMessages = b.sent.map(parseMessage);
     expect(aMessages.some((msg) => msg.type === 'set-workspace')).toBe(true);
     expect(aMessages.some((msg) => msg.type === 'workspace-changed')).toBe(
       false
