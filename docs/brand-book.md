@@ -67,25 +67,25 @@ hierarchy.
 
 ### Dark Theme Tokens
 
-| Token              | Value     | Notes                                              |
-| ------------------ | --------- | -------------------------------------------------- |
-| `--bg`             | `#0d1426` | Canvas / page background                           |
-| `--panel-bg`       | `#111a2f` | Cards, rows, list items, topbar, header strips     |
-| `--surface-raised` | `#141f38` | Active tab, elevated panels                        |
-| `--control-bg`     | `#151f35` | Toggle, input backgrounds                          |
-| `--button-bg`      | `#2b364a` | Button surface, toggle knob                        |
-| `--border`         | `#25304a` | Topbar, header strip borders                       |
-| `--border-row`     | `#28334d` | Card / row inside borders                          |
-| `--border-tab`     | `#2f3a55` | Active tab border                                  |
-| `--button-border`  | `#3b4860` | Button and control inside border                   |
-| `--fg-strong`      | `#f4f7fc` | Brand label, button text, active tab text          |
-| `--fg`             | `#d9e0ea` | Primary content text (row titles, IDs)             |
+| Token              | Value     | Notes                                                             |
+| ------------------ | --------- | ----------------------------------------------------------------- |
+| `--bg`             | `#0d1426` | Canvas / page background                                          |
+| `--panel-bg`       | `#111a2f` | Cards, rows, list items, topbar, header strips                    |
+| `--surface-raised` | `#141f38` | Active tab, elevated panels                                       |
+| `--control-bg`     | `#151f35` | Toggle, input backgrounds                                         |
+| `--button-bg`      | `#2b364a` | Button surface, toggle knob                                       |
+| `--border`         | `#25304a` | Topbar, header strip borders                                      |
+| `--border-row`     | `#28334d` | Card / row inside borders                                         |
+| `--border-tab`     | `#2f3a55` | Active tab border                                                 |
+| `--button-border`  | `#3b4860` | Button and control inside border                                  |
+| `--fg-strong`      | `#f4f7fc` | Brand label, button text, active tab text                         |
+| `--fg`             | `#d9e0ea` | Primary content text (row titles, IDs)                            |
 | `--fg-mid`         | `#a8b0c0` | Secondary labels (inactive tabs, column headers, progress counts) |
-| `--fg-dim`         | `#8794ad` | Tertiary labels (workspace path)                   |
-| `--muted`          | `#6b7b99` | Icons, deemphasized text                           |
-| `--link`           | `#93c5fd` |                                                    |
-| `--link-hover`     | `#bfdbfe` |                                                    |
-| `--link-visited`   | `#c4b5fd` |                                                    |
+| `--fg-dim`         | `#8794ad` | Tertiary labels (workspace path)                                  |
+| `--muted`          | `#6b7b99` | Icons, deemphasized text                                          |
+| `--link`           | `#93c5fd` |                                                                   |
+| `--link-hover`     | `#bfdbfe` |                                                                   |
+| `--link-visited`   | `#c4b5fd` |                                                                   |
 
 ### Semantic Accent Colors
 
@@ -114,8 +114,8 @@ Rules:
 - Weight scale in use: 500 (content), 600 (labels/pills), 700 (tabs/headers),
   800 (brand/buttons/active states).
 - Size scale in use: 11px (pills, column headers), 12px (annotations), 13px
-  (button labels), 14px (secondary labels), 16px (tabs), 17px (progress
-  counts), 18px (row titles and IDs).
+  (button labels), 14px (secondary labels), 16px (tabs), 17px (progress counts),
+  18px (row titles and IDs).
 - Preserve the 2px-based spacing rhythm; prefer 8, 12, 16, 20, and 32px steps.
 - Keep the UI dense but breathable; detail views can breathe more than lists.
 - Use restrained radii, hairline borders, and soft shadows mainly for dialogs

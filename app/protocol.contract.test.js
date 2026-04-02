@@ -242,9 +242,7 @@ describe('error ReplyEnvelope contract', () => {
   });
 
   test('isReply rejects ok=false envelope with no error object', () => {
-    expect(
-      isReply({ id: 'r-1', ok: false, type: 'edit-text' })
-    ).toBe(false);
+    expect(isReply({ id: 'r-1', ok: false, type: 'edit-text' })).toBe(false);
   });
 
   test('isReply rejects ok=false with null error', () => {

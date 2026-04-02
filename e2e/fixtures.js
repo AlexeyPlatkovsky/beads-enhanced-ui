@@ -5,7 +5,7 @@
  * wsConnected: extends appPage and waits for WebSocket to signal a
  *   workspace reply before handing control to the test.
  */
-import { expect, test as base } from '@playwright/test';
+import { test as base, expect } from '@playwright/test';
 
 /**
  * Wait for the app shell to mount (the header + main#app are present in the DOM).
@@ -27,9 +27,9 @@ async function waitForAppShell(page) {
 async function waitForWsReady(page) {
   // The workspace picker hides its loading indicator once the WS reply arrives.
   // Wait for either: a workspace label (single workspace) or the select (multi).
-  await expect(
-    page.locator('[data-testid="workspace-picker"]')
-  ).toBeVisible({ timeout: 10_000 });
+  await expect(page.locator('[data-testid="workspace-picker"]')).toBeVisible({
+    timeout: 10_000
+  });
   // Then wait for the loading spinner inside the picker to disappear.
   await expect(
     page.locator('[data-testid="workspace-picker-loading"]')

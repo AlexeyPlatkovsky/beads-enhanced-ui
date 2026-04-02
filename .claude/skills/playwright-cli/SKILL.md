@@ -21,8 +21,8 @@ When the task is about this repo, prefer local targets first:
 - App: `http://127.0.0.1:3000`
 - WebSocket endpoint: `ws://127.0.0.1:3000/ws`
 
-Before driving the local app, read `README.md` and `docs/architecture.md` if
-you need startup commands, bind address defaults, or protocol context.
+Before driving the local app, read `README.md` and `docs/architecture.md` if you
+need startup commands, bind address defaults, or protocol context.
 
 ## Quick start
 

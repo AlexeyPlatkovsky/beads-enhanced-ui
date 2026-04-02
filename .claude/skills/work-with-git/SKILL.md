@@ -86,7 +86,8 @@ If the current branch is `main` or the remote default branch:
 
 ## Session End
 
-If the user explicitly asked for commit/push work or approved it, run this sequence before declaring that git portion complete:
+If the user explicitly asked for commit/push work or approved it, run this
+sequence before declaring that git portion complete:
 
 ```bash
 git pull --rebase

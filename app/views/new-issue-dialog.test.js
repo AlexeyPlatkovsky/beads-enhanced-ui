@@ -67,7 +67,9 @@ describe('views/new-issue-dialog', () => {
     const form = /** @type {HTMLFormElement} */ (
       document.getElementById('new-issue-form')
     );
-    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+    form.dispatchEvent(
+      new Event('submit', { bubbles: true, cancelable: true })
+    );
     await Promise.resolve();
 
     const error = /** @type {HTMLElement} */ (
@@ -98,10 +100,12 @@ describe('views/new-issue-dialog', () => {
     dialog.open();
     vi.runAllTimers();
 
-    /** @type {HTMLInputElement} */ (document.getElementById('new-title')).value =
-      'New bug';
-    /** @type {HTMLSelectElement} */ (document.getElementById('new-type')).value =
-      'bug';
+    /** @type {HTMLInputElement} */ (
+      document.getElementById('new-title')
+    ).value = 'New bug';
+    /** @type {HTMLSelectElement} */ (
+      document.getElementById('new-type')
+    ).value = 'bug';
     /** @type {HTMLSelectElement} */ (
       document.getElementById('new-priority')
     ).value = '1';
@@ -115,7 +119,9 @@ describe('views/new-issue-dialog', () => {
     const form = /** @type {HTMLFormElement} */ (
       document.getElementById('new-issue-form')
     );
-    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+    form.dispatchEvent(
+      new Event('submit', { bubbles: true, cancelable: true })
+    );
     await vi.waitFor(() => {
       expect(gotoIssue).toHaveBeenCalledWith('UI-25');
     });

@@ -3,8 +3,8 @@ name: beads-work
 description:
   Task and issue tracking using Beads (bd CLI). Use when the user explicitly
   asks for tracking or when implementation work is substantive enough to need
-  multi-step or cross-session coordination. Replaces TodoWrite, TaskCreate,
-  and markdown task lists.
+  multi-step or cross-session coordination. Replaces TodoWrite, TaskCreate, and
+  markdown task lists.
 ---
 
 This project uses **Beads** for issue tracking when the work is substantive
@@ -60,8 +60,8 @@ Beads ID policy:
 
 - Always create issues with an explicit numeric ID in the form `bd-ui-NNN`.
 - `NNN` must be digits only. Never use letters or mixed alphanumeric suffixes.
-- Maintain a consecutive numeric sequence. Before `bd create`, inspect
-  existing `bd-ui-NNN` IDs and choose the next highest numeric suffix plus 1.
+- Maintain a consecutive numeric sequence. Before `bd create`, inspect existing
+  `bd-ui-NNN` IDs and choose the next highest numeric suffix plus 1.
 - When creating multiple issues in one batch, allocate consecutive IDs in that
   same batch order.
 - Never rely on Beads auto-generated mixed alphanumeric IDs.
@@ -71,6 +71,7 @@ Beads ID policy:
   cleanup. Do not delete historical issues by default. Prefer an explicit
   migration plan over destructive cleanup, and ask the user before deleting
   legacy issues.
+
 ## Working an Issue
 
 ```bash

@@ -160,8 +160,7 @@ export function createIssueRowRenderer(options) {
               : ''}${(it.dependent_count || 0) > 0
               ? html`<span
                   class="dependent-count"
-                  title="${it.dependent_count} ${(it.dependent_count || 0) ===
-                  1
+                  title="${it.dependent_count} ${(it.dependent_count || 0) === 1
                     ? 'dependent'
                     : 'dependents'}"
                   >${'\u2190'}${it.dependent_count}</span

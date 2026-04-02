@@ -366,7 +366,9 @@ describe('views/board', () => {
     expect(
       mount.querySelector('[data-testid="board-column-blocked"]')
     ).toBeTruthy();
-    expect(mount.querySelector('[data-testid="board-column-ready"]')).toBeTruthy();
+    expect(
+      mount.querySelector('[data-testid="board-column-ready"]')
+    ).toBeTruthy();
     expect(
       mount.querySelector('[data-testid="board-column-in-progress"]')
     ).toBeTruthy();

@@ -13,7 +13,9 @@ test.describe('app boot', () => {
     await expect(page).toHaveTitle('Beads');
   });
 
-  test('app header renders with title and action bar', async ({ appPage: page }) => {
+  test('app header renders with title and action bar', async ({
+    appPage: page
+  }) => {
     await expect(page.locator('header.app-header')).toBeVisible();
     await expect(page.locator('h1.app-title')).toHaveText('Beads');
     await expect(page.locator('#new-issue-btn')).toBeVisible();
@@ -35,7 +37,9 @@ test.describe('app boot', () => {
 });
 
 test.describe('routing: navigation tabs', () => {
-  test('navigation renders Issues, Epics, and Board tabs', async ({ wsConnectedPage: page }) => {
+  test('navigation renders Issues, Epics, and Board tabs', async ({
+    wsConnectedPage: page
+  }) => {
     const nav = page.locator('[data-testid="top-nav"]');
     await expect(nav).toBeVisible();
     await expect(page.locator('[data-testid="nav-tab-issues"]')).toBeVisible();
@@ -48,39 +52,53 @@ test.describe('routing: navigation tabs', () => {
     await expect(issuesTab).toHaveClass(/active/);
   });
 
-  test('clicking Epics tab shows epics route', async ({ wsConnectedPage: page }) => {
+  test('clicking Epics tab shows epics route', async ({
+    wsConnectedPage: page
+  }) => {
     await page.locator('[data-testid="nav-tab-epics"]').click();
     await expect(page.locator('#epics-root')).not.toHaveAttribute('hidden');
     await expect(page.locator('#issues-root')).toHaveAttribute('hidden', '');
   });
 
-  test('clicking Board tab shows board route', async ({ wsConnectedPage: page }) => {
+  test('clicking Board tab shows board route', async ({
+    wsConnectedPage: page
+  }) => {
     await page.locator('[data-testid="nav-tab-board"]').click();
     await expect(page.locator('#board-root')).not.toHaveAttribute('hidden');
   });
 
-  test('clicking Issues tab after switching returns to issues route', async ({ wsConnectedPage: page }) => {
+  test('clicking Issues tab after switching returns to issues route', async ({
+    wsConnectedPage: page
+  }) => {
     await page.locator('[data-testid="nav-tab-epics"]').click();
     await page.locator('[data-testid="nav-tab-issues"]').click();
     await expect(page.locator('#issues-root')).not.toHaveAttribute('hidden');
-    await expect(page.locator('[data-testid="nav-tab-issues"]')).toHaveClass(/active/);
+    await expect(page.locator('[data-testid="nav-tab-issues"]')).toHaveClass(
+      /active/
+    );
   });
 });
 
 test.describe('workspace selection', () => {
-  test('workspace picker renders in header', async ({ wsConnectedPage: page }) => {
+  test('workspace picker renders in header', async ({
+    wsConnectedPage: page
+  }) => {
     await expect(
       page.locator('[data-testid="workspace-picker"]')
     ).toBeVisible();
   });
 
-  test('workspace loading indicator disappears after WS handshake', async ({ wsConnectedPage: page }) => {
+  test('workspace loading indicator disappears after WS handshake', async ({
+    wsConnectedPage: page
+  }) => {
     await expect(
       page.locator('[data-testid="workspace-picker-loading"]')
     ).toBeHidden();
   });
 
-  test('workspace picker shows at least one workspace option', async ({ wsConnectedPage: page }) => {
+  test('workspace picker shows at least one workspace option', async ({
+    wsConnectedPage: page
+  }) => {
     const picker = page.locator('[data-testid="workspace-picker"]');
     // Single-workspace: label; multi-workspace: select element
     const labelOrSelect = picker.locator(
@@ -91,7 +109,9 @@ test.describe('workspace selection', () => {
 });
 
 test.describe('connection states', () => {
-  test('app does not show fatal error dialog on successful WS connection', async ({ wsConnectedPage: page }) => {
+  test('app does not show fatal error dialog on successful WS connection', async ({
+    wsConnectedPage: page
+  }) => {
     // Fatal error dialog should not be present in the DOM
     await expect(
       page.locator('[data-testid="fatal-error-dialog"]')
@@ -105,7 +125,9 @@ test.describe('connection states', () => {
     await page.goto('/');
     // Wait for WebSocket handshake to complete — this is the meaningful
     // ready signal, not an arbitrary sleep.
-    await page.waitForSelector('[data-testid="workspace-picker"]', { timeout: 10_000 });
+    await page.waitForSelector('[data-testid="workspace-picker"]', {
+      timeout: 10_000
+    });
     await page.waitForSelector('[data-testid="workspace-picker-loading"]', {
       state: 'hidden',
       timeout: 10_000

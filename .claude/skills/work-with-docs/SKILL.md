@@ -7,15 +7,15 @@ description:
 
 ## Folder Conventions
 
-| Path                  | What goes there                                                                                                                                                                                 |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `docs/plans/`         | Implementation plans and scoped design plans                                                                                                                                                    |
-| `docs/reviews/`       | Code review reports with findings and recommended actions                                                                                                                                       |
-| `docs/architecture.md` | High-level design and architecture intent                                                                                                                                                      |
-| `docs/adr/`           | Architectural Decision Records (ADRs) for significant decisions                                                                                                                                 |
-| `docs/protocol/`      | WebSocket message protocol specs and subscription model docs                                                                                                                                    |
-| `app/protocol.md`     | Human-readable protocol reference alongside the JS definition                                                                                                                                   |
-| `AGENTS.md`           | Project-wide policy only: architecture invariants, trivial/non-trivial rules, skill compliance. Procedure for a specific task type belongs in the matching skill, not here. Target: ≤150 lines. |
+| Path                   | What goes there                                                                                                                                                                                 |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `docs/plans/`          | Implementation plans and scoped design plans                                                                                                                                                    |
+| `docs/reviews/`        | Code review reports with findings and recommended actions                                                                                                                                       |
+| `docs/architecture.md` | High-level design and architecture intent                                                                                                                                                       |
+| `docs/adr/`            | Architectural Decision Records (ADRs) for significant decisions                                                                                                                                 |
+| `docs/protocol/`       | WebSocket message protocol specs and subscription model docs                                                                                                                                    |
+| `app/protocol.md`      | Human-readable protocol reference alongside the JS definition                                                                                                                                   |
+| `AGENTS.md`            | Project-wide policy only: architecture invariants, trivial/non-trivial rules, skill compliance. Procedure for a specific task type belongs in the matching skill, not here. Target: ≤150 lines. |
 
 Never create plan or review files at the `docs/` root.
 

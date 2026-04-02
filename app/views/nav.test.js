@@ -37,9 +37,9 @@ describe('views/nav', () => {
     );
 
     expect(
-      mount.querySelector('[data-testid="nav-tab-issues"]')?.classList.contains(
-        'active'
-      )
+      mount
+        .querySelector('[data-testid="nav-tab-issues"]')
+        ?.classList.contains('active')
     ).toBe(true);
   });
 
@@ -82,9 +82,9 @@ describe('views/nav', () => {
     store.set({ view: 'board' });
 
     expect(
-      mount.querySelector('[data-testid="nav-tab-board"]')?.classList.contains(
-        'active'
-      )
+      mount
+        .querySelector('[data-testid="nav-tab-board"]')
+        ?.classList.contains('active')
     ).toBe(true);
     expect(
       mount
@@ -106,9 +106,9 @@ describe('views/nav', () => {
     );
 
     expect(
-      mount.querySelector('[data-testid="nav-tab-epics"]')?.classList.contains(
-        'active'
-      )
+      mount
+        .querySelector('[data-testid="nav-tab-epics"]')
+        ?.classList.contains('active')
     ).toBe(true);
 
     nav.destroy();

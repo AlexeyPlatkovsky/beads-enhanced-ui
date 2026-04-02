@@ -80,7 +80,8 @@ export function createWorkspacePicker(mount_element, store, onWorkspaceChange) {
             class="workspace-picker__label"
             title="${available[0].path}"
             data-testid="workspace-picker-label"
-          >${name}</span>
+            >${name}</span
+          >
         </div>
       `;
     }

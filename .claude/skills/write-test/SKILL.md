@@ -11,11 +11,11 @@ description:
 Tests are colocated with source files, not in a separate top-level test
 directory.
 
-| Where to put it              | Pattern                                |
-| ---------------------------- | -------------------------------------- |
-| Next to the module under test | `<module>.test.js`                     |
-| Unit-only variant             | `<module>.unit.test.js`                |
-| Integration/e2e variant       | `<module>.integration.test.js`         |
+| Where to put it               | Pattern                        |
+| ----------------------------- | ------------------------------ |
+| Next to the module under test | `<module>.test.js`             |
+| Unit-only variant             | `<module>.unit.test.js`        |
+| Integration/e2e variant       | `<module>.integration.test.js` |
 
 `test/setup-vitest.js` is global setup — do not add test files there.
 
@@ -24,7 +24,8 @@ directory.
 - Pure logic (selectors, data transforms, utilities, protocol parsing):
   colocated `.test.js` with the source file
 - Code that exercises the full request/response cycle or WebSocket message
-  exchange: `.integration.test.js` (e.g. `server/cli/commands.integration.test.js`)
+  exchange: `.integration.test.js` (e.g.
+  `server/cli/commands.integration.test.js`)
 - If a change crosses both boundaries, add a small unit test first, then the
   narrowest integration test that proves the wiring
 

@@ -2,9 +2,9 @@
 name: refactor-code
 description:
   Rules and practices for safely handling non-trivial refactors in this
-  repository. Use when restructuring shared server, client, WebSocket,
-  view, or protocol behavior; changing public interfaces or defaults; or
-  moving code across modules with cross-cutting impact.
+  repository. Use when restructuring shared server, client, WebSocket, view, or
+  protocol behavior; changing public interfaces or defaults; or moving code
+  across modules with cross-cutting impact.
 ---
 
 Use for any change that:
@@ -52,13 +52,13 @@ should:
 
 Extra care is required in these areas because they have hidden coupling:
 
-| Area                                    | Risk                                                                        |
-| --------------------------------------- | --------------------------------------------------------------------------- |
-| `app/protocol.js` and `app/ws.js`       | Protocol changes must stay in sync between server and client                |
-| `server/subscriptions.js`               | Subscription model changes affect all active client connections             |
-| `app/state.js` and `app/router.js`      | View state shape and URL routing are tightly coupled across all views       |
-| `app/data/` stores                      | Per-subscription stores feed every view; shape changes ripple broadly       |
-| `server/bd.js`                          | CLI bridge is the sole data source; interface changes affect all endpoints  |
+| Area                               | Risk                                                                       |
+| ---------------------------------- | -------------------------------------------------------------------------- |
+| `app/protocol.js` and `app/ws.js`  | Protocol changes must stay in sync between server and client               |
+| `server/subscriptions.js`          | Subscription model changes affect all active client connections            |
+| `app/state.js` and `app/router.js` | View state shape and URL routing are tightly coupled across all views      |
+| `app/data/` stores                 | Per-subscription stores feed every view; shape changes ripple broadly      |
+| `server/bd.js`                     | CLI bridge is the sole data source; interface changes affect all endpoints |
 
 ## Step Size
 
@@ -76,8 +76,8 @@ Extra care is required in these areas because they have hidden coupling:
 
 ## Public API Changes
 
-If the refactor changes a WebSocket message type, subscription event, view
-state key, URL shape, or exported function signature:
+If the refactor changes a WebSocket message type, subscription event, view state
+key, URL shape, or exported function signature:
 
 - Check all call sites before renaming.
 - Prefer adding the new form and deprecating the old one if call sites are
@@ -91,8 +91,8 @@ Run in this order:
 
 1. Run the protecting test first.
 2. Run the narrowest relevant `npm test` target for the changed area.
-3. If shared protocol, subscription, or view state changed, run `npm test`
-   (full suite — these changes ripple across both sides).
+3. If shared protocol, subscription, or view state changed, run `npm test` (full
+   suite — these changes ripple across both sides).
 4. If protocol or architecture docs need updating, update them.
 5. If frontend-visible behavior changed and the app is runnable, open the
    browser and verify the affected view.

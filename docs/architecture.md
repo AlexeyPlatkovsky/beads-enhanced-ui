@@ -146,6 +146,7 @@ Notes
 
 - Fields are optional to allow partial views and forward compatibility.
 - Additional properties may appear; clients should ignore unknown keys.
+
 ## Error Model and Versioning
 
 - Error object: `{ code: string, message: string, details?: any }`

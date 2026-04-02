@@ -3,8 +3,8 @@ name: frontend-implementation
 description:
   Implementing or updating browser UI code under app/ and app/views/ for this
   project. Use when changing rendered markup, interactive controls, dialogs,
-  view composition, or frontend-facing behavior in the Beads UI. Do not use
-  for Pencil design-only work.
+  view composition, or frontend-facing behavior in the Beads UI. Do not use for
+  Pencil design-only work.
 ---
 
 ## Scope
@@ -34,13 +34,13 @@ Do not use it for:
 5. If tests are added or updated, also use `write-test`.
 6. After edits, use `validate` to pick the narrowest meaningful checks.
 7. If the change can affect visible UI, finish with `playwright-cli`
-   verification against the affected view or interaction as the last step
-   before handoff.
+   verification against the affected view or interaction as the last step before
+   handoff.
 
 ## Test IDs
 
-Add stable `data-testid` attributes to significant rendered elements and
-primary controls in any frontend code you add or materially change.
+Add stable `data-testid` attributes to significant rendered elements and primary
+controls in any frontend code you add or materially change.
 
 Use these rules:
 
@@ -49,13 +49,13 @@ Use these rules:
   `detail-status-select`, `board-column-ready`.
 - For repeated or dynamic entities, include the entity id in the value, such as
   `issue-row-UI-12`, `board-card-UI-12`, `epic-group-UI-12`.
-- Cover significant structure and user-facing controls:
-  view roots, tables, headers, rows/cards, dialogs, forms, key inputs, primary
-  actions, sort/filter controls, and expandable sections.
+- Cover significant structure and user-facing controls: view roots, tables,
+  headers, rows/cards, dialogs, forms, key inputs, primary actions, sort/filter
+  controls, and expandable sections.
 - Do not add IDs to every decorative wrapper. Favor stable test surfaces over
   noisy markup.
-- When touching an older area that uses `testid` or `test-id`, prefer moving
-  the changed code toward `data-testid` instead of extending the older pattern.
+- When touching an older area that uses `testid` or `test-id`, prefer moving the
+  changed code toward `data-testid` instead of extending the older pattern.
 
 ## Accessibility And Interaction
 
@@ -90,18 +90,26 @@ Match the `<thead>` column-span structure exactly in the grouped row:
 ```html
 <!-- thead -->
 <tr>
-  <th>Id</th>                          <!-- col 1 -->
-  <th colspan="2">Name</th>            <!-- cols 2+3 -->
-  <th>Status</th>                      <!-- col 4 -->
-  <th colspan="2">Progress</th>        <!-- cols 5+6 -->
+  <th>Id</th>
+  <!-- col 1 -->
+  <th colspan="2">Name</th>
+  <!-- cols 2+3 -->
+  <th>Status</th>
+  <!-- col 4 -->
+  <th colspan="2">Progress</th>
+  <!-- cols 5+6 -->
 </tr>
 
 <!-- grouped epic row — same spans, guaranteed alignment -->
 <tr class="epic-header-row" tabindex="0" aria-expanded="false" @click="...">
   <td class="epic-header-row__cell epic-header-row__cell--id">…</td>
-  <td class="epic-header-row__cell epic-header-row__cell--name" colspan="2">…</td>
+  <td class="epic-header-row__cell epic-header-row__cell--name" colspan="2">
+    …
+  </td>
   <td class="epic-header-row__cell epic-header-row__cell--status">…</td>
-  <td class="epic-header-row__cell epic-header-row__cell--progress" colspan="2">…</td>
+  <td class="epic-header-row__cell epic-header-row__cell--progress" colspan="2">
+    …
+  </td>
 </tr>
 ```
 
@@ -127,19 +135,23 @@ selectively so adjacent cells form a seamless card:
   border-bottom-right-radius: 6px;
 }
 /* Flatten bottom radius when a children row follows */
-.epic-group.is-open .epic-header-row__cell:first-child { border-bottom-left-radius: 0; }
-.epic-group.is-open .epic-header-row__cell:last-child  { border-bottom-right-radius: 0; }
+.epic-group.is-open .epic-header-row__cell:first-child {
+  border-bottom-left-radius: 0;
+}
+.epic-group.is-open .epic-header-row__cell:last-child {
+  border-bottom-right-radius: 0;
+}
 ```
 
 ### Interactive row
 
-Put `@click`, `@keydown`, `tabindex="0"`, and `aria-expanded` on the `<tr>`.
-Do **not** add `role="button"` — it removes the native `row` semantics. The
+Put `@click`, `@keydown`, `tabindex="0"`, and `aria-expanded` on the `<tr>`. Do
+**not** add `role="button"` — it removes the native `row` semantics. The
 `cursor: pointer` CSS communicates interactivity.
 
 Flex content inside a cell (e.g., chevron + title) goes in an inner `<span>`
-with `display: flex; align-items: center` — not on the `<td>` itself, which
-must stay `display: table-cell`.
+with `display: flex; align-items: center` — not on the `<td>` itself, which must
+stay `display: table-cell`.
 
 ### Verify class names before making CSS tweaks
 

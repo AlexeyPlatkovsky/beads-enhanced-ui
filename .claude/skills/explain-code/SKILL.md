@@ -21,8 +21,8 @@ When explaining code:
 
 ## Default Structure
 
-1. **What it is** - one or two sentences describing the module, view, route,
-   CLI path, or subsystem role.
+1. **What it is** - one or two sentences describing the module, view, route, CLI
+   path, or subsystem role.
 2. **Entry points** - which route, WebSocket message, CLI command, or function
    starts the behavior.
 3. **How it flows** - step-by-step execution path with file references.

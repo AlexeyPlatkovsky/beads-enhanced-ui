@@ -36,7 +36,9 @@ afterEach(() => {
 describe('resolveDbPath', () => {
   test('uses explicit_db when provided', () => {
     const res = resolveDbPath({ cwd: '/x', explicit_db: './my.db', env: {} });
-    expect(path.normalize(res.path)).toBe(path.normalize(path.resolve('/x', 'my.db')));
+    expect(path.normalize(res.path)).toBe(
+      path.normalize(path.resolve('/x', 'my.db'))
+    );
     expect(res.source).toBe('flag');
   });
 

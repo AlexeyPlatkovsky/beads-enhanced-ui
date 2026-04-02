@@ -10,47 +10,77 @@
 import { expect, test } from './fixtures.js';
 
 test.describe('new issue dialog', () => {
-  test('New Issue button opens the dialog', async ({ wsConnectedPage: page }) => {
+  test('New Issue button opens the dialog', async ({
+    wsConnectedPage: page
+  }) => {
     await page.locator('#new-issue-btn').click();
-    await expect(page.locator('[data-testid="new-issue-dialog"]')).toBeVisible();
+    await expect(
+      page.locator('[data-testid="new-issue-dialog"]')
+    ).toBeVisible();
   });
 
-  test('dialog has title input, type select, priority select, and create button', async ({ wsConnectedPage: page }) => {
+  test('dialog has title input, type select, priority select, and create button', async ({
+    wsConnectedPage: page
+  }) => {
     await page.locator('#new-issue-btn').click();
-    await expect(page.locator('[data-testid="new-issue-title-input"]')).toBeVisible();
-    await expect(page.locator('[data-testid="new-issue-type-select"]')).toBeVisible();
-    await expect(page.locator('[data-testid="new-issue-priority-select"]')).toBeVisible();
-    await expect(page.locator('[data-testid="new-issue-create"]')).toBeVisible();
+    await expect(
+      page.locator('[data-testid="new-issue-title-input"]')
+    ).toBeVisible();
+    await expect(
+      page.locator('[data-testid="new-issue-type-select"]')
+    ).toBeVisible();
+    await expect(
+      page.locator('[data-testid="new-issue-priority-select"]')
+    ).toBeVisible();
+    await expect(
+      page.locator('[data-testid="new-issue-create"]')
+    ).toBeVisible();
   });
 
   test('Cancel button closes the dialog', async ({ wsConnectedPage: page }) => {
     await page.locator('#new-issue-btn').click();
-    await expect(page.locator('[data-testid="new-issue-dialog"]')).toBeVisible();
+    await expect(
+      page.locator('[data-testid="new-issue-dialog"]')
+    ).toBeVisible();
     await page.locator('[data-testid="new-issue-cancel"]').click();
-    await expect(page.locator('[data-testid="new-issue-dialog"]')).not.toBeVisible();
+    await expect(
+      page.locator('[data-testid="new-issue-dialog"]')
+    ).not.toBeVisible();
   });
 
   test('Escape key closes the dialog', async ({ wsConnectedPage: page }) => {
     await page.locator('#new-issue-btn').click();
-    await expect(page.locator('[data-testid="new-issue-dialog"]')).toBeVisible();
+    await expect(
+      page.locator('[data-testid="new-issue-dialog"]')
+    ).toBeVisible();
     await page.keyboard.press('Escape');
-    await expect(page.locator('[data-testid="new-issue-dialog"]')).not.toBeVisible();
+    await expect(
+      page.locator('[data-testid="new-issue-dialog"]')
+    ).not.toBeVisible();
   });
 
-  test('keyboard shortcut Ctrl+N opens the dialog', async ({ wsConnectedPage: page }) => {
+  test('keyboard shortcut Ctrl+N opens the dialog', async ({
+    wsConnectedPage: page
+  }) => {
     await page.keyboard.press('Control+n');
-    await expect(page.locator('[data-testid="new-issue-dialog"]')).toBeVisible();
+    await expect(
+      page.locator('[data-testid="new-issue-dialog"]')
+    ).toBeVisible();
     // Clean up
     await page.keyboard.press('Escape');
   });
 
-  test('title input is focused when dialog opens', async ({ wsConnectedPage: page }) => {
+  test('title input is focused when dialog opens', async ({
+    wsConnectedPage: page
+  }) => {
     await page.locator('#new-issue-btn').click();
     const titleInput = page.locator('[data-testid="new-issue-title-input"]');
     await expect(titleInput).toBeFocused();
   });
 
-  test('create button is disabled when title is empty', async ({ wsConnectedPage: page }) => {
+  test('create button is disabled when title is empty', async ({
+    wsConnectedPage: page
+  }) => {
     await page.locator('#new-issue-btn').click();
     const createBtn = page.locator('[data-testid="new-issue-create"]');
     // Title input is empty by default — create should be disabled or form-validates
@@ -64,17 +94,27 @@ test.describe('new issue dialog', () => {
 });
 
 test.describe('list view: inline edits', () => {
-  test('list view renders when app loads', async ({ wsConnectedPage: page }) => {
+  test('list view renders when app loads', async ({
+    wsConnectedPage: page
+  }) => {
     await expect(page.locator('[data-testid="list-view"]')).toBeVisible();
   });
 
-  test('list filter bar is visible with status and type filters', async ({ wsConnectedPage: page }) => {
+  test('list filter bar is visible with status and type filters', async ({
+    wsConnectedPage: page
+  }) => {
     await expect(page.locator('[data-testid="list-filters"]')).toBeVisible();
-    await expect(page.locator('[data-testid="list-filter-status"]')).toBeVisible();
-    await expect(page.locator('[data-testid="list-filter-type"]')).toBeVisible();
+    await expect(
+      page.locator('[data-testid="list-filter-status"]')
+    ).toBeVisible();
+    await expect(
+      page.locator('[data-testid="list-filter-type"]')
+    ).toBeVisible();
   });
 
-  test('status filter dropdown opens on click', async ({ wsConnectedPage: page }) => {
+  test('status filter dropdown opens on click', async ({
+    wsConnectedPage: page
+  }) => {
     const trigger = page.locator('[data-testid="list-filter-status-trigger"]');
     await trigger.click();
     await expect(
@@ -84,7 +124,9 @@ test.describe('list view: inline edits', () => {
     await trigger.click();
   });
 
-  test('type filter dropdown opens on click', async ({ wsConnectedPage: page }) => {
+  test('type filter dropdown opens on click', async ({
+    wsConnectedPage: page
+  }) => {
     const trigger = page.locator('[data-testid="list-filter-type-trigger"]');
     await trigger.click();
     await expect(
@@ -99,7 +141,9 @@ test.describe('list view: inline edits', () => {
     ).toBeVisible();
   });
 
-  test('search input filters visible issues', async ({ wsConnectedPage: page }) => {
+  test('search input filters visible issues', async ({
+    wsConnectedPage: page
+  }) => {
     const listBody = page.locator('[data-testid="list-body"]');
     await expect(listBody).toBeVisible();
 
@@ -113,7 +157,9 @@ test.describe('list view: inline edits', () => {
     await searchInput.clear();
   });
 
-  test('clicking an issue row opens the detail panel', async ({ wsConnectedPage: page }) => {
+  test('clicking an issue row opens the detail panel', async ({
+    wsConnectedPage: page
+  }) => {
     // Only run if there are issues in the list
     const firstRow = page.locator('[data-testid^="issue-row-"]').first();
     const hasIssues = await firstRow.count();
@@ -122,17 +168,24 @@ test.describe('list view: inline edits', () => {
       return;
     }
     await firstRow.click();
-    await expect(page.locator('#detail-panel')).not.toHaveAttribute('hidden', '');
+    await expect(page.locator('#detail-panel')).not.toHaveAttribute(
+      'hidden',
+      ''
+    );
   });
 });
 
 test.describe('epics view', () => {
-  test('navigating to epics shows the epics route', async ({ wsConnectedPage: page }) => {
+  test('navigating to epics shows the epics route', async ({
+    wsConnectedPage: page
+  }) => {
     await page.locator('[data-testid="nav-tab-epics"]').click();
     await expect(page.locator('#epics-root')).not.toHaveAttribute('hidden', '');
   });
 
-  test('epics view renders table or empty state', async ({ wsConnectedPage: page }) => {
+  test('epics view renders table or empty state', async ({
+    wsConnectedPage: page
+  }) => {
     await page.locator('[data-testid="nav-tab-epics"]').click();
     // Either the table or the empty message must be visible
     await expect(
@@ -140,7 +193,9 @@ test.describe('epics view', () => {
     ).toBeVisible({ timeout: 8_000 });
   });
 
-  test('epics table has header columns when data is present', async ({ wsConnectedPage: page }) => {
+  test('epics table has header columns when data is present', async ({
+    wsConnectedPage: page
+  }) => {
     await page.locator('[data-testid="nav-tab-epics"]').click();
     const tableVisible = await page
       .locator('[data-testid="epics-table"]')
@@ -153,8 +208,12 @@ test.describe('epics view', () => {
       return;
     }
     await expect(page.locator('[data-testid="epics-header-id"]')).toBeVisible();
-    await expect(page.locator('[data-testid="epics-header-name"]')).toBeVisible();
-    await expect(page.locator('[data-testid="epics-header-status"]')).toBeVisible();
+    await expect(
+      page.locator('[data-testid="epics-header-name"]')
+    ).toBeVisible();
+    await expect(
+      page.locator('[data-testid="epics-header-status"]')
+    ).toBeVisible();
     await expect(
       page.locator('[data-testid="epics-header-progress"]')
     ).toBeVisible();
@@ -162,19 +221,25 @@ test.describe('epics view', () => {
 });
 
 test.describe('board view', () => {
-  test('navigating to board shows the board route', async ({ wsConnectedPage: page }) => {
+  test('navigating to board shows the board route', async ({
+    wsConnectedPage: page
+  }) => {
     await page.locator('[data-testid="nav-tab-board"]').click();
     await expect(page.locator('#board-root')).not.toHaveAttribute('hidden', '');
   });
 
-  test('board view renders the board container', async ({ wsConnectedPage: page }) => {
+  test('board view renders the board container', async ({
+    wsConnectedPage: page
+  }) => {
     await page.locator('[data-testid="nav-tab-board"]').click();
-    await expect(
-      page.locator('[data-testid="board-view"]')
-    ).toBeVisible({ timeout: 8_000 });
+    await expect(page.locator('[data-testid="board-view"]')).toBeVisible({
+      timeout: 8_000
+    });
   });
 
-  test('board has at least one status column when data is present', async ({ wsConnectedPage: page }) => {
+  test('board has at least one status column when data is present', async ({
+    wsConnectedPage: page
+  }) => {
     await page.locator('[data-testid="nav-tab-board"]').click();
     const boardView = page.locator('[data-testid="board-view"]');
     await expect(boardView).toBeVisible({ timeout: 8_000 });
@@ -186,12 +251,16 @@ test.describe('board view', () => {
       return;
     }
     // At least one named column header should be visible
-    await expect(columns.first().locator('[data-testid^="board-column-header-"]')).toBeVisible();
+    await expect(
+      columns.first().locator('[data-testid^="board-column-header-"]')
+    ).toBeVisible();
   });
 });
 
 test.describe('theme toggle', () => {
-  test('dark mode toggle switches the data-theme attribute', async ({ wsConnectedPage: page }) => {
+  test('dark mode toggle switches the data-theme attribute', async ({
+    wsConnectedPage: page
+  }) => {
     const toggle = page.locator('#theme-switch');
     const html = page.locator('html');
 

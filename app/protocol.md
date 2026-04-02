@@ -14,6 +14,7 @@ the local server.
 - Transport: single WebSocket connection
 - Encoding: JSON text frames
 - Correlation: all request/response pairs share the same `id`
+
 ## Envelope Shapes
 
 - RequestEnvelope: `{ id: string, type: string, payload?: any }`

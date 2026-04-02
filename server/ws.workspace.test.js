@@ -5,8 +5,8 @@
  * get-workspace, and set-workspace handlers — independent of business
  * logic already covered by server/ws.test.js.
  */
-import { createServer } from 'node:http';
 import fs from 'node:fs';
+import { createServer } from 'node:http';
 import os from 'node:os';
 import path from 'node:path';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';

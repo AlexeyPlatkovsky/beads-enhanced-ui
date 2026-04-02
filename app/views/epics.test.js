@@ -969,9 +969,7 @@ describe('views/epics', () => {
 
     expect(mount.querySelector('[data-testid="epics-view"]')).toBeTruthy();
     expect(mount.querySelector('[data-testid="epics-table"]')).toBeTruthy();
-    expect(
-      mount.querySelector('[data-testid="epics-sort-id"]')
-    ).toBeTruthy();
+    expect(mount.querySelector('[data-testid="epics-sort-id"]')).toBeTruthy();
     expect(
       mount.querySelector('[data-testid="epic-group-UI-70"]')
     ).toBeTruthy();
@@ -982,22 +980,22 @@ describe('views/epics', () => {
       mount.querySelector('[data-testid="epic-header-chevron-UI-70"]')
     ).toBeTruthy();
     expect(
-      mount.querySelector('[data-testid="epic-header-title-UI-70"]')
-        ?.textContent
-        ?.trim()
+      mount
+        .querySelector('[data-testid="epic-header-title-UI-70"]')
+        ?.textContent?.trim()
     ).toBe('Epic Ids');
     expect(
-      mount.querySelector('[data-testid="epic-header-status-badge-UI-70"]')
-        ?.textContent
-        ?.trim()
+      mount
+        .querySelector('[data-testid="epic-header-status-badge-UI-70"]')
+        ?.textContent?.trim()
     ).toBe('Open');
     expect(
       mount.querySelector('[data-testid="epic-progress-bar-UI-70"]')
     ).toBeTruthy();
     expect(
-      mount.querySelector('[data-testid="epic-progress-count-UI-70"]')
-        ?.textContent
-        ?.trim()
+      mount
+        .querySelector('[data-testid="epic-progress-count-UI-70"]')
+        ?.textContent?.trim()
     ).toBe('0/1');
     expect(
       mount.querySelector('[data-testid="epic-children-table-UI-70"]')

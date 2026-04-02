@@ -233,75 +233,81 @@ export function createListView(
     return html`
       <div class="panel__header" data-testid="list-view">
         <div class="list-filters" data-testid="list-filters">
-        <div
-          class="filter-dropdown ${status_dropdown_open ? 'is-open' : ''}"
-          data-testid="list-filter-status"
-        >
-          <button
-            class="filter-dropdown__trigger"
-            @click=${toggleStatusDropdown}
-            data-testid="list-filter-status-trigger"
+          <div
+            class="filter-dropdown ${status_dropdown_open ? 'is-open' : ''}"
+            data-testid="list-filter-status"
           >
-            ${getDropdownDisplayText(status_filters, 'Status', statusLabel)}
-            <span class="filter-dropdown__arrow">▾</span>
-          </button>
-          <div class="filter-dropdown__menu" data-testid="list-filter-status-menu">
-            ${['ready', 'open', 'in_progress', 'closed'].map(
-              (s) => html`
-                <label
-                  class="filter-dropdown__option"
-                  data-testid=${`list-filter-status-option-${s}`}
-                >
-                  <input
-                    type="checkbox"
-                    .checked=${status_filters.includes(s)}
-                    @change=${() => toggleStatusFilter(s)}
-                    data-testid=${`list-filter-status-checkbox-${s}`}
-                  />
-                  ${s === 'ready' ? 'Ready' : statusLabel(s)}
-                </label>
-              `
-            )}
+            <button
+              class="filter-dropdown__trigger"
+              @click=${toggleStatusDropdown}
+              data-testid="list-filter-status-trigger"
+            >
+              ${getDropdownDisplayText(status_filters, 'Status', statusLabel)}
+              <span class="filter-dropdown__arrow">▾</span>
+            </button>
+            <div
+              class="filter-dropdown__menu"
+              data-testid="list-filter-status-menu"
+            >
+              ${['ready', 'open', 'in_progress', 'closed'].map(
+                (s) => html`
+                  <label
+                    class="filter-dropdown__option"
+                    data-testid=${`list-filter-status-option-${s}`}
+                  >
+                    <input
+                      type="checkbox"
+                      .checked=${status_filters.includes(s)}
+                      @change=${() => toggleStatusFilter(s)}
+                      data-testid=${`list-filter-status-checkbox-${s}`}
+                    />
+                    ${s === 'ready' ? 'Ready' : statusLabel(s)}
+                  </label>
+                `
+              )}
+            </div>
           </div>
-        </div>
-        <div
-          class="filter-dropdown ${type_dropdown_open ? 'is-open' : ''}"
-          data-testid="list-filter-type"
-        >
-          <button
-            class="filter-dropdown__trigger"
-            @click=${toggleTypeDropdown}
-            data-testid="list-filter-type-trigger"
+          <div
+            class="filter-dropdown ${type_dropdown_open ? 'is-open' : ''}"
+            data-testid="list-filter-type"
           >
-            ${getDropdownDisplayText(type_filters, 'Types', typeLabel)}
-            <span class="filter-dropdown__arrow">▾</span>
-          </button>
-          <div class="filter-dropdown__menu" data-testid="list-filter-type-menu">
-            ${ISSUE_TYPES.map(
-              (t) => html`
-                <label
-                  class="filter-dropdown__option"
-                  data-testid=${`list-filter-type-option-${t}`}
-                >
-                  <input
-                    type="checkbox"
-                    .checked=${type_filters.includes(t)}
-                    @change=${() => toggleTypeFilter(t)}
-                    data-testid=${`list-filter-type-checkbox-${t}`}
-                  />
-                  ${typeLabel(t)}
-                </label>
-              `
-            )}
+            <button
+              class="filter-dropdown__trigger"
+              @click=${toggleTypeDropdown}
+              data-testid="list-filter-type-trigger"
+            >
+              ${getDropdownDisplayText(type_filters, 'Types', typeLabel)}
+              <span class="filter-dropdown__arrow">▾</span>
+            </button>
+            <div
+              class="filter-dropdown__menu"
+              data-testid="list-filter-type-menu"
+            >
+              ${ISSUE_TYPES.map(
+                (t) => html`
+                  <label
+                    class="filter-dropdown__option"
+                    data-testid=${`list-filter-type-option-${t}`}
+                  >
+                    <input
+                      type="checkbox"
+                      .checked=${type_filters.includes(t)}
+                      @change=${() => toggleTypeFilter(t)}
+                      data-testid=${`list-filter-type-checkbox-${t}`}
+                    />
+                    ${typeLabel(t)}
+                  </label>
+                `
+              )}
+            </div>
           </div>
-        </div>
-        <input
-          type="search"
-          placeholder="Search…"
-          @input=${onSearchInput}
-          .value=${search_text}
-          data-testid="list-search-input"
-        />
+          <input
+            type="search"
+            placeholder="Search…"
+            @input=${onSearchInput}
+            .value=${search_text}
+            data-testid="list-search-input"
+          />
         </div>
       </div>
       <div class="panel__body" id="list-root" data-testid="list-body">
@@ -338,12 +344,24 @@ export function createListView(
                 <thead data-testid="list-header">
                   <tr role="row">
                     <th role="columnheader" data-testid="list-header-id">ID</th>
-                    <th role="columnheader" data-testid="list-header-type">Type</th>
-                    <th role="columnheader" data-testid="list-header-title">Title</th>
-                    <th role="columnheader" data-testid="list-header-status">Status</th>
-                    <th role="columnheader" data-testid="list-header-assignee">Assignee</th>
-                    <th role="columnheader" data-testid="list-header-priority">Priority</th>
-                    <th role="columnheader" data-testid="list-header-deps">Deps</th>
+                    <th role="columnheader" data-testid="list-header-type">
+                      Type
+                    </th>
+                    <th role="columnheader" data-testid="list-header-title">
+                      Title
+                    </th>
+                    <th role="columnheader" data-testid="list-header-status">
+                      Status
+                    </th>
+                    <th role="columnheader" data-testid="list-header-assignee">
+                      Assignee
+                    </th>
+                    <th role="columnheader" data-testid="list-header-priority">
+                      Priority
+                    </th>
+                    <th role="columnheader" data-testid="list-header-deps">
+                      Deps
+                    </th>
                   </tr>
                 </thead>
                 <tbody role="rowgroup" data-testid="list-rows">

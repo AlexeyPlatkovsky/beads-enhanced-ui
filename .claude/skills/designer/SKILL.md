@@ -152,6 +152,7 @@ title=I(container,{type:\"text\",name:\"Settings Title\",content:\"Screen title\
 - For absolutely positioned layouts, if one item is visually on the right and
   another is on the left, place the right item earlier in the `.pen` array when
   you want the Layers tab to show the left item first.
+
 ### Component Grouping
 
 Group elements into a named frame when they form a single semantic unit — i.e.
@@ -159,13 +160,14 @@ the pieces are only meaningful together (e.g. a progress bar + count label →
 "Progress Tracker"; a status dot + label → "Status Pill").
 
 When a named group repeats 2+ times with only data varying:
+
 - Mark the first instance `reusable: true`.
 - In every other instance, replace the full subtree with a `ref` pointing to
   that node's ID.
 - Do not duplicate structure; the ref is the single source of truth.
 
-Candidates to check before finishing: any set of sibling elements that share
-one purpose and appear in multiple rows or cards.
+Candidates to check before finishing: any set of sibling elements that share one
+purpose and appear in multiple rows or cards.
 
 - Scope changes to what the user asked for. Do not restyle unrelated screens or
   components.

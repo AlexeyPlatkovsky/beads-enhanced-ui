@@ -70,14 +70,14 @@
 
   /* New design tokens (light fallbacks) */
   --surface-raised: var(--bg);
-  --control-bg:     #ffffff;
-  --button-bg:      #f3f4f6;
-  --border-row:     var(--border);
-  --border-tab:     var(--border);
-  --button-border:  #d1d5db;
-  --fg-strong:      var(--fg);
-  --fg-mid:         var(--muted);
-  --fg-dim:         #888888;
+  --control-bg: #ffffff;
+  --button-bg: #f3f4f6;
+  --border-row: var(--border);
+  --border-tab: var(--border);
+  --button-border: #d1d5db;
+  --fg-strong: var(--fg);
+  --fg-mid: var(--muted);
+  --fg-dim: #888888;
   --progress-track: #e5e7eb;
 
   /* Spacing scale (2px baseline) */
@@ -1604,14 +1604,14 @@ html[data-theme='dark'] {
   --panel-bg: #111a2f;
   --border: #25304a;
   --surface-raised: #141f38;
-  --control-bg:     #151f35;
-  --button-bg:      #2b364a;
-  --border-row:     #28334d;
-  --border-tab:     #2f3a55;
-  --button-border:  #3b4860;
-  --fg-strong:      #f4f7fc;
-  --fg-mid:         #a8b0c0;
-  --fg-dim:         #8794ad;
+  --control-bg: #151f35;
+  --button-bg: #2b364a;
+  --border-row: #28334d;
+  --border-tab: #2f3a55;
+  --button-border: #3b4860;
+  --fg-strong: #f4f7fc;
+  --fg-mid: #a8b0c0;
+  --fg-dim: #8794ad;
   --progress-track: #f4f4f1;
   --status-open-base: #51cb4e;
 

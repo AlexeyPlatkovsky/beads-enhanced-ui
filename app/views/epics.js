@@ -76,10 +76,7 @@ export function createEpicsView(
 
   function template() {
     if (!groups.length) {
-      return html`<div
-        class="panel__header muted"
-        data-testid="epics-empty"
-      >
+      return html`<div class="panel__header muted" data-testid="epics-empty">
         No epics found.
       </div>`;
     }
@@ -97,10 +94,23 @@ export function createEpicsView(
           </colgroup>
           <thead class="epics-list-header" data-testid="epics-header">
             <tr>
-              <th scope="col" data-testid="epics-header-id">${sortHeaderTemplate('id', 'Id')}</th>
-              <th scope="col" colspan="2" data-testid="epics-header-name">${sortHeaderTemplate('name', 'Name')}</th>
-              <th scope="col" data-testid="epics-header-status">${sortHeaderTemplate('status', 'Status')}</th>
-              <th scope="col" colspan="2" class="epics-list-header__meta" data-testid="epics-header-progress">Progress</th>
+              <th scope="col" data-testid="epics-header-id">
+                ${sortHeaderTemplate('id', 'Id')}
+              </th>
+              <th scope="col" colspan="2" data-testid="epics-header-name">
+                ${sortHeaderTemplate('name', 'Name')}
+              </th>
+              <th scope="col" data-testid="epics-header-status">
+                ${sortHeaderTemplate('status', 'Status')}
+              </th>
+              <th
+                scope="col"
+                colspan="2"
+                class="epics-list-header__meta"
+                data-testid="epics-header-progress"
+              >
+                Progress
+              </th>
             </tr>
           </thead>
           ${sorted_groups.map((group) => groupTemplate(group))}
@@ -163,9 +173,48 @@ export function createEpicsView(
       is_active && active_direction === 'asc' ? 'desc' : 'asc';
     const sort_icon = is_active
       ? active_direction === 'asc'
-        ? html`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>`
-        : html`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/></svg>`
-      : html`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 15l5 5 5-5"/><path d="M7 9l5-5 5 5"/></svg>`;
+        ? html`<svg
+            width="11"
+            height="11"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M12 19V5" />
+            <path d="M5 12l7-7 7 7" />
+          </svg>`
+        : html`<svg
+            width="11"
+            height="11"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M12 5v14" />
+            <path d="M19 12l-7 7-7-7" />
+          </svg>`
+      : html`<svg
+          width="11"
+          height="11"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M7 15l5 5 5-5" />
+          <path d="M7 9l5-5 5 5" />
+        </svg>`;
     return html`
       <button
         type="button"
@@ -173,7 +222,8 @@ export function createEpicsView(
         data-sort-column=${data_attribute_name === 'data-sort-column'
           ? column
           : nothing}
-        data-child-sort-column=${data_attribute_name === 'data-child-sort-column'
+        data-child-sort-column=${data_attribute_name ===
+        'data-child-sort-column'
           ? column
           : nothing}
         data-testid=${data_attribute_name === 'data-sort-column'
@@ -230,8 +280,36 @@ export function createEpicsView(
           >
             <span class="epic-header-name">
               ${is_open
-                ? html`<svg class="epic-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-testid=${`epic-header-chevron-${id}`}><polyline points="6 9 12 15 18 9"></polyline></svg>`
-                : html`<svg class="epic-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-testid=${`epic-header-chevron-${id}`}><polyline points="9 18 15 12 9 6"></polyline></svg>`}
+                ? html`<svg
+                    class="epic-chevron"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    data-testid=${`epic-header-chevron-${id}`}
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>`
+                : html`<svg
+                    class="epic-chevron"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    data-testid=${`epic-header-chevron-${id}`}
+                  >
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>`}
               <span
                 class="text-truncate"
                 data-testid=${`epic-header-title-${id}`}
@@ -254,10 +332,7 @@ export function createEpicsView(
             colspan="2"
             data-testid=${`epic-header-progress-${id}`}
           >
-            <span
-              class="epic-progress"
-              data-testid=${`epic-progress-${id}`}
-            >
+            <span class="epic-progress" data-testid=${`epic-progress-${id}`}>
               <progress
                 value=${Number(group.closed_children || 0)}
                 max=${Math.max(1, Number(group.total_children || 0))}
@@ -291,20 +366,52 @@ export function createEpicsView(
                       >
                         <colgroup>
                           <col class="epics-table__col epics-table__col--id" />
-                          <col class="epics-table__col epics-table__col--type" />
-                          <col class="epics-table__col epics-table__col--title" />
-                          <col class="epics-table__col epics-table__col--status" />
-                          <col class="epics-table__col epics-table__col--assignee" />
-                          <col class="epics-table__col epics-table__col--priority" />
+                          <col
+                            class="epics-table__col epics-table__col--type"
+                          />
+                          <col
+                            class="epics-table__col epics-table__col--title"
+                          />
+                          <col
+                            class="epics-table__col epics-table__col--status"
+                          />
+                          <col
+                            class="epics-table__col epics-table__col--assignee"
+                          />
+                          <col
+                            class="epics-table__col epics-table__col--priority"
+                          />
                         </colgroup>
                         <thead data-testid=${`epic-children-header-${id}`}>
                           <tr>
-                            <th data-testid=${`epic-children-header-id-${id}`}>${childSortHeaderTemplate('id', 'ID')}</th>
-                            <th data-testid=${`epic-children-header-type-${id}`}>${childSortHeaderTemplate('type', 'Type')}</th>
-                            <th data-testid=${`epic-children-header-title-${id}`}>${childSortHeaderTemplate('title', 'Title')}</th>
-                            <th data-testid=${`epic-children-header-status-${id}`}>${childSortHeaderTemplate('status', 'Status')}</th>
-                            <th data-testid=${`epic-children-header-assignee-${id}`}>${childSortHeaderTemplate('assignee', 'Assignee')}</th>
-                            <th data-testid=${`epic-children-header-priority-${id}`}>${childSortHeaderTemplate('priority', 'Priority')}</th>
+                            <th data-testid=${`epic-children-header-id-${id}`}>
+                              ${childSortHeaderTemplate('id', 'ID')}
+                            </th>
+                            <th
+                              data-testid=${`epic-children-header-type-${id}`}
+                            >
+                              ${childSortHeaderTemplate('type', 'Type')}
+                            </th>
+                            <th
+                              data-testid=${`epic-children-header-title-${id}`}
+                            >
+                              ${childSortHeaderTemplate('title', 'Title')}
+                            </th>
+                            <th
+                              data-testid=${`epic-children-header-status-${id}`}
+                            >
+                              ${childSortHeaderTemplate('status', 'Status')}
+                            </th>
+                            <th
+                              data-testid=${`epic-children-header-assignee-${id}`}
+                            >
+                              ${childSortHeaderTemplate('assignee', 'Assignee')}
+                            </th>
+                            <th
+                              data-testid=${`epic-children-header-priority-${id}`}
+                            >
+                              ${childSortHeaderTemplate('priority', 'Priority')}
+                            </th>
                           </tr>
                         </thead>
                         <tbody data-testid=${`epic-children-rows-${id}`}>

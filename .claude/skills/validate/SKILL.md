@@ -10,16 +10,16 @@ broaden only when the change surface requires it.
 
 ## Decision Table
 
-| What changed                                      | Commands to run                                                        |
-| ------------------------------------------------- | ---------------------------------------------------------------------- |
-| Single test file only                             | `npm test -- <file>` (narrowest target)                                |
-| Logic in `app/` or `server/` only                | Narrowest matching test file, then `npm test` if shared behavior       |
-| Server/client protocol or WebSocket schema        | `npm test` (full suite — protocol changes ripple across both sides)    |
-| Types in `types/`                                 | `npm run tsc`                                                          |
-| `.claude/**` only                                 | No app test run; verify referenced paths, commands, and conventions    |
-| Docs only (`docs/**`, `AGENTS.md`, `CHANGES.md`)  | Review for accuracy and path/command consistency                       |
-| Mixed code + tests                                | Protecting test first, then narrowest `npm test` target, then full suite if shared behavior changed |
-| UI/view or routing changes                        | `npm run test:e2e` after `npm test` (needs live server + built bundle) |
+| What changed                                     | Commands to run                                                                                     |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| Single test file only                            | `npm test -- <file>` (narrowest target)                                                             |
+| Logic in `app/` or `server/` only                | Narrowest matching test file, then `npm test` if shared behavior                                    |
+| Server/client protocol or WebSocket schema       | `npm test` (full suite — protocol changes ripple across both sides)                                 |
+| Types in `types/`                                | `npm run tsc`                                                                                       |
+| `.claude/**` only                                | No app test run; verify referenced paths, commands, and conventions                                 |
+| Docs only (`docs/**`, `AGENTS.md`, `CHANGES.md`) | Review for accuracy and path/command consistency                                                    |
+| Mixed code + tests                               | Protecting test first, then narrowest `npm test` target, then full suite if shared behavior changed |
+| UI/view or routing changes                       | `npm run test:e2e` after `npm test` (needs live server + built bundle)                              |
 
 ## Common Commands
 
@@ -35,11 +35,15 @@ npm run test:e2e          # Playwright E2E suite (requires: npm run build first)
 ## E2E Local Requirements
 
 The Playwright E2E suite (`e2e/`) requires:
-1. **Browser binaries**: `npx playwright install chromium` (one-time, ~175 MB)
-2. **Built bundle**: `npm run build` before running (generates `app/main.bundle.js`)
-3. **Live workspace**: The server starts from `process.cwd()` — run from the repo root so the project's `.beads/` workspace is discoverable
 
-The E2E webServer auto-starts on port 3999 and reuses an existing server on that port (unless `CI=true`).
+1. **Browser binaries**: `npx playwright install chromium` (one-time, ~175 MB)
+2. **Built bundle**: `npm run build` before running (generates
+   `app/main.bundle.js`)
+3. **Live workspace**: The server starts from `process.cwd()` — run from the
+   repo root so the project's `.beads/` workspace is discoverable
+
+The E2E webServer auto-starts on port 3999 and reuses an existing server on that
+port (unless `CI=true`).
 
 ## Rules
 
