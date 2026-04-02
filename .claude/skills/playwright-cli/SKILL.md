@@ -5,7 +5,6 @@ description:
   browsing. Use when the user needs to navigate websites, interact with web
   pages, fill forms, take screenshots, test the frontend, reproduce browser
   issues, or extract information from web pages.
-allowed-tools: Bash(playwright-cli:*)
 ---
 
 # Browser Automation with playwright-cli
@@ -220,6 +219,11 @@ under `.playwright/snapshots/`. Do not write snapshot YAML artifacts to the
 repository root. If a named artifact is needed, pass a path under
 `.playwright/snapshots/`.
 
+When a snapshot gives you an element ref like `e7` but not the DOM attribute or
+style detail you need, inspect that element with `playwright-cli eval`. For
+examples, see
+[references/element-attributes.md](references/element-attributes.md).
+
 ## Artifact Locations
 
 Keep browser artifacts out of the repo root:
@@ -318,10 +322,14 @@ playwright-cli close
 
 ## Specific tasks
 
+- **Inspecting element attributes**
+  [references/element-attributes.md](references/element-attributes.md)
 - **Request mocking**
   [references/request-mocking.md](references/request-mocking.md)
 - **Running Playwright code**
   [references/running-code.md](references/running-code.md)
+- **Running and debugging Playwright tests**
+  [references/playwright-tests.md](references/playwright-tests.md)
 - **Browser session management**
   [references/session-management.md](references/session-management.md)
 - **Storage state (cookies, localStorage)**

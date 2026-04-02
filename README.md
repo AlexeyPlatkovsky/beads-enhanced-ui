@@ -16,7 +16,7 @@
 
 ## Features
 
-- ✨ **Zero setup** – just run `bdui start`
+- ✨ **Zero setup** – just run `bdui start --open`
 - 📺 **Live updates** – Monitors the beads database for changes
 - 🔎 **Issues view** – Filter and search issues, edit inline
 - ⛰️ **Epics view** – Show progress per epic, expand rows, edit inline
@@ -29,7 +29,7 @@
 
 ```sh
 npm install -g beads-enhanced-ui
-# In your project directory:
+# Run UI in your project directory:
 bdui start --open
 ```
 
@@ -39,15 +39,15 @@ See `bdui --help` for options.
 
 **Issues**
 
-![Issues view](https://github.com/mantoni/beads-ui/raw/main/media/bdui-issues.png)
+![Issues view](docs/media/issues-view.png)
 
 **Epics**
 
-![Epics view](https://github.com/mantoni/beads-ui/raw/main/media/bdui-epics.png)
+![Epics view](docs/media/epics-view.png)
 
 **Board**
 
-![Board view](https://github.com/mantoni/beads-ui/raw/main/media/bdui-board.png)
+![Board view](docs/media/board-view.png)
 
 ## Environment variables
 
