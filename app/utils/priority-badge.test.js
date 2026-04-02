@@ -18,4 +18,11 @@ describe('utils/priority-badge', () => {
     expect(emojiForPriority(99)).not.toBe('');
     expect(emojiForPriority(-1)).not.toBe('');
   });
+
+  test('defaults null priorities to medium', () => {
+    const badge = createPriorityBadge(null);
+
+    expect(badge.classList.contains('is-p2')).toBe(true);
+    expect(badge.getAttribute('title')).toBe('Medium');
+  });
 });

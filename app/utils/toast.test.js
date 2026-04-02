@@ -28,4 +28,11 @@ describe('utils/toast', () => {
     const toast = /** @type {HTMLElement} */ (document.querySelector('.toast'));
     expect(toast.style.background).toBe('rgb(159, 32, 17)');
   });
+
+  test('uses info styling by default', () => {
+    showToast('Heads up');
+
+    const toast = /** @type {HTMLElement} */ (document.querySelector('.toast'));
+    expect(toast.style.background).toBe('rgba(0, 0, 0, 0.85)');
+  });
 });

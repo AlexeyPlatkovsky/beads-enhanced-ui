@@ -21,6 +21,25 @@ describe('utils/activity-indicator', () => {
     expect(mount.hasAttribute('hidden')).toBe(true);
   });
 
+  test('done is a no-op when no work is pending', () => {
+    const mount = document.createElement('div');
+    const indicator = createActivityIndicator(mount);
+
+    indicator.done();
+
+    expect(indicator.getCount()).toBe(0);
+    expect(mount.getAttribute('aria-busy')).toBe('false');
+  });
+
+  test('supports a missing mount element', async () => {
+    const indicator = createActivityIndicator(null);
+    const wrapped = indicator.wrapSend(async () => 'ok');
+
+    await expect(wrapped('list-issues')).resolves.toBe('ok');
+    expect(indicator.getCount()).toBe(0);
+    expect(indicator.getActiveRequests()).toHaveLength(0);
+  });
+
   test('wrapSend tracks active requests and clears state after resolve', async () => {
     const mount = document.createElement('div');
     const indicator = createActivityIndicator(mount);
@@ -51,6 +70,41 @@ describe('utils/activity-indicator', () => {
     void wrapped('list-issues');
     vi.advanceTimersByTime(30000);
 
+    expect(indicator.getCount()).toBe(0);
+    expect(indicator.getActiveRequests()).toHaveLength(0);
+  });
+
+  test('wrapSend clears state after rejection', async () => {
+    const mount = document.createElement('div');
+    const indicator = createActivityIndicator(mount);
+    const wrapped = indicator.wrapSend(async () => {
+      throw new Error('boom');
+    });
+
+    await expect(wrapped('list-issues')).rejects.toThrow('boom');
+    expect(indicator.getCount()).toBe(0);
+    expect(indicator.getActiveRequests()).toHaveLength(0);
+    expect(mount.getAttribute('aria-busy')).toBe('false');
+  });
+
+  test('late resolution after safety timeout does not double-decrement', async () => {
+    const mount = document.createElement('div');
+    const indicator = createActivityIndicator(mount);
+    const wrapped = indicator.wrapSend(
+      () =>
+        new Promise((resolve) => {
+          setTimeout(() => resolve('late'), 31000);
+        })
+    );
+
+    const promise = wrapped('list-issues');
+
+    vi.advanceTimersByTime(30000);
+    expect(indicator.getCount()).toBe(0);
+    expect(indicator.getActiveRequests()).toHaveLength(0);
+
+    vi.advanceTimersByTime(1000);
+    await expect(promise).resolves.toBe('late');
     expect(indicator.getCount()).toBe(0);
     expect(indicator.getActiveRequests()).toHaveLength(0);
   });

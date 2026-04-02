@@ -85,4 +85,35 @@ describe('views/fatal-error-dialog', () => {
     expect(ev.defaultPrevented).toBe(true);
     expect(dialog.getElement().hasAttribute('open')).toBe(false);
   });
+
+  test('falls back to setting open when showModal throws', () => {
+    const mount = document.createElement('div');
+    const dialog = createFatalErrorDialog(mount);
+    const element = dialog.getElement();
+    const originalShowModal = element.showModal;
+
+    element.showModal = () => {
+      throw new Error('not supported');
+    };
+
+    dialog.open('Boom', 'Something failed');
+
+    expect(element.hasAttribute('open')).toBe(true);
+    element.showModal = originalShowModal;
+  });
+
+  test('falls back to setting open when showModal is unavailable', () => {
+    const mount = document.createElement('div');
+    const dialog = createFatalErrorDialog(mount);
+    const element = dialog.getElement();
+    const originalShowModal = element.showModal;
+
+    // @ts-expect-error exercise runtime fallback when the method is absent
+    element.showModal = undefined;
+
+    dialog.open('Boom', 'Something failed');
+
+    expect(element.hasAttribute('open')).toBe(true);
+    element.showModal = originalShowModal;
+  });
 });

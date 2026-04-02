@@ -27,6 +27,22 @@ function setup() {
 }
 
 describe('views/nav', () => {
+  test('defaults to issues when store view is missing', () => {
+    const { mount, store, router } = setup();
+    store.state = {};
+    createTopNav(
+      mount,
+      /** @type {any} */ (store),
+      /** @type {any} */ (router)
+    );
+
+    expect(
+      mount.querySelector('[data-testid="nav-tab-issues"]')?.classList.contains(
+        'active'
+      )
+    ).toBe(true);
+  });
+
   test('renders and routes between tabs', async () => {
     const { mount, store, router } = setup();
     createTopNav(
@@ -76,6 +92,26 @@ describe('views/nav', () => {
         ?.classList.contains('active')
     ).toBe(false);
 
+    nav.destroy();
+    expect(mount.querySelector('[data-testid="top-nav"]')).toBeNull();
+  });
+
+  test('marks epics active and destroy is idempotent', () => {
+    const { mount, store, router } = setup();
+    store.state = { view: 'epics' };
+    const nav = createTopNav(
+      mount,
+      /** @type {any} */ (store),
+      /** @type {any} */ (router)
+    );
+
+    expect(
+      mount.querySelector('[data-testid="nav-tab-epics"]')?.classList.contains(
+        'active'
+      )
+    ).toBe(true);
+
+    nav.destroy();
     nav.destroy();
     expect(mount.querySelector('[data-testid="top-nav"]')).toBeNull();
   });
