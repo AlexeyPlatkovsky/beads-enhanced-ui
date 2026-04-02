@@ -28,7 +28,7 @@
 ## Setup
 
 ```sh
-npm i beads-ui -g
+npm install -g beads-enhanced-ui
 # In your project directory:
 bdui start --open
 ```
