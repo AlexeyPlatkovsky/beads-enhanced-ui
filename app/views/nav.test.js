@@ -5,7 +5,7 @@ function setup() {
   document.body.innerHTML = '<div id="m"></div>';
   const mount = /** @type {HTMLElement} */ (document.getElementById('m'));
   const store = {
-    state: { view: 'issues' },
+    state: /** @type {{ view?: string }} */ ({ view: 'issues' }),
     getState() {
       return this.state;
     },
