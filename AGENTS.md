@@ -51,7 +51,11 @@ updates, Vitest for tests.
 - Update docs when public usage, extension points, or workflow expectations
   change.
 - Use matched local skills as binding workflow.
-- Use the `validate` skill before claiming non-trivial work complete.
+- Use the `validate` skill after any code change before claiming work complete.
+- Validation findings must be fixed before handoff, no matter how small they
+  are.
+- If the work must survive release/versioning gates such as `npm version patch`,
+  validation must include the full `npm run all` flow.
 - For non-trivial code work, run the `code-reviewer` agent after validation and
   include its outcome in handoff.
 - If subagent invocation is unavailable or disallowed by the current runtime

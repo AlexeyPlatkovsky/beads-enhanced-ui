@@ -6,7 +6,8 @@ description:
 ---
 
 Inspect what changed first, then run the smallest meaningful verification and
-broaden only when the change surface requires it.
+broaden to the full project gate whenever the work is intended to be complete,
+releaseable, or must satisfy preversion/version checks.
 
 ## Decision Table
 
@@ -20,6 +21,7 @@ broaden only when the change surface requires it.
 | Docs only (`docs/**`, `AGENTS.md`, `CHANGES.md`) | Review for accuracy and path/command consistency                                                    |
 | Mixed code + tests                               | Protecting test first, then narrowest `npm test` target, then full suite if shared behavior changed |
 | UI/view or routing changes                       | `npm run test:e2e` after `npm test` (needs live server + built bundle)                              |
+| Any change that must pass release/version gates  | `npm run all`                                                                                       |
 
 ## Common Commands
 
@@ -50,8 +52,13 @@ port (unless `CI=true`).
 - Run the smallest protecting test first whenever behavior is changing.
 - Prefer targeted test invocations over full-suite runs unless the change is
   broad.
+- After any code change, do not stop at a partial green check if any validation
+  finding remains. Fix all findings, including formatting, typing, lint, test,
+  and coverage failures.
 - If server/client protocol, WebSocket message schema, or view state shape
   changed, run the full suite — these changes ripple across boundaries.
+- If the user is preparing a release, running `npm version`, or otherwise needs
+  the repo to satisfy the same gate as `preversion`, run `npm run all`.
 - For `.claude/**` changes, verify that referenced paths, commands, and
   conventions exist in the repo before calling the work complete.
 - If the target code does not exist yet and the change is documentation or
