@@ -51,6 +51,8 @@ updates, Vitest for tests.
 - Update docs when public usage, extension points, or workflow expectations
   change.
 - Use matched local skills as binding workflow.
+- Before release/versioning work, use `prepare-release-notes` so `CHANGES.md`
+  contains curated notes for the target version.
 - Use the `validate` skill after any code change before claiming work complete.
 - Validation findings must be fixed before handoff, no matter how small they
   are.
@@ -137,6 +139,7 @@ Compliance above.
 | `explain-code`            | Explaining implemented code or design flow across server, client, WebSocket, and view boundaries                                                                                                                                                              |
 | `frontend-implementation` | Implementing or updating browser UI code under app/ and app/views/ for this project. Use when changing rendered markup, interactive controls, dialogs, view composition, or frontend-facing behavior in the Beads UI. Do not use for Pencil design-only work. |
 | `playwright-cli`          | Browser automation for local frontend verification or external-site browsing                                                                                                                                                                                  |
+| `prepare-release-notes`   | Curating `CHANGES.md` entries for an existing or upcoming release from commit history. Use on demand and before any release/versioning command so the target version has a non-empty curated entry at the top of `CHANGES.md`.                                |
 | `refactor-code`           | Non-trivial refactors affecting shared server, client, WebSocket, view, or protocol behavior                                                                                                                                                                  |
 | `validate`                | Select and run the right verification steps based on what changed. Use after making code, docs, config, or skill changes to confirm the result is coherent.                                                                                                   |
 | `work-with-docs`          | Creating and maintaining plans, reviews, architecture docs, ADRs, and protocol docs                                                                                                                                                                           |
@@ -150,7 +153,9 @@ Compliance above.
 - Never mix design work and implementation in the same task without explicit
   approval; use `designer` for Pencil work and `frontend-implementation` for UI
   code.
-- Never update `CHANGES.md`.
+- Never append raw commit dumps to `CHANGES.md`; curate it with
+  `prepare-release-notes`, or update a specific release entry only when the task
+  explicitly asks for changelog curation.
 - Never add dependencies without checking that existing ones are insufficient.
 - Never invent Pencil node IDs -- always derive them from tool output.
 
