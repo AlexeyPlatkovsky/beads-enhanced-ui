@@ -1,5 +1,13 @@
 # Changes
 
+## 0.1.2
+
+Released April 15, 2026
+
+### Fixed
+
+- Reduced Dolt workspace lock contention by skipping `bd --sandbox` where it does not help and by coalescing watcher-triggered refreshes during backend file churn.
+
 ## 0.1.1
 
 Released April 02, 2026
