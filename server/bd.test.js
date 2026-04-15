@@ -73,30 +73,56 @@ describe('getBdBin', () => {
   });
 });
 
+/**
+ * Create a temp dir containing `.beads/ui.db` so runBd detects a SQLite
+ * workspace when `cwd` is set to the returned path.
+ *
+ * @returns {string}
+ */
+function make_sqlite_workspace() {
+  const root = make_temp_dir();
+  const beads_dir = path.join(root, '.beads');
+  fs.mkdirSync(beads_dir, { recursive: true });
+  fs.writeFileSync(path.join(beads_dir, 'ui.db'), '');
+  return root;
+}
+
 describe('runBd', () => {
-  test('prepends --sandbox by default', async () => {
+  test('prepends --sandbox by default in a SQLite workspace', async () => {
+    const root = make_sqlite_workspace();
     mockedSpawn.mockReturnValueOnce(makeFakeProc('ok', '', 0));
-    await runBd(['list', '--json']);
+    await runBd(['list', '--json'], { cwd: root, env: {} });
 
     const args = mockedSpawn.mock.calls[0][1];
     expect(args[0]).toBe('--sandbox');
     expect(args.slice(1)).toEqual(['list', '--json']);
   });
 
-  test('does not duplicate --sandbox when caller already provides it', async () => {
+  test('does not prepend --sandbox in a non-SQLite workspace (e.g. Dolt)', async () => {
+    const root = make_temp_dir();
     mockedSpawn.mockReturnValueOnce(makeFakeProc('ok', '', 0));
-    await runBd(['--sandbox', 'list', '--json']);
+    await runBd(['list', '--json'], { cwd: root, env: {} });
+
+    const args = mockedSpawn.mock.calls[0][1];
+    expect(args).toEqual(['list', '--json']);
+  });
+
+  test('does not duplicate --sandbox when caller already provides it', async () => {
+    const root = make_sqlite_workspace();
+    mockedSpawn.mockReturnValueOnce(makeFakeProc('ok', '', 0));
+    await runBd(['--sandbox', 'list', '--json'], { cwd: root, env: {} });
 
     const args = mockedSpawn.mock.calls[0][1];
     expect(args).toEqual(['--sandbox', 'list', '--json']);
   });
 
   test('allows disabling default sandbox via BDUI_BD_SANDBOX', async () => {
+    const root = make_sqlite_workspace();
     const prev = process.env.BDUI_BD_SANDBOX;
     process.env.BDUI_BD_SANDBOX = '0';
     mockedSpawn.mockReturnValueOnce(makeFakeProc('ok', '', 0));
 
-    await runBd(['list', '--json']);
+    await runBd(['list', '--json'], { cwd: root, env: {} });
 
     const args = mockedSpawn.mock.calls[0][1];
     expect(args).toEqual(['list', '--json']);
