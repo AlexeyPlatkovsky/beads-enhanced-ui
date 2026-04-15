@@ -82,7 +82,8 @@ function runBdUnlocked(args, options = {}) {
     env: options.env || process.env
   });
   const env_with_db = { ...(options.env || process.env) };
-  if (db_path.source === 'nearest' && db_path.exists) {
+  const is_sqlite_workspace = db_path.source === 'nearest' && db_path.exists;
+  if (is_sqlite_workspace) {
     env_with_db.BEADS_DB = db_path.path;
   }
 
@@ -94,7 +95,7 @@ function runBdUnlocked(args, options = {}) {
   };
 
   /** @type {string[]} */
-  const final_args = buildBdArgs(args);
+  const final_args = buildBdArgs(args, { is_sqlite_workspace });
 
   return new Promise((resolve) => {
     const child = spawn(bin, final_args, spawn_opts);
@@ -156,14 +157,22 @@ function runBdUnlocked(args, options = {}) {
  * bdui defaults to sandbox mode to avoid sync/autopush overhead on interactive
  * UI requests. Set `BDUI_BD_SANDBOX=0` (or "false") to opt out.
  *
+ * Sandbox is skipped for non-SQLite workspaces (for example Dolt), where it
+ * adds no benefit but still triggers a repo open that contends with the
+ * embedded-mode exclusive lock.
+ *
  * @param {string[]} args
+ * @param {{ is_sqlite_workspace?: boolean }} [ctx]
  * @returns {string[]}
  */
-function buildBdArgs(args) {
+function buildBdArgs(args, ctx = {}) {
   const arg_set = new Set(args);
   const raw_sandbox = String(process.env.BDUI_BD_SANDBOX || '').toLowerCase();
   const sandbox_disabled = raw_sandbox === '0' || raw_sandbox === 'false';
-  const should_prepend_sandbox = !sandbox_disabled && !arg_set.has('--sandbox');
+  const should_prepend_sandbox =
+    !sandbox_disabled &&
+    !arg_set.has('--sandbox') &&
+    ctx.is_sqlite_workspace === true;
 
   if (!should_prepend_sandbox) {
     return args.slice();

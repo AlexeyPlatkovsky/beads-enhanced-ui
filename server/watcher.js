@@ -18,8 +18,9 @@ import { debug } from './logging.js';
  */
 export function watchDb(root_dir, onChange, options = {}) {
   const debounce_ms = options.debounce_ms ?? 250;
-  const cooldown_ms = options.cooldown_ms ?? 1000;
+  const default_cooldown_ms = options.cooldown_ms ?? 1000;
   const log = debug('watcher');
+  let cooldown_ms = default_cooldown_ms;
 
   /** @type {ReturnType<typeof setTimeout> | undefined} */
   let timer;
@@ -56,9 +57,15 @@ export function watchDb(root_dir, onChange, options = {}) {
     if (pathIsDirectory(current_path)) {
       current_dir = current_path;
       current_file = '';
+      // Non-SQLite backends (e.g. Dolt) churn many files inside `.beads/`
+      // during a single logical write. Use a longer cooldown to avoid
+      // storms of onChange callbacks (each of which spawns a `bd` that
+      // re-acquires the embedded-mode exclusive lock).
+      cooldown_ms = Math.max(default_cooldown_ms, 5000);
     } else {
       current_dir = path.dirname(current_path);
       current_file = path.basename(current_path);
+      cooldown_ms = default_cooldown_ms;
     }
     if (!resolved.exists) {
       log(
