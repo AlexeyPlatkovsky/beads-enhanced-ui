@@ -7,7 +7,7 @@ import path from 'node:path';
 import { WebSocketServer } from 'ws';
 import { isRequest, makeError, makeOk } from '../app/protocol.js';
 import { getGitUserName, runBd, runBdJson } from './bd.js';
-import { resolveWorkspaceDatabase } from './db.js';
+import { resolveWorkspaceBackend, resolveWorkspaceDatabase } from './db.js';
 import { fetchListForSubscription } from './list-adapters.js';
 import { debug } from './logging.js';
 import { getAvailableWorkspaces } from './registry-watcher.js';
@@ -191,7 +191,7 @@ let CURRENT_WSS = null;
 /**
  * Current workspace configuration.
  *
- * @type {{ root_dir: string, db_path: string } | null}
+ * @type {{ root_dir: string, db_path: string, backend: 'dolt-embedded'|'dolt-server'|'sqlite'|'unknown' } | null}
  */
 let CURRENT_WORKSPACE = null;
 
@@ -430,7 +430,8 @@ export function attachWsServer(http_server, options = {}) {
   const initial_db = resolveWorkspaceDatabase({ cwd: initial_root });
   CURRENT_WORKSPACE = {
     root_dir: initial_root,
-    db_path: initial_db.path
+    db_path: initial_db.path,
+    backend: resolveWorkspaceBackend({ cwd: initial_root })
   };
 
   if (options.watcher) {
@@ -526,7 +527,8 @@ export function attachWsServer(http_server, options = {}) {
 
     CURRENT_WORKSPACE = {
       root_dir: resolved_root,
-      db_path: new_db.path
+      db_path: new_db.path,
+      backend: resolveWorkspaceBackend({ cwd: resolved_root })
     };
 
     const changed = new_db.path !== old_path;
@@ -1303,7 +1305,8 @@ export async function handleMessage(ws, data) {
 
     CURRENT_WORKSPACE = {
       root_dir: resolved,
-      db_path: new_db.path
+      db_path: new_db.path,
+      backend: resolveWorkspaceBackend({ cwd: resolved })
     };
 
     const changed = new_db.path !== old_path;
