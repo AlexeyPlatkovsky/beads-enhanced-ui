@@ -53,15 +53,59 @@ export function getBdBin() {
 }
 
 /**
+ * Maximum cumulative time spent retrying a `bd` invocation that failed with
+ * a Dolt embedded-mode exclusive-lock error. Retries use jittered backoff
+ * between `LOCK_RETRY_MIN_MS` and `LOCK_RETRY_MAX_MS`.
+ */
+const LOCK_RETRY_BUDGET_MS = 5000;
+const LOCK_RETRY_MIN_MS = 350;
+const LOCK_RETRY_MAX_MS = 600;
+const LOCK_ERROR_PATTERN = /another process holds the exclusive lock/i;
+
+/**
  * Run the `bd` CLI with provided arguments.
  * Shell is not used to avoid injection; args must be pre-split.
+ *
+ * If the invocation fails with a Dolt embedded-mode exclusive-lock error, it
+ * is retried with jittered backoff until `LOCK_RETRY_BUDGET_MS` elapses.
  *
  * @param {string[]} args - Arguments to pass (e.g., ["list", "--json"]).
  * @param {{ cwd?: string, env?: Record<string, string | undefined>, timeout_ms?: number }} [options]
  * @returns {Promise<{ code: number, stdout: string, stderr: string }>}
  */
 export function runBd(args, options = {}) {
-  return withBdRunQueue(async () => runBdUnlocked(args, options));
+  return withBdRunQueue(async () => {
+    const started = Date.now();
+    let result = await runBdUnlocked(args, options);
+    while (
+      result.code !== 0 &&
+      LOCK_ERROR_PATTERN.test(result.stderr || '') &&
+      Date.now() - started < LOCK_RETRY_BUDGET_MS
+    ) {
+      const delay =
+        LOCK_RETRY_MIN_MS +
+        Math.floor(Math.random() * (LOCK_RETRY_MAX_MS - LOCK_RETRY_MIN_MS + 1));
+      const remaining = LOCK_RETRY_BUDGET_MS - (Date.now() - started);
+      if (remaining <= 0) {
+        break;
+      }
+      await sleep(Math.min(delay, remaining));
+      log('retrying bd after Dolt lock error (args=%o)', args);
+      result = await runBdUnlocked(args, options);
+    }
+    return result;
+  });
+}
+
+/**
+ * @param {number} ms
+ * @returns {Promise<void>}
+ */
+function sleep(ms) {
+  return new Promise((resolve) => {
+    const t = setTimeout(resolve, ms);
+    t.unref?.();
+  });
 }
 
 /**

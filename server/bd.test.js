@@ -148,6 +148,37 @@ describe('runBd', () => {
     expect(res.stderr).toContain('boom');
   });
 
+  test('retries on Dolt exclusive-lock error and eventually succeeds', async () => {
+    const lock_err =
+      'error: another process holds the exclusive lock on .beads/embeddeddolt';
+    /** @type {Array<() => ReturnType<typeof makeFakeProc>>} */
+    const factories = [
+      () => makeFakeProc('', lock_err, 1),
+      () => makeFakeProc('', lock_err, 1),
+      () => makeFakeProc('ok', '', 0)
+    ];
+    mockedSpawn.mockImplementation(() => {
+      const factory = factories.shift();
+      if (!factory) {
+        throw new Error('unexpected extra spawn');
+      }
+      return factory();
+    });
+
+    const res = await runBd(['list']);
+    expect(res.code).toBe(0);
+    expect(res.stdout).toContain('ok');
+    expect(mockedSpawn).toHaveBeenCalledTimes(3);
+  });
+
+  test('does not retry on non-lock errors', async () => {
+    mockedSpawn.mockReturnValueOnce(makeFakeProc('', 'unrelated boom', 1));
+    const res = await runBd(['list']);
+    expect(res.code).toBe(1);
+    expect(res.stderr).toContain('boom');
+    expect(mockedSpawn).toHaveBeenCalledTimes(1);
+  });
+
   test('sets BEADS_DB for workspace-local SQLite db', async () => {
     const root = make_temp_dir();
     const beads_dir = path.join(root, '.beads');

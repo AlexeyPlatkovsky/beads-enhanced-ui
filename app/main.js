@@ -266,6 +266,26 @@ export function bootstrap(root_element) {
     }
 
     /**
+     * Update the backend status banner based on the current workspace backend.
+     *
+     * @param {string | undefined} backend
+     */
+    function updateBackendBanner(backend) {
+      const el = document.getElementById('backend-status-banner');
+      if (!el) {
+        return;
+      }
+      if (backend === 'dolt-embedded') {
+        el.textContent =
+          'Dolt embedded — external bd may occasionally conflict';
+        el.hidden = false;
+      } else {
+        el.textContent = '';
+        el.hidden = true;
+      }
+    }
+
+    /**
      * Load available workspaces from server and update state.
      */
     async function loadWorkspaces() {
@@ -286,6 +306,9 @@ export function bootstrap(root_element) {
               }
             : null;
           store.setState({ workspace: { current, available } });
+          updateBackendBanner(
+            result.current ? result.current.backend : undefined
+          );
 
           // Check if we have a saved preference that differs from current
           const savedWorkspace =
@@ -318,6 +341,7 @@ export function bootstrap(root_element) {
             }
           }
         });
+        updateBackendBanner(payload.backend);
         // Reload workspaces to get fresh list
         void loadWorkspaces();
         // Clear and resubscribe

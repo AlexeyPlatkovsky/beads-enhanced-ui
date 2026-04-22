@@ -77,6 +77,41 @@ export function resolveWorkspaceDatabase(options = {}) {
 }
 
 /**
+ * Resolve the backend kind used by a workspace.
+ *
+ * Reads the nearest `.beads/metadata.json` and maps `backend` + `dolt_mode`
+ * into one of: `dolt-embedded`, `dolt-server`, `sqlite`, or `unknown`.
+ * Falls back to `sqlite` when a `.beads/*.db` file exists but no metadata.
+ *
+ * @param {{ cwd?: string }} [options]
+ * @returns {'dolt-embedded'|'dolt-server'|'sqlite'|'unknown'}
+ */
+export function resolveWorkspaceBackend(options = {}) {
+  const cwd = options.cwd ? path.resolve(options.cwd) : process.cwd();
+  const metadata_path = findNearestBeadsMetadata(cwd);
+  if (metadata_path) {
+    try {
+      const raw = fs.readFileSync(metadata_path, 'utf8');
+      const meta = JSON.parse(raw);
+      const backend = String(meta?.backend || '').toLowerCase();
+      if (backend === 'dolt') {
+        const mode = String(meta?.dolt_mode || '').toLowerCase();
+        return mode === 'embedded' ? 'dolt-embedded' : 'dolt-server';
+      }
+      if (backend === 'sqlite') {
+        return 'sqlite';
+      }
+    } catch {
+      // fall through
+    }
+  }
+  if (findNearestBeadsDb(cwd)) {
+    return 'sqlite';
+  }
+  return 'unknown';
+}
+
+/**
  * Find nearest `.beads/metadata.json` by walking up from start.
  *
  * @param {string} start

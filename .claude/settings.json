@@ -1,20 +1,41 @@
 {
   "hooks": {
-    "PreToolUse": [
+    "PreCompact": [
       {
-        "matcher": "Bash(git push:*)",
         "hooks": [
           {
-            "type": "command",
-            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"additionalContext\":\"PRE-PUSH CHECKLIST (AGENTS.md):\\n1. CODE REVIEW: Have you run the code-reviewer subagent on this diff?\\n2. BRANCH: Did you explicitly confirm the branch with the user before starting non-trivial work?\\nIf either answer is no, stop the push, complete the missing step, then retry.\"}}'",
-            "statusMessage": "Checking pre-push checklist..."
+            "command": "bd prime",
+            "type": "command"
           }
-        ]
+        ],
+        "matcher": ""
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"additionalContext\":\"PRE-PUSH CHECKLIST (AGENTS.md):\\n1. CODE REVIEW: Have you run the code-reviewer subagent on this diff?\\n2. BRANCH: Did you explicitly confirm the branch with the user before starting non-trivial work?\\nIf either answer is no, stop the push, complete the missing step, then retry.\"}}'",
+            "statusMessage": "Checking pre-push checklist...",
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash(git push:*)"
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "bd prime",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
       }
     ]
   },
   "permissions": {
-    "defaultMode": "acceptEdits",
     "allow": [
       "Bash(bd:*)",
       "Bash(git:*)",
@@ -44,6 +65,7 @@
       "Bash(git push:*)",
       "Bash(git rebase:*)",
       "Bash(git reset:*)"
-    ]
+    ],
+    "defaultMode": "acceptEdits"
   }
 }

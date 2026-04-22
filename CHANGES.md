@@ -1,5 +1,18 @@
 # Changes
 
+## 0.1.3
+
+Released April 22, 2026
+
+### Added
+
+- Header banner warns when the active workspace uses Dolt embedded mode, where occasional lock conflicts with external `bd` processes may occur.
+
+### Fixed
+
+- `bd` invocations that fail with a Dolt embedded-mode exclusive-lock error are now automatically retried with jittered backoff (up to 5 seconds), reducing transient failures during concurrent access.
+- Watcher cooldown for Dolt embedded-mode increased from 5 s to 30 s to prevent lock-storm cascades after a write.
+
 ## 0.1.2
 
 Released April 15, 2026

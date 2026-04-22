@@ -61,7 +61,7 @@ export function watchDb(root_dir, onChange, options = {}) {
       // during a single logical write. Use a longer cooldown to avoid
       // storms of onChange callbacks (each of which spawns a `bd` that
       // re-acquires the embedded-mode exclusive lock).
-      cooldown_ms = Math.max(default_cooldown_ms, 5000);
+      cooldown_ms = Math.max(default_cooldown_ms, 30000);
     } else {
       current_dir = path.dirname(current_path);
       current_file = path.basename(current_path);
