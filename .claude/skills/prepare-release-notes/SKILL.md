@@ -1,9 +1,8 @@
 ---
 name: prepare-release-notes
 description:
-  Curate a `CHANGES.md` entry for an existing or upcoming release from commit
-  history. Use when asked to prepare release notes, curate a release entry, or
-  before running release/versioning commands.
+  Curate a `CHANGES.md` entry and run the release command to bump the version.
+  Use when asked to bump the version, prepare a release, or curate a release entry.
 ---
 
 Use this skill to maintain `CHANGES.md` as the single canonical release log. The
@@ -55,3 +54,6 @@ Produce a curated release entry with:
    non-code commits.
 4. Group the meaningful changes into 1-5 bullets under non-empty sections.
 5. Prepend or rewrite the target version entry in `CHANGES.md`.
+6. Run `npm run release:patch` (or `:minor` / `:major` as appropriate) to bump
+   `package.json`, commit, tag, push, and publish. Do not stop after writing
+   `CHANGES.md` — the version bump is the goal; the release notes are a gate.
