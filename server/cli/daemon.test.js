@@ -11,7 +11,7 @@ vi.mock('../db.js', () => ({
 }));
 
 vi.mock('../config.js', () => ({
-  getConfig: () => ({ url: 'http://127.0.0.1:3000' })
+  getConfig: () => ({ url: 'http://127.0.0.1:3050' })
 }));
 
 describe('printServerUrl', () => {
@@ -23,7 +23,7 @@ describe('printServerUrl', () => {
     expect(resolveWorkspaceDatabase).toHaveBeenCalledTimes(1);
     expect(log_spy).toHaveBeenCalledWith('beads db   /repo/.beads (metadata)');
     expect(log_spy).toHaveBeenCalledWith(
-      'beads ui   listening on http://127.0.0.1:3000'
+      'beads ui   listening on http://127.0.0.1:3050'
     );
 
     log_spy.mockRestore();

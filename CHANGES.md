@@ -1,5 +1,13 @@
 # Changes
 
+## 0.1.4
+
+Released April 23, 2026
+
+### Changed
+
+- Changed the default local UI server port from `3000` to `3050` to reduce collisions with other dev servers.
+
 ## 0.1.3
 
 Released April 22, 2026

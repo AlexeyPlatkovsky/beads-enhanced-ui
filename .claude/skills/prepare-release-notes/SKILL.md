@@ -2,7 +2,8 @@
 name: prepare-release-notes
 description:
   Curate a `CHANGES.md` entry and run the release command to bump the version.
-  Use when asked to bump the version, prepare a release, or curate a release entry.
+  Use when asked to bump the version, prepare a release, or curate a release
+  entry.
 ---
 
 Use this skill to maintain `CHANGES.md` as the single canonical release log. The

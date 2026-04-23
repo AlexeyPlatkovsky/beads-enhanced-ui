@@ -55,7 +55,7 @@ See `bdui --help` for options.
 - `BDUI_RUNTIME_DIR`: override runtime directory for PID/logs. Defaults to
   `$XDG_RUNTIME_DIR/beads-ui` or the system temp dir.
 - `HOST`: overrides the bind address (default `127.0.0.1`).
-- `PORT`: overrides the listen port (default `3000`).
+- `PORT`: overrides the listen port (default `3050`).
 
 These can also be set via CLI options: `bdui start --host 0.0.0.0 --port 8080`
 

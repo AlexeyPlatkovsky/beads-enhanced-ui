@@ -18,8 +18,8 @@ Use this skill for both:
 
 When the task is about this repo, prefer local targets first:
 
-- App: `http://127.0.0.1:3000`
-- WebSocket endpoint: `ws://127.0.0.1:3000/ws`
+- App: `http://127.0.0.1:3050`
+- WebSocket endpoint: `ws://127.0.0.1:3050/ws`
 
 Before driving the local app, read `README.md` and `docs/architecture.md` if you
 need startup commands, bind address defaults, or protocol context.
@@ -281,7 +281,7 @@ playwright-cli close
 ## Example: Local app smoke flow
 
 ```bash
-playwright-cli open http://127.0.0.1:3000
+playwright-cli open http://127.0.0.1:3050
 playwright-cli snapshot
 
 # inspect the issues view, switch views, or open issue detail
