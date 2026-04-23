@@ -14,9 +14,9 @@ function setupIndexMocks(options = {}) {
       options.config || {
         root_dir: '/repo',
         host: process.env.HOST || '127.0.0.1',
-        port: Number(process.env.PORT || '3000'),
+        port: Number(process.env.PORT || '3050'),
         app_dir: '/app',
-        url: `http://${process.env.HOST || '127.0.0.1'}:${process.env.PORT || '3000'}`
+        url: `http://${process.env.HOST || '127.0.0.1'}:${process.env.PORT || '3050'}`
       }
   );
   const resolveWorkspaceDatabase = vi.fn(
@@ -133,9 +133,9 @@ describe('server/index startup wiring', () => {
       config: {
         root_dir: '/repo',
         host: '127.0.0.1',
-        port: 3000,
+        port: 3050,
         app_dir: '/app',
-        url: 'http://127.0.0.1:3000'
+        url: 'http://127.0.0.1:3050'
       },
       workspaceDatabase: {
         source: 'home-default',

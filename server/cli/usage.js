@@ -18,7 +18,7 @@ export function printUsage(out_stream) {
     '  -d, --debug       Enable debug logging',
     '      --open        Open the browser after start/restart',
     '      --host <addr> Bind to a specific host (default: 127.0.0.1)',
-    '      --port <num>  Bind to a specific port (default: 3000)',
+    '      --port <num>  Bind to a specific port (default: 3050)',
     ''
   ];
   for (const line of lines) {

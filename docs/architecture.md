@@ -52,7 +52,7 @@ push‑only data flow used between the browser SPA and the local Node.js server.
     helpers)
   - DB resolution/watch: `server/db.js` (resolve active DB path),
     `server/watcher.js` (schedule list refresh)
-  - Config: `server/config.js` (bind to `127.0.0.1`, default port 3000)
+  - Config: `server/config.js` (bind to `127.0.0.1`, default port 3050)
 
 ## Data Flow
 

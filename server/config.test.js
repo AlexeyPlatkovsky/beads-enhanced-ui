@@ -21,9 +21,9 @@ describe('server/config', () => {
     const config = getConfig();
 
     expect(config.host).toBe('127.0.0.1');
-    expect(config.port).toBe(3000);
+    expect(config.port).toBe(3050);
     expect(config.root_dir).toBe('/repo');
-    expect(config.url).toBe('http://127.0.0.1:3000');
+    expect(config.url).toBe('http://127.0.0.1:3050');
     expect(path.basename(config.app_dir)).toBe('app');
   });
 

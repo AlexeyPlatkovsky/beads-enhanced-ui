@@ -28,7 +28,7 @@ vi.mock('../db.js', () => ({
 // Mock config - mirrors real getConfig() so env var overrides are testable
 vi.mock('../config.js', () => ({
   getConfig: () => {
-    const port = Number.parseInt(process.env.PORT || '', 10) || 3000;
+    const port = Number.parseInt(process.env.PORT || '', 10) || 3050;
     const host = process.env.HOST || '127.0.0.1';
     return { url: `http://${host}:${port}` };
   }
@@ -75,7 +75,7 @@ describe('handleStart (unit)', () => {
     expect(code).toBe(0);
     expect(register_workspace_with_server).toHaveBeenCalledTimes(1);
     expect(register_workspace_with_server).toHaveBeenCalledWith(
-      'http://127.0.0.1:3000',
+      'http://127.0.0.1:3050',
       {
         path: process.cwd(),
         database: path.join(process.cwd(), '.beads')
@@ -122,7 +122,7 @@ describe('handleStart (unit)', () => {
     expect(remove_pid).toHaveBeenCalledTimes(1);
     expect(register_workspace_with_server).toHaveBeenCalledTimes(1);
     expect(register_workspace_with_server).toHaveBeenCalledWith(
-      'http://127.0.0.1:3000',
+      'http://127.0.0.1:3050',
       {
         path: process.cwd(),
         database: path.join(process.cwd(), '.beads')
@@ -151,7 +151,7 @@ describe('handleStart (unit)', () => {
     expect(print_url).toHaveBeenCalledTimes(1);
     expect(register_workspace_with_server).toHaveBeenCalledTimes(1);
     expect(register_workspace_with_server).toHaveBeenCalledWith(
-      'http://127.0.0.1:3000',
+      'http://127.0.0.1:3050',
       {
         path: process.cwd(),
         database: path.join(process.cwd(), '.beads')

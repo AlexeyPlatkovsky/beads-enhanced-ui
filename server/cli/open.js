@@ -102,7 +102,7 @@ function sleep(ms) {
  * Register a workspace with the running server.
  * Makes a POST request to /api/register-workspace.
  *
- * @param {string} base_url - Server base URL (e.g., "http://127.0.0.1:3000")
+ * @param {string} base_url - Server base URL (e.g., "http://127.0.0.1:3050")
  * @param {{ path: string, database: string }} workspace
  * @returns {Promise<boolean>} True if registration succeeded
  */
