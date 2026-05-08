@@ -1,0 +1,92 @@
+{
+  "name": "beads-enhanced-ui",
+  "version": "0.1.2",
+  "description": "Enhanced local UI for Beads with improved epic rows, status labels, and UX refinements.",
+  "keywords": [
+    "agent",
+    "issue-tracker",
+    "local-first",
+    "ai-tools"
+  ],
+  "homepage": "https://github.com/AlexeyPlatkovsky/beads-enhanced-ui#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexeyPlatkovsky/beads-enhanced-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AlexeyPlatkovsky/beads-enhanced-ui/issues"
+  },
+  "author": "Alexey Platkovsky",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "bdui": "bin/bdui.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "all": "npm run lint && npm run tsc && npm test && npm run test:coverage:app && npm run prettier:check",
+    "start": "node server/index.js --debug",
+    "build": "node scripts/build-frontend.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:coverage:app": "vitest run --project=jsdom --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "tsc": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint --ext .js .",
+    "prettier:write": "prettier --write .",
+    "prettier:check": "prettier --check .",
+    "preversion": "npm run all",
+    "release:patch": "node scripts/check-release-notes.js patch && npm version patch",
+    "release:minor": "node scripts/check-release-notes.js minor && npm version minor",
+    "release:major": "node scripts/check-release-notes.js major && npm version major",
+    "version": "node scripts/check-release-notes.js current",
+    "postversion": "git push --follow-tags && npm publish",
+    "prepack": "npm run build",
+    "postpack": "rm app/main.bundle.js app/main.bundle.js.map"
+  },
+  "dependencies": {
+    "debug": "^4.4.3",
+    "dompurify": "^3.3.0",
+    "express": "^5.2.1",
+    "lit-html": "^3.3.1",
+    "marked": "^17.0.1",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@playwright/test": "^1.58.2",
+    "@trivago/prettier-plugin-sort-imports": "^6.0.0",
+    "@types/debug": "^4.1.12",
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.19.1",
+    "@types/ws": "^8.18.1",
+    "@vitest/coverage-v8": "^4.1.2",
+    "esbuild": "^0.27.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsdoc": "^61.4.1",
+    "eslint-plugin-n": "^17.9.0",
+    "globals": "^16.5.0",
+    "jsdom": "^27.2.0",
+    "prettier": "^3.7.4",
+    "typescript": "^5.6.3",
+    "vitest": "^4.0.15"
+  },
+  "files": [
+    "app/index.html",
+    "app/styles.css",
+    "app/main.bundle.js",
+    "app/main.bundle.js.map",
+    "app/protocol.js",
+    "bin",
+    "server",
+    "CHANGES.md",
+    "LICENSE",
+    "README.md",
+    "!**/*.test.js"
+  ]
+}

@@ -1,0 +1,37 @@
+/node_modules
+/coverage
+tsconfig.tsbuildinfo
+app/main.bundle.js
+app/main.bundle.js.map
+.DS_Store
+
+# Dolt database files (added by bd init)
+.dolt/
+*.db
+
+coverage/
+.claude/settings.local.json
+.playwright/snapshots
+.playwright/screenshots
+
+# Beads / Dolt files (added by bd init)
+.beads-credential-key
+
+# Beads local runtime artifacts (keep issue/config metadata, ignore machine-local state)
+.beads/.beads-credential-key
+.beads/.local_version
+.beads/last-touched
+.beads/interactions.jsonl
+.beads/push-state.json
+.beads/dolt-server.pid
+.beads/dolt-server.log
+.beads/dolt-server.lock
+.beads/dolt-server.port
+.beads/dolt-server.activity
+.beads/backup/
+.beads/dolt/
+
+# Playwright
+.playwright/report/
+playwright-report/
+test-results/

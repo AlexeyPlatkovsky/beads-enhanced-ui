@@ -1,0 +1,49 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash(git push:*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"additionalContext\":\"PRE-PUSH CHECKLIST (AGENTS.md):\\n1. CODE REVIEW: Have you run the code-reviewer subagent on this diff?\\n2. BRANCH: Did you explicitly confirm the branch with the user before starting non-trivial work?\\nIf either answer is no, stop the push, complete the missing step, then retry.\"}}'",
+            "statusMessage": "Checking pre-push checklist..."
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Bash(bd:*)",
+      "Bash(git:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(node:*)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(playwright-cli:*)",
+      "Bash(python:*)",
+      "Bash(rg:*)",
+      "Bash(sqlite3:*)",
+      "Skill(playwright-cli)",
+      "Edit",
+      "Glob",
+      "Grep",
+      "Read",
+      "Read(:*)",
+      "WebFetch",
+      "Write"
+    ],
+    "ask": [
+      "Bash(git clean:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git rebase:*)",
+      "Bash(git reset:*)"
+    ]
+  }
+}

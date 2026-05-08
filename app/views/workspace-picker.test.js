@@ -1,0 +1,215 @@
+import { describe, expect, test, vi } from 'vitest';
+import { createWorkspacePicker } from './workspace-picker.js';
+
+/**
+ * @param {{ workspace: { current: { path: string } | null, available: Array<{ path: string }> } }} state
+ */
+function createStore(state) {
+  let current = state;
+  /** @type {Array<(state: any) => void>} */
+  const subscribers = [];
+  return {
+    getState: () => current,
+    /** @param {(state: typeof current) => void} fn */
+    subscribe(fn) {
+      subscribers.push(fn);
+      return () => {
+        const index = subscribers.indexOf(fn);
+        if (index >= 0) {
+          subscribers.splice(index, 1);
+        }
+      };
+    },
+    /** @param {typeof current} next */
+    setState(next) {
+      current = next;
+      for (const fn of subscribers) {
+        fn(current);
+      }
+    }
+  };
+}
+
+describe('views/workspace-picker', () => {
+  test('shows a simple label when only one workspace is available', () => {
+    const mount = document.createElement('div');
+    const store = createStore({
+      workspace: {
+        current: { path: '/repo/current' },
+        available: [{ path: '/repo/current' }]
+      }
+    });
+
+    createWorkspacePicker(mount, store, vi.fn());
+
+    expect(
+      mount.querySelector('[data-testid="workspace-picker-label"]')?.textContent
+    ).toBe('current');
+    expect(
+      mount.querySelector('[data-testid="workspace-picker-select"]')
+    ).toBeNull();
+  });
+
+  test('falls back to Unknown for empty workspace paths', () => {
+    const mount = document.createElement('div');
+    const store = createStore({
+      workspace: {
+        current: { path: '' },
+        available: [{ path: '' }]
+      }
+    });
+
+    createWorkspacePicker(mount, store, vi.fn());
+
+    expect(
+      mount.querySelector('[data-testid="workspace-picker-label"]')?.textContent
+    ).toBe('Unknown');
+  });
+
+  test('falls back to Unknown for root-like workspace paths', () => {
+    const mount = document.createElement('div');
+    const store = createStore({
+      workspace: {
+        current: { path: '/' },
+        available: [{ path: '/' }]
+      }
+    });
+
+    createWorkspacePicker(mount, store, vi.fn());
+
+    expect(
+      mount.querySelector('[data-testid="workspace-picker-label"]')?.textContent
+    ).toBe('Unknown');
+  });
+
+  test('disables select and shows loading indicator while switching', async () => {
+    const mount = document.createElement('div');
+    const store = createStore({
+      workspace: {
+        current: { path: '/repo/current' },
+        available: [{ path: '/repo/current' }, { path: '/repo/other' }]
+      }
+    });
+    /** @type {((value?: unknown) => void) | undefined} */
+    let resolveChange;
+    const onWorkspaceChange = vi.fn(
+      () =>
+        new Promise((resolve) => {
+          resolveChange = resolve;
+        })
+    );
+
+    createWorkspacePicker(mount, store, onWorkspaceChange);
+
+    const select = /** @type {HTMLSelectElement} */ (
+      mount.querySelector('[data-testid="workspace-picker-select"]')
+    );
+    select.value = '/repo/other';
+    select.dispatchEvent(new Event('change'));
+
+    expect(onWorkspaceChange).toHaveBeenCalledWith('/repo/other');
+    expect(select.disabled).toBe(true);
+    expect(
+      mount.querySelector('[data-testid="workspace-picker-loading"]')
+    ).toBeTruthy();
+
+    if (!resolveChange) {
+      throw new Error('expected pending workspace change');
+    }
+    resolveChange();
+    await Promise.resolve();
+
+    expect(
+      /** @type {HTMLSelectElement} */ (
+        mount.querySelector('[data-testid="workspace-picker-select"]')
+      ).disabled
+    ).toBe(false);
+  });
+
+  test('renders nothing when no workspaces are available', () => {
+    const mount = document.createElement('div');
+    const store = createStore({
+      workspace: { current: null, available: [] }
+    });
+
+    createWorkspacePicker(mount, store, vi.fn());
+
+    expect(mount.querySelector('[data-testid="workspace-picker"]')).toBeNull();
+  });
+
+  test('does not switch when selecting the current workspace and destroy clears content', () => {
+    const mount = document.createElement('div');
+    const store = createStore({
+      workspace: {
+        current: { path: '/repo/current' },
+        available: [{ path: '/repo/current' }, { path: '/repo/other' }]
+      }
+    });
+    const onWorkspaceChange = vi.fn();
+
+    const picker = createWorkspacePicker(mount, store, onWorkspaceChange);
+    const select = /** @type {HTMLSelectElement} */ (
+      mount.querySelector('[data-testid="workspace-picker-select"]')
+    );
+    select.value = '/repo/current';
+    select.dispatchEvent(new Event('change'));
+
+    expect(onWorkspaceChange).not.toHaveBeenCalled();
+
+    picker.destroy();
+    expect(mount.querySelector('[data-testid="workspace-picker"]')).toBeNull();
+  });
+
+  test('does not switch when the selected workspace path is empty', () => {
+    const mount = document.createElement('div');
+    const store = createStore({
+      workspace: {
+        current: null,
+        available: [{ path: '/repo/current' }, { path: '/repo/other' }]
+      }
+    });
+    const onWorkspaceChange = vi.fn();
+
+    createWorkspacePicker(mount, store, onWorkspaceChange);
+
+    const select = /** @type {HTMLSelectElement} */ (
+      mount.querySelector('[data-testid="workspace-picker-select"]')
+    );
+    select.value = '';
+    select.dispatchEvent(new Event('change'));
+
+    expect(onWorkspaceChange).not.toHaveBeenCalled();
+  });
+
+  test('recovers after workspace switch failure', async () => {
+    const mount = document.createElement('div');
+    const store = createStore({
+      workspace: {
+        current: { path: '/repo/current' },
+        available: [{ path: '/repo/current' }, { path: '/repo/other' }]
+      }
+    });
+    const onWorkspaceChange = vi.fn(async () => {
+      throw new Error('switch failed');
+    });
+
+    createWorkspacePicker(mount, store, onWorkspaceChange);
+
+    const select = /** @type {HTMLSelectElement} */ (
+      mount.querySelector('[data-testid="workspace-picker-select"]')
+    );
+    select.value = '/repo/other';
+    select.dispatchEvent(new Event('change'));
+    await Promise.resolve();
+
+    expect(onWorkspaceChange).toHaveBeenCalledWith('/repo/other');
+    expect(
+      /** @type {HTMLSelectElement} */ (
+        mount.querySelector('[data-testid="workspace-picker-select"]')
+      ).disabled
+    ).toBe(false);
+    expect(
+      mount.querySelector('[data-testid="workspace-picker-loading"]')
+    ).toBeNull();
+  });
+});
