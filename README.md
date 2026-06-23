@@ -8,7 +8,7 @@
 <div align="center">
   <a href="https://www.npmjs.com/package/beads-ui"><img src="https://img.shields.io/npm/v/beads-ui.svg" alt="npm Version"></a>
   <a href="https://semver.org"><img src="https://img.shields.io/:semver-%E2%9C%93-blue.svg" alt="SemVer"></a>
-  <a href="https://github.com/mantoni/beads-ui/actions/worflows/ci.yml"><img src="https://github.com/mantoni/eslint_d.js/actions/workflows/ci.yml/badge.svg" alt="Build Status"></a>
+  <a href="https://github.com/AlexeyPlatkovsky/beads-enhanced-ui/actions/workflows/ci.yml"><img src="https://github.com/AlexeyPlatkovsky/beads-enhanced-ui/actions/workflows/ci.yml/badge.svg" alt="Build Status"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/npm/l/eslint_d.svg" alt="MIT License"></a>
   <br>
   <br>
